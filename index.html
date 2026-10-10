@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Personagem 3D — Demo Gratuita</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #05060f; font-family: system-ui, sans-serif; }
+  #scene { display: block; width: 100%; height: 100%; }
+  #titulo {
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    color: #fff; text-align: center; pointer-events: none; user-select: none;
+    text-shadow: 0 0 20px rgba(90,170,255,.8);
+  }
+  #titulo h1 { font-size: clamp(20px, 4vw, 40px); letter-spacing: 2px; font-weight: 800; }
+  #titulo p { font-size: clamp(11px, 1.6vw, 15px); opacity: .75; margin-top: 6px; }
+  #dica {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    color: #9fd0ff; font-size: 13px; background: rgba(20,40,80,.55);
+    padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(120,180,255,.35);
+    backdrop-filter: blur(6px); pointer-events: none; user-select: none;
+  }
+  #loader {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #7fb8ff; font-size: 15px; background: #05060f; z-index: 10; transition: opacity .6s;
+  }
+</style>
+</head>
+<body>
+  <div id="loader">Carregando o personagem 3D…</div>
+  <div id="titulo">
+    <h1>🤖 O MEU PERSONAGEM 3D</h1>
+    <p>Feito de graça com Three.js</p>
+  </div>
+  <div id="dica">🖱️ Arraste para girar · 🔍 Scroll para dar zoom</div>
+  <canvas id="scene"></canvas>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+
+  // ---------- Cena, câmera e renderizador ----------
+  const canvas = document.getElementById('scene');
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x05060f, 0.035);
+
+  const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 200);
+  camera.position.set(0, 3.2, 9);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.target.set(0, 1.7, 0);
+  controls.minDistance = 4;
+  controls.maxDistance = 18;
+  controls.maxPolarAngle = Math.PI * 0.52;
+
+  // ---------- Luzes ----------
+  scene.add(new THREE.HemisphereLight(0x88bbff, 0x0a0a1a, 0.8));
+
+  const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
+  keyLight.position.set(5, 9, 6);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.set(2048, 2048);
+  keyLight.shadow.camera.near = 1;
+  keyLight.shadow.camera.far = 40;
+  keyLight.shadow.camera.left = -8;
+  keyLight.shadow.camera.right = 8;
+  keyLight.shadow.camera.top = 8;
+  keyLight.shadow.camera.bottom = -8;
+  scene.add(keyLight);
+
+  const rimLight = new THREE.PointLight(0x4da6ff, 40, 30);
+  rimLight.position.set(-5, 3, -5);
+  scene.add(rimLight);
+
+  const warmLight = new THREE.PointLight(0xff7b4d, 25, 25);
+  warmLight.position.set(5, 2, -4);
+  scene.add(warmLight);
+
+  // ---------- Piso com brilho ----------
+  const floor = new THREE.Mesh(
+    new THREE.CircleGeometry(14, 64),
+    new THREE.MeshStandardMaterial({ color: 0x0c1230, roughness: 0.35, metalness: 0.9 })
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  const grid = new THREE.GridHelper(28, 40, 0x2a6bff, 0x122a5c);
+  grid.position.y = 0.01;
+  grid.material.transparent = true;
+  grid.material.opacity = 0.35;
+  scene.add(grid);
+
+  // ---------- Campo de estrelas ----------
+  const starGeo = new THREE.BufferGeometry();
+  const starCount = 1600;
+  const pos = new Float32Array(starCount * 3);
+  for (let i = 0; i < starCount * 3; i += 3) {
+    const r = 40 + Math.random() * 60;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+    pos[i]     = r * Math.sin(phi) * Math.cos(theta);
+    pos[i + 1] = Math.abs(r * Math.cos(phi)) * 0.7 + 2;
+    pos[i + 2] = r * Math.sin(phi) * Math.sin(theta);
+  }
+  starGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0x9fd0ff, size: 0.35, transparent: true, opacity: 0.9 })));
+
+  // ---------- Materiais do personagem ----------
+  const matBody   = new THREE.MeshStandardMaterial({ color: 0xdfe8ff, roughness: 0.25, metalness: 0.85 });
+  const matAccent = new THREE.MeshStandardMaterial({ color: 0x2f7bff, roughness: 0.3, metalness: 0.7, emissive: 0x0a2a66, emissiveIntensity: 0.6 });
+  const matDark   = new THREE.MeshStandardMaterial({ color: 0x1a2340, roughness: 0.5, metalness: 0.6 });
+  const matGlow   = new THREE.MeshStandardMaterial({ color: 0x66f0ff, emissive: 0x66f0ff, emissiveIntensity: 2.2, roughness: 0.2 });
+
+  // ---------- Personagem (robô) ----------
+  const personagem = new THREE.Group();
+  personagem.position.y = 0;
+  scene.add(personagem);
+
+  // Corpo
+  const corpo = new THREE.Mesh(new THREE.CapsuleGeometry(0.95, 1.2, 8, 24), matBody);
+  corpo.position.y = 2.05;
+  corpo.castShadow = true;
+  personagem.add(corpo);
+
+  // Peito iluminado
+  const peito = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.12, 32), matGlow);
+  peito.rotation.x = Math.PI / 2;
+  peito.position.set(0, 2.15, 0.92);
+  personagem.add(peito);
+  const anelPeito = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.05, 16, 40), matAccent);
+  anelPeito.position.set(0, 2.15, 0.9);
+  personagem.add(anelPeito);
+
+  // Cabeça
+  const cabeca = new THREE.Mesh(new THREE.SphereGeometry(0.78, 40, 40), matBody);
+  cabeca.position.y = 3.55;
+  cabeca.castShadow = true;
+  personagem.add(cabeca);
+
+  // Visor (faixa escura)
+  const visor = new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.4, 0.5), matDark);
+  visor.position.set(0, 3.62, 0.55);
+  visor.castShadow = true;
+  personagem.add(visor);
+
+  // Olhos brilhantes
+  const olhoGeo = new THREE.SphereGeometry(0.12, 20, 20);
+  const olhoEsq = new THREE.Mesh(olhoGeo, matGlow);
+  olhoEsq.position.set(-0.28, 3.63, 0.85);
+  const olhoDir = olhoEsq.clone();
+  olhoDir.position.x = 0.28;
+  personagem.add(olhoEsq, olhoDir);
+
+  // Antena
+  const hasteAntena = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.7, 12), matDark);
+  hasteAntena.position.y = 4.45;
+  personagem.add(hasteAntena);
+  const bolaAntena = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 20), matGlow);
+  bolaAntena.position.y = 4.85;
+  personagem.add(bolaAntena);
+
+  // Braços
+  function criarBraco(lado) {
+    const braco = new THREE.Group();
+    braco.position.set(lado * 1.15, 2.7, 0);
+    const superior = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 0.7, 6, 16), matAccent);
+    superior.position.y = -0.5;
+    superior.castShadow = true;
+    braco.add(superior);
+    const mao = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), matBody);
+    mao.position.y = -1.05;
+    mao.castShadow = true;
+    braco.add(mao);
+    return braco;
+  }
+  const bracoEsq = criarBraco(-1);
+  const bracoDir = criarBraco(1);
+  personagem.add(bracoEsq, bracoDir);
+
+  // Pernas
+  function criarPerna(lado) {
+    const perna = new THREE.Mesh(new THREE.CapsuleGeometry(0.26, 0.7, 6, 16), matDark);
+    perna.position.set(lado * 0.42, 0.62, 0);
+    perna.castShadow = true;
+    return perna;
+  }
+  const pernaEsq = criarPerna(-1);
+  const pernaDir = criarPerna(1);
+  personagem.add(pernaEsq, pernaDir);
+
+  // Pés
+  function criarPe(lado) {
+    const pe = new THREE.Mesh(new THREE.SphereGeometry(0.32, 20, 20), matBody);
+    pe.scale.set(1, 0.6, 1.4);
+    pe.position.set(lado * 0.42, 0.18, 0.1);
+    pe.castShadow = true;
+    return pe;
+  }
+  personagem.add(criarPe(-1), criarPe(1));
+
+  // ---------- Órbita de partículas ao redor ----------
+  const orbita = new THREE.Group();
+  personagem.add(orbita);
+  for (let i = 0; i < 60; i++) {
+    const p = new THREE.Mesh(
+      new THREE.SphereGeometry(0.045, 8, 8),
+      new THREE.MeshBasicMaterial({ color: 0x66f0ff, transparent: true, opacity: 0.85 })
+    );
+    const a = (i / 60) * Math.PI * 2;
+    const rad = 2.2 + Math.random() * 0.6;
+    p.position.set(Math.cos(a) * rad, 1.5 + Math.random() * 2.5, Math.sin(a) * rad);
+    orbita.add(p);
+  }
+
+  // ---------- Animação ----------
+  const clock = new THREE.Clock();
+  let t = 0;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const dt = clock.getDelta();
+    t += dt;
+
+    // Flutuação suave
+    personagem.position.y = Math.sin(t * 1.6) * 0.12;
+
+    // Cabeça acompanha de leve
+    cabeca.rotation.z = Math.sin(t * 1.2) * 0.05;
+    cabeca.rotation.y = Math.sin(t * 0.6) * 0.15;
+
+    // Braços balançando (um acena)
+    bracoEsq.rotation.x = Math.sin(t * 1.8) * 0.35;
+    bracoDir.rotation.x = Math.sin(t * 1.8 + Math.PI) * 0.35;
+    bracoDir.rotation.z = -Math.sin(t * 2.4) * 0.5 - 0.3;
+
+    // Olhos piscam
+    const blink = Math.abs(Math.sin(t * 1.7)) > 0.96 ? 0.15 : 1;
+    olhoEsq.scale.y = olhoDir.scale.y = blink;
+
+    // Antena pulsa
+    const pulse = 1 + Math.sin(t * 5) * 0.25;
+    bolaAntena.scale.setScalar(pulse);
+    peito.material.emissiveIntensity = 1.8 + Math.sin(t * 3) * 0.8;
+
+    // Órbita gira
+    orbita.rotation.y = t * 0.5;
+
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  // ---------- Responsivo ----------
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+
+  // Esconde o loader
+  const loader = document.getElementById('loader');
+  loader.style.opacity = '0';
+  setTimeout(() => loader.remove(), 600);
+
+  animate();
+  </script>
+</body>
+</html>
+
