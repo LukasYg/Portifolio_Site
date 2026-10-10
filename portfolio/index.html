@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Portfólio — Visual & Design</title>
+<style>
+  :root {
+    --bg: #0b0b0f;
+    --bg-soft: #14141c;
+    --card: #17171f;
+    --txt: #f4f4f7;
+    --muted: #9a9aad;
+    --accent: #ff5c8a;
+    --accent2: #7b6cff;
+    --radius: 18px;
+    --maxw: 1180px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--txt);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .display { font-family: 'Georgia', 'Times New Roman', serif; }
+
+  /* ---------- Fundo decorativo ---------- */
+  .glow {
+    position: fixed; border-radius: 50%; filter: blur(120px); opacity: .35;
+    pointer-events: none; z-index: 0;
+  }
+  .glow.a { width: 480px; height: 480px; background: var(--accent); top: -160px; left: -120px; }
+  .glow.b { width: 420px; height: 420px; background: var(--accent2); top: 40%; right: -140px; }
+
+  /* ---------- Nav ---------- */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 6vw;
+    backdrop-filter: blur(12px);
+    background: rgba(11,11,15,.6);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .logo { font-weight: 800; letter-spacing: 1px; font-size: 18px; }
+  .logo span { color: var(--accent); }
+  nav a {
+    color: var(--muted); text-decoration: none; margin-left: 26px;
+    font-size: 14px; transition: color .25s;
+  }
+  nav a:hover { color: var(--txt); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; z-index: 1;
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 180px 6vw 100px;
+  }
+  .tag {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+    border: 1px solid rgba(255,92,138,.4); border-radius: 999px;
+    padding: 6px 16px; margin-bottom: 26px;
+  }
+  .hero h1 {
+    font-size: clamp(42px, 8vw, 92px); line-height: 1.02;
+    font-weight: 400; letter-spacing: -1px; margin-bottom: 22px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p { color: var(--muted); font-size: clamp(15px, 2vw, 19px); max-width: 560px; }
+  .cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 28px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: transform .25s, box-shadow .25s;
+    display: inline-block; cursor: pointer; border: none;
+  }
+  .btn.primary {
+    background: linear-gradient(120deg, var(--accent), var(--accent2)); color: #fff;
+    box-shadow: 0 10px 30px rgba(123,108,255,.35);
+  }
+  .btn.ghost { background: transparent; color: var(--txt); border: 1px solid rgba(255,255,255,.2); }
+  .btn:hover { transform: translateY(-3px); }
+
+  /* ---------- Seções ---------- */
+  section { position: relative; z-index: 1; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 6vw; }
+  .sec-head { margin-bottom: 44px; }
+  .sec-head .kicker {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent2); font-weight: 700;
+  }
+  .sec-head h2 {
+    font-size: clamp(30px, 5vw, 52px); font-weight: 400; margin-top: 10px;
+  }
+
+  /* ---------- Filtros ---------- */
+  .filtros { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; }
+  .filtro {
+    background: var(--card); color: var(--muted); border: 1px solid rgba(255,255,255,.08);
+    padding: 8px 20px; border-radius: 999px; font-size: 13px; cursor: pointer;
+    transition: all .25s;
+  }
+  .filtro:hover { color: var(--txt); border-color: rgba(255,255,255,.25); }
+  .filtro.ativo {
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    color: #fff; border-color: transparent;
+  }
+
+  /* ---------- Galeria ---------- */
+  #trabalhos { padding: 60px 0 100px; }
+  .grid {
+    display: grid; gap: 22px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .item {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    cursor: pointer; background: var(--card);
+    border: 1px solid rgba(255,255,255,.07);
+    aspect-ratio: 4 / 3;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, opacity .4s;
+  }
+  .item.alto { grid-row: span 2; aspect-ratio: 3 / 4; }
+  .item:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,.5); }
+  .item .thumb {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .item:hover .thumb { transform: scale(1.08); }
+  .item .overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 24px;
+    background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,0) 55%);
+    opacity: 0; transition: opacity .4s;
+  }
+  .item:hover .overlay { opacity: 1; }
+  .item .overlay h3 { font-size: 19px; font-weight: 700; }
+  .item .overlay span { font-size: 12px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+  .item .badge {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
+    color: #fff; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15);
+  }
+  .item.oculto { display: none; }
+
+  /* ---------- Sobre ---------- */
+  #sobre { padding: 100px 0; background: var(--bg-soft); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .sobre-grid p { color: var(--muted); margin-bottom: 16px; }
+  .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .skills span {
+    background: var(--card); border: 1px solid rgba(255,255,255,.1);
+    padding: 7px 16px; border-radius: 999px; font-size: 13px; color: var(--txt);
+  }
+  .retrato {
+    aspect-ratio: 1; border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px; box-shadow: 0 30px 60px rgba(123,108,255,.3);
+  }
+
+  /* ---------- Contato ---------- */
+  #contato { padding: 110px 0; text-align: center; }
+  #contato h2 { font-size: clamp(34px, 6vw, 64px); font-weight: 400; margin-bottom: 20px; }
+  #contato p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; }
+  .redes { display: flex; gap: 16px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+  .redes a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    border: 1px solid rgba(255,255,255,.12); padding: 9px 20px; border-radius: 999px;
+    transition: all .25s;
+  }
+  .redes a:hover { color: #fff; border-color: var(--accent); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    position: relative; z-index: 1; text-align: center;
+    padding: 30px; color: var(--muted); font-size: 13px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 100; display: none;
+    align-items: center; justify-content: center; padding: 5vw;
+    background: rgba(5,5,8,.92); backdrop-filter: blur(10px);
+  }
+  .lightbox.aberto { display: flex; animation: fade .3s; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .lightbox .conteudo {
+    max-width: 900px; width: 100%; border-radius: var(--radius); overflow: hidden;
+    background: var(--card); border: 1px solid rgba(255,255,255,.1);
+  }
+  .lightbox .imagem { aspect-ratio: 16/10; background-size: cover; background-position: center; }
+  .lightbox .texto { padding: 24px 28px; }
+  .lightbox .texto h3 { font-size: 22px; }
+  .lightbox .texto p { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .lightbox .fechar {
+    position: absolute; top: 24px; right: 28px; font-size: 34px; color: #fff;
+    cursor: pointer; line-height: 1; opacity: .7; transition: opacity .2s;
+  }
+  .lightbox .fechar:hover { opacity: 1; }
+
+  /* ---------- Revelar ao rolar ---------- */
+  .revelar { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s; }
+  .revelar.visivel { opacity: 1; transform: none; }
+
+  @media (max-width: 720px) {
+    .sobre-grid { grid-template-columns: 1fr; gap: 36px; }
+    nav a { margin-left: 16px; font-size: 13px; }
+  }
+
+</style>
+</head>
+<body>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+
+  <header>
+    <div class="logo">SEU<span>NOME</span></div>
+    <nav>
+      <a href="#trabalhos">Trabalhos</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <span class="tag">Portfólio · Visual &amp; Design</span>
+    <h1 class="display">Crio <em>visuais</em><br>que contam histórias.</h1>
+    <p>Designer visual e criador digital. Aqui reúno uma seleção dos meus melhores trabalhos — branding, ilustração, UI e arte digital.</p>
+    <div class="cta">
+      <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
+      <a href="#contato" class="btn ghost">Fale comigo</a>
+    </div>
+  </section>
+
+  <!-- ===== TRABALHOS ===== -->
+  <section id="trabalhos">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Selecionados</div>
+        <h2 class="display">Trabalhos recentes</h2>
+      </div>
+
+      <div class="filtros revelar">
+        <button class="filtro ativo" data-filtro="todos">Todos</button>
+        <button class="filtro" data-filtro="branding">Branding</button>
+        <button class="filtro" data-filtro="ilustracao">Ilustração</button>
+        <button class="filtro" data-filtro="ui">UI / Web</button>
+        <button class="filtro" data-filtro="arte">Arte digital</button>
+      </div>
+
+      <div class="grid" id="grid">
+        <!-- Os itens abaixo são EXEMPLOS. Troque imagem, título e categoria. -->
+        <article class="item revelar" data-cat="branding" data-titulo="Identidade Aurora"
+          data-desc="Sistema visual completo com paleta, tipografia e aplicações."
+          style="--g: linear-gradient(135deg,#ff5c8a,#7b6cff)">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#ff5c8a,#7b6cff)"></div>
+          <span class="badge">Branding</span>
+          <div class="overlay"><span>Branding</span><h3>Identidade Aurora</h3></div>
+        </article>
+
+        <article class="item revelar alto" data-cat="ilustracao" data-titulo="Série Cosmos"
+          data-desc="Ilustrações digitais inspiradas no espaço profundo.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#1e3c72,#2a5298)"></div>
+          <span class="badge">Ilustração</span>
+          <div class="overlay"><span>Ilustração</span><h3>Série Cosmos</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="ui" data-titulo="App Fintech"
+          data-desc="Design de interface para aplicativo financeiro.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#11998e,#38ef7d)"></div>
+          <span class="badge">UI / Web</span>
+          <div class="overlay"><span>UI / Web</span><h3>App Fintech</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="arte" data-titulo="Neon Dreams"
+          data-desc="Arte digital em estilo retrô-futurista.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#fc466b,#3f5efb)"></div>
+          <span class="badge">Arte digital</span>
+          <div class="overlay"><span>Arte digital</span><h3>Neon Dreams</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="branding" data-titulo="Marca Café Puro"
+          data-desc="Identidade e embalagem para marca de café artesanal.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#c79081,#dfa579)"></div>
+          <span class="badge">Branding</span>
+          <div class="overlay"><span>Branding</span><h3>Marca Café Puro</h3></div>
+        </article>
+
+        <article class="item revelar alto" data-cat="ui" data-titulo="Landing Studio"
+          data-desc="Página de apresentação para estúdio criativo.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#654ea3,#eaafc8)"></div>
+          <span class="badge">UI / Web</span>
+          <div class="overlay"><span>UI / Web</span><h3>Landing Studio</h3></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== SOBRE ===== -->
+  <section id="sobre">
+    <div class="wrap sobre-grid">
+      <div class="revelar">
+        <div class="sec-head">
+          <div class="kicker">Sobre mim</div>
+          <h2 class="display">Design com propósito</h2>
+        </div>
+        <p>Sou um criador visual apaixonado por transformar ideias em imagens que comunicam. Trabalho com branding, ilustração e design de interfaces.</p>
+        <p>Este é um texto de exemplo — edite no arquivo <code>index.html</code> para contar a sua história.</p>
+        <div class="skills">
+          <span>Branding</span><span>Ilustração</span><span>UI/UX</span>
+          <span>Photoshop</span><span>Illustrator</span><span>Figma</span>
+        </div>
+      </div>
+      <div class="retrato revelar">🎨</div>
+    </div>
+  </section>
+
+  <!-- ===== CONTATO ===== -->
+  <section id="contato">
+    <div class="wrap">
+      <h2 class="display revelar">Vamos criar algo juntos?</h2>
+      <p class="revelar">Disponível para projetos freelance e colaborações. Me chame por e-mail ou redes sociais.</p>
+      <a href="mailto:seu@email.com" class="btn primary revelar">seu@email.com</a>
+      <div class="redes revelar">
+        <a href="#">Instagram</a>
+        <a href="#">Behance</a>
+        <a href="#">Dribbble</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 Seu Nome · Portfólio visual feito à mão</footer>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox" id="lightbox">
+    <span class="fechar" id="fechar">×</span>
+    <div class="conteudo">
+      <div class="imagem" id="lb-imagem"></div>
+      <div class="texto">
+        <h3 id="lb-titulo"></h3>
+        <p id="lb-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ---------- Filtros ----------
+  const filtros = document.querySelectorAll('.filtro');
+  const itens = document.querySelectorAll('.item');
+  filtros.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filtros.forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      const cat = btn.dataset.filtro;
+      itens.forEach(it => {
+        const mostra = cat === 'todos' || it.dataset.cat === cat;
+        it.classList.toggle('oculto', !mostra);
+      });
+    });
+  });
+
+  // ---------- Lightbox ----------
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-imagem');
+  const lbTit = document.getElementById('lb-titulo');
+  const lbDesc = document.getElementById('lb-desc');
+
+  itens.forEach(it => {
+    it.addEventListener('click', () => {
+      const thumb = it.querySelector('.thumb');
+      lbImg.style.backgroundImage = thumb.style.backgroundImage;
+      lbTit.textContent = it.dataset.titulo || '';
+      lbDesc.textContent = it.dataset.desc || '';
+      lb.classList.add('aberto');
+    });
+  });
+  function fecharLb() { lb.classList.remove('aberto'); }
+  document.getElementById('fechar').addEventListener('click', fecharLb);
+  lb.addEventListener('click', e => { if (e.target === lb) fecharLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+
+  // ---------- Revelar ao rolar ----------
+  const obs = new IntersectionObserver(entradas => {
+    entradas.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('visivel'); obs.unobserve(en.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>
