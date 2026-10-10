@@ -112,12 +112,22 @@
   .tl-stats span { color: var(--muted); font-weight: 400; margin: 0 4px; }
   /* Marcas */
   #marcas { padding: 90px 0; background: var(--bg-soft); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
-  .marquee { position: relative; margin-top: 40px; overflow: hidden;
+  .carrossel-duplo { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+  .marquee { position: relative; overflow: hidden;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-  .marquee-track { display: flex; gap: 46px; width: max-content; animation: rolar 48s linear infinite; }
+  .marquee-track { display: flex; gap: 46px; width: max-content; animation: rolar 80s linear infinite; }
+  .marquee-track.rev { animation-direction: reverse; }
   .marquee:hover .marquee-track { animation-play-state: paused; }
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* Quem sou eu */
+  .sobre-junto { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 52px; align-items: start; }
+  .foto { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); margin-bottom: 24px; aspect-ratio: 4/5; background: var(--card); }
+  .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sobre-esq p { color: var(--muted); margin-bottom: 14px; }
+  .sobre-esq .skills { margin-top: 20px; }
+  .tl-titulo { font-size: 20px; font-weight: 600; margin-bottom: 22px; }
+  @media (max-width: 880px) { .sobre-junto { grid-template-columns: 1fr; gap: 34px; } }
   .marca { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 140px; flex: 0 0 auto; }
   .marca img { height: 40px; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1) brightness(1.8); opacity: .72; transition: filter .3s, opacity .3s; }
   .marca:hover img { filter: grayscale(0) brightness(1); opacity: 1; }
@@ -359,6 +369,156 @@
     </div>
   </section>
 
+  <!-- ===== QUEM SOU EU ===== -->
+  <section id="sobre">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Quem sou eu</div>
+        <h2 class="display">Lucas Yago — Lukitas</h2>
+      </div>
+      <div class="sobre-junto">
+        <div class="sobre-esq revelar">
+          <div class="foto">
+            <img src="https://yt3.googleusercontent.com/X0cKDvFUOEKKOjyWTyzWIEjn_GSaIoc-XApSrpGg5uXk7ungxfVDyerB9FF5D4fBdR9kuCCxyQ=s400-c-k-c0x00ffffff-no-rj" alt="Lucas Yago (Lukitas)">
+          </div>
+          <p>Sou o Lukitas, profissional de audiovisual. Atuo como <strong>diretor de fotografia e apresentador</strong>, além de <strong>criador de conteúdo, diretor, roteirista, editor de vídeo e profissional de TI</strong> — cuidando de cada etapa, da ideia à entrega final.</p>
+          <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil. Atualmente curso <strong>Audiovisual na Univali</strong>.</p>
+          <div class="skills">
+            <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>TI</span>
+          </div>
+        </div>
+        <div class="sobre-dir revelar">
+          <h3 class="tl-titulo">Onde construí a carreira</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-ano">2018 — 2023</div>
+              <div class="tl-card">
+                <h3>TJ Gaming</h3>
+                <p>Assumi o canal com poucos inscritos e conduzi o crescimento até ultrapassar o marco de <strong>100 mil inscritos</strong>. Conteúdo de games e tecnologia, com foco em hardware.</p>
+                <div class="tl-stats">775 mil inscritos <span>·</span> 142M visualizações <span>·</span> 2,78 mil vídeos</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-ano">2023 — hoje</div>
+              <div class="tl-card">
+                <h3>PipocaTech</h3>
+                <p>Criação e comando do canal de tecnologia — reviews, hardware e entretenimento, direto ao ponto.</p>
+                <div class="tl-stats">316 mil inscritos <span>·</span> 118M visualizações <span>·</span> 2,3 mil vídeos</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-ano">2023 — hoje</div>
+              <div class="tl-card">
+                <h3>Solid Importadora</h3>
+                <p>Trabalho com as marcas internacionais trazidas pela Solid para o Brasil — conteúdo, reviews e divulgação.</p>
+                <div class="tl-stats">Marcas de hardware, periféricos e tecnologia</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-ano">2026 — hoje</div>
+              <div class="tl-card">
+                <h3>Univali — Audiovisual</h3>
+                <p>Faculdade de Audiovisual (em curso), aprofundando linguagem, técnica e direção.</p>
+                <div class="tl-stats">Graduação em andamento</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARCAS ===== -->
+  <section id="marcas">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Marcas &amp; Parceiros</div>
+        <h2 class="display">Marcas que trabalhei</h2>
+        <p>Através da Solid Importadora, atuei com marcas internacionais trazidas para o Brasil.</p>
+      </div>
+    </div>
+    <div class="carrossel-duplo">
+      <div class="marquee"><div class="marquee-track">
+          <div class="marca"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"><span>Redragon</span></div>
+          <div class="marca"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"><span>Gigabyte</span></div>
+          <div class="marca"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"><span>Ingrem</span></div>
+          <div class="marca"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"><span>Lamzu</span></div>
+          <div class="marca"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"><span>OnePower</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"><span>NZXT</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"><span>Lian Li</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gamdias.com&sz=128" alt="Gamdias" loading="lazy"><span>Gamdias</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"><span>Phanteks</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=akkogear.com&sz=128" alt="Akko Gear" loading="lazy"><span>Akko Gear</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=bequiet.com&sz=128" alt="be quiet!" loading="lazy"><span>be quiet!</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=deepcool.com&sz=128" alt="Deepcool" loading="lazy"><span>Deepcool</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"><span>Fnatic</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fsp-group.com&sz=128" alt="FSP" loading="lazy"><span>FSP</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=divoom.com&sz=128" alt="Divoom" loading="lazy"><span>Divoom</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"><span>Creative Labs</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"><span>Scythe</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"><span>XP-Pen</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"><span>Maono</span></div>
+          <div class="marca"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"><span>Redragon</span></div>
+          <div class="marca"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"><span>Gigabyte</span></div>
+          <div class="marca"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"><span>Ingrem</span></div>
+          <div class="marca"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"><span>Lamzu</span></div>
+          <div class="marca"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"><span>OnePower</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"><span>NZXT</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"><span>Lian Li</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gamdias.com&sz=128" alt="Gamdias" loading="lazy"><span>Gamdias</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"><span>Phanteks</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=akkogear.com&sz=128" alt="Akko Gear" loading="lazy"><span>Akko Gear</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=bequiet.com&sz=128" alt="be quiet!" loading="lazy"><span>be quiet!</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=deepcool.com&sz=128" alt="Deepcool" loading="lazy"><span>Deepcool</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"><span>Fnatic</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fsp-group.com&sz=128" alt="FSP" loading="lazy"><span>FSP</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=divoom.com&sz=128" alt="Divoom" loading="lazy"><span>Divoom</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"><span>Creative Labs</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"><span>Scythe</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"><span>XP-Pen</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"><span>Maono</span></div>
+          </div></div>
+      <div class="marquee"><div class="marquee-track rev">
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"><span>Sapphire</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"><span>Cudy</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=monsgeek.com&sz=128" alt="Monsgeek" loading="lazy"><span>Monsgeek</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hiksemi.com&sz=128" alt="Hiksemi" loading="lazy"><span>Hiksemi</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"><span>Biostar</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=manli.com&sz=128" alt="Manli" loading="lazy"><span>Manli</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"><span>Thermal Grizzly</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=t-dagger.com&sz=128" alt="T-Dagger" loading="lazy"><span>T-Dagger</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"><span>Cougar</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"><span>Philips</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"><span>Trust</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"><span>Kalkan</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"><span>Keytime</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"><span>Zomoplus</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hoto.com&sz=128" alt="Hoto" loading="lazy"><span>Hoto</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=geometricfuture.com&sz=128" alt="Geometric Future" loading="lazy"><span>Geometric Future</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=icebergthermal.com&sz=128" alt="Iceberg Thermal" loading="lazy"><span>Iceberg Thermal</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gxtrust.com&sz=128" alt="GXTrust" loading="lazy"><span>GXTrust</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"><span>Sapphire</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"><span>Cudy</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=monsgeek.com&sz=128" alt="Monsgeek" loading="lazy"><span>Monsgeek</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hiksemi.com&sz=128" alt="Hiksemi" loading="lazy"><span>Hiksemi</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"><span>Biostar</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=manli.com&sz=128" alt="Manli" loading="lazy"><span>Manli</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"><span>Thermal Grizzly</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=t-dagger.com&sz=128" alt="T-Dagger" loading="lazy"><span>T-Dagger</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"><span>Cougar</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"><span>Philips</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"><span>Trust</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"><span>Kalkan</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"><span>Keytime</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"><span>Zomoplus</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hoto.com&sz=128" alt="Hoto" loading="lazy"><span>Hoto</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=geometricfuture.com&sz=128" alt="Geometric Future" loading="lazy"><span>Geometric Future</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=icebergthermal.com&sz=128" alt="Iceberg Thermal" loading="lazy"><span>Iceberg Thermal</span></div>
+          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gxtrust.com&sz=128" alt="GXTrust" loading="lazy"><span>GXTrust</span></div>
+          </div></div>
+    </div>
+  </section>
+
   <!-- ===== TRABALHOS ===== -->
   <section id="trabalhos">
     <div class="wrap">
@@ -438,159 +598,6 @@
         <figure><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Diretor de fotografia operando a câmera" loading="lazy"></figure>
         <figure><img src="https://images.pexels.com/photos/34516677/pexels-photo-34516677.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Equipamento de produção de vídeo" loading="lazy"></figure>
         <figure><img src="https://images.pexels.com/photos/15779000/pexels-photo-15779000.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Câmera de cinema em estúdio" loading="lazy"></figure>
-    </div>
-  </section>
-
-  <!-- ===== TRAJETÓRIA ===== -->
-  <section id="trajetoria">
-    <div class="wrap">
-      <div class="sec-head revelar">
-        <div class="kicker">Trajetória</div>
-        <h2 class="display">Onde eu construí</h2>
-      </div>
-      <div class="timeline">
-        <div class="tl-item revelar">
-          <div class="tl-ano">2018 — 2023</div>
-          <div class="tl-card">
-            <h3>TJ Gaming</h3>
-            <p>Assumi o canal com poucos inscritos e conduzi o crescimento até ultrapassar o marco de <strong>100 mil inscritos</strong>. Conteúdo de games e tecnologia, com foco em hardware.</p>
-            <div class="tl-stats">775 mil inscritos <span>·</span> 142M visualizações <span>·</span> 2,78 mil vídeos</div>
-          </div>
-        </div>
-        <div class="tl-item revelar">
-          <div class="tl-ano">2023 — hoje</div>
-          <div class="tl-card">
-            <h3>PipocaTech</h3>
-            <p>Criação e comando do canal de tecnologia — reviews, hardware e entretenimento, direto ao ponto.</p>
-            <div class="tl-stats">316 mil inscritos <span>·</span> 118M visualizações <span>·</span> 2,3 mil vídeos</div>
-          </div>
-        </div>
-        <div class="tl-item revelar">
-          <div class="tl-ano">2023 — hoje</div>
-          <div class="tl-card">
-            <h3>Solid Importadora</h3>
-            <p>Trabalho com as marcas internacionais trazidas pela Solid para o Brasil — conteúdo, reviews e divulgação.</p>
-            <div class="tl-stats">Marcas de hardware, periféricos e tecnologia</div>
-          </div>
-        </div>
-        <div class="tl-item revelar">
-          <div class="tl-ano">2026 — hoje</div>
-          <div class="tl-card">
-            <h3>Univali — Audiovisual</h3>
-            <p>Faculdade de Audiovisual (em curso), aprofundando linguagem, técnica e direção.</p>
-            <div class="tl-stats">Graduação em andamento</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MARCAS ===== -->
-  <section id="marcas">
-    <div class="wrap">
-      <div class="sec-head revelar">
-        <div class="kicker">Marcas &amp; Parceiros</div>
-        <h2 class="display">Marcas que trabalhei</h2>
-        <p>Através da Solid Importadora, atuei com marcas internacionais trazidas para o Brasil.</p>
-      </div>
-      <div class="marquee">
-        <div class="marquee-track">
-                <div class="marca"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"><span>Redragon</span></div>
-                <div class="marca"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"><span>Gigabyte</span></div>
-                <div class="marca"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"><span>Ingrem</span></div>
-                <div class="marca"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"><span>Lamzu</span></div>
-                <div class="marca"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"><span>OnePower</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"><span>NZXT</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"><span>Lian Li</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gamdias.com&sz=128" alt="Gamdias" loading="lazy"><span>Gamdias</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"><span>Phanteks</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=akkogear.com&sz=128" alt="Akko Gear" loading="lazy"><span>Akko Gear</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=bequiet.com&sz=128" alt="be quiet!" loading="lazy"><span>be quiet!</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=deepcool.com&sz=128" alt="Deepcool" loading="lazy"><span>Deepcool</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"><span>Fnatic</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fsp-group.com&sz=128" alt="FSP" loading="lazy"><span>FSP</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=divoom.com&sz=128" alt="Divoom" loading="lazy"><span>Divoom</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"><span>Creative Labs</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"><span>Scythe</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"><span>XP-Pen</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"><span>Maono</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"><span>Sapphire</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"><span>Cudy</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=monsgeek.com&sz=128" alt="Monsgeek" loading="lazy"><span>Monsgeek</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hiksemi.com&sz=128" alt="Hiksemi" loading="lazy"><span>Hiksemi</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"><span>Biostar</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=manli.com&sz=128" alt="Manli" loading="lazy"><span>Manli</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"><span>Thermal Grizzly</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=t-dagger.com&sz=128" alt="T-Dagger" loading="lazy"><span>T-Dagger</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"><span>Cougar</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"><span>Philips</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"><span>Trust</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"><span>Kalkan</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"><span>Keytime</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"><span>Zomoplus</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hoto.com&sz=128" alt="Hoto" loading="lazy"><span>Hoto</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=geometricfuture.com&sz=128" alt="Geometric Future" loading="lazy"><span>Geometric Future</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=icebergthermal.com&sz=128" alt="Iceberg Thermal" loading="lazy"><span>Iceberg Thermal</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gxtrust.com&sz=128" alt="GXTrust" loading="lazy"><span>GXTrust</span></div>
-
-                <div class="marca"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"><span>Redragon</span></div>
-                <div class="marca"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"><span>Gigabyte</span></div>
-                <div class="marca"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"><span>Ingrem</span></div>
-                <div class="marca"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"><span>Lamzu</span></div>
-                <div class="marca"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"><span>OnePower</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"><span>NZXT</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"><span>Lian Li</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gamdias.com&sz=128" alt="Gamdias" loading="lazy"><span>Gamdias</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"><span>Phanteks</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=akkogear.com&sz=128" alt="Akko Gear" loading="lazy"><span>Akko Gear</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=bequiet.com&sz=128" alt="be quiet!" loading="lazy"><span>be quiet!</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=deepcool.com&sz=128" alt="Deepcool" loading="lazy"><span>Deepcool</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"><span>Fnatic</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fsp-group.com&sz=128" alt="FSP" loading="lazy"><span>FSP</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=divoom.com&sz=128" alt="Divoom" loading="lazy"><span>Divoom</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"><span>Creative Labs</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"><span>Scythe</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"><span>XP-Pen</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"><span>Maono</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"><span>Sapphire</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"><span>Cudy</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=monsgeek.com&sz=128" alt="Monsgeek" loading="lazy"><span>Monsgeek</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hiksemi.com&sz=128" alt="Hiksemi" loading="lazy"><span>Hiksemi</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"><span>Biostar</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=manli.com&sz=128" alt="Manli" loading="lazy"><span>Manli</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"><span>Thermal Grizzly</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=t-dagger.com&sz=128" alt="T-Dagger" loading="lazy"><span>T-Dagger</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"><span>Cougar</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"><span>Philips</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"><span>Trust</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"><span>Kalkan</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"><span>Keytime</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"><span>Zomoplus</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hoto.com&sz=128" alt="Hoto" loading="lazy"><span>Hoto</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=geometricfuture.com&sz=128" alt="Geometric Future" loading="lazy"><span>Geometric Future</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=icebergthermal.com&sz=128" alt="Iceberg Thermal" loading="lazy"><span>Iceberg Thermal</span></div>
-                <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gxtrust.com&sz=128" alt="GXTrust" loading="lazy"><span>GXTrust</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== SOBRE ===== -->
-  <section id="sobre">
-    <div class="wrap sobre-grid">
-      <div class="revelar">
-        <div class="sec-head">
-          <div class="kicker">Sobre mim</div>
-          <h2 class="display">Do roteiro à tela</h2>
-        </div>
-        <p>Sou o Lukitas, profissional de audiovisual. Atuo como <strong>diretor de fotografia e apresentador</strong>, além de <strong>criador de conteúdo, diretor, roteirista, editor de vídeo e profissional de TI</strong> — cuidando de cada etapa, da ideia à entrega final.</p>
-        <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil. Atualmente curso <strong>Audiovisual na Univali</strong>.</p>
-        <div class="skills">
-          <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span>
-          <span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>TI</span>
-        </div>
-      </div>
-      <div class="retrato revelar">🎬</div>
     </div>
   </section>
 
