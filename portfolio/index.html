@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meu Portfólio — Visual & Design</title>
+<title>Lukitas — Portfólio Tech &amp; Setup</title>
 <style>
   :root {
     --bg: #0b0b0f;
@@ -86,6 +86,11 @@
   }
   .btn.ghost { background: transparent; color: var(--txt); border: 1px solid rgba(255,255,255,.2); }
   .btn:hover { transform: translateY(-3px); }
+  .stats { display: flex; gap: 40px; margin-top: 44px; flex-wrap: wrap; }
+  .stats div { display: flex; flex-direction: column; }
+  .stats strong { font-size: 30px; font-weight: 800; color: #fff; }
+  .stats span { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 720px) { .stats { gap: 26px; } .stats strong { font-size: 24px; } }
 
   /* ---------- Seções ---------- */
   section { position: relative; z-index: 1; }
@@ -223,21 +228,26 @@
   <div class="glow b"></div>
 
   <header>
-    <div class="logo">SEU<span>NOME</span></div>
+    <div class="logo">LUKI<span>TAS</span></div>
     <nav>
-      <a href="#trabalhos">Trabalhos</a>
+      <a href="#trabalhos">Vídeos</a>
       <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
     </nav>
   </header>
 
   <section class="hero">
-    <span class="tag">Portfólio · Visual &amp; Design</span>
-    <h1 class="display">Crio <em>visuais</em><br>que contam histórias.</h1>
-    <p>Designer visual e criador digital. Aqui reúno uma seleção dos meus melhores trabalhos — branding, ilustração, UI e arte digital.</p>
+    <span class="tag">Criador de Conteúdo · Tech &amp; PC Gamer</span>
+    <h1 class="display">Conteúdo de <em>tech</em><br>que monta seu setup.</h1>
+    <p>Sou o Lukitas, criador de conteúdo sobre tecnologia, periféricos e PC gamer. Aqui reúno meus melhores vídeos — reviews, dicas e guias para você montar o setup perfeito.</p>
+    <div class="stats">
+      <div><strong>1,8M</strong><span>visualizações</span></div>
+      <div><strong>1,47K</strong><span>inscritos</span></div>
+      <div><strong>18</strong><span>vídeos</span></div>
+    </div>
     <div class="cta">
-      <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
-      <a href="#contato" class="btn ghost">Fale comigo</a>
+      <a href="#trabalhos" class="btn primary">Ver vídeos</a>
+      <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener" class="btn ghost">Inscreva-se</a>
     </div>
   </section>
 
@@ -246,60 +256,53 @@
     <div class="wrap">
       <div class="sec-head revelar">
         <div class="kicker">Selecionados</div>
-        <h2 class="display">Trabalhos recentes</h2>
+        <h2 class="display">Vídeos recentes</h2>
       </div>
 
       <div class="filtros revelar">
         <button class="filtro ativo" data-filtro="todos">Todos</button>
-        <button class="filtro" data-filtro="branding">Branding</button>
-        <button class="filtro" data-filtro="ilustracao">Ilustração</button>
-        <button class="filtro" data-filtro="ui">UI / Web</button>
-        <button class="filtro" data-filtro="arte">Arte digital</button>
+        <button class="filtro" data-filtro="monitor">Monitores</button>
+        <button class="filtro" data-filtro="teclado">Teclados</button>
+        <button class="filtro" data-filtro="gabinete">Gabinetes</button>
+        <button class="filtro" data-filtro="cooler">Refrigeração</button>
+        <button class="filtro" data-filtro="dicas">Dicas</button>
       </div>
 
       <div class="grid" id="grid">
-        <!-- Os itens abaixo são EXEMPLOS. Troque imagem, título e categoria. -->
-        <article class="item revelar" data-cat="branding" data-titulo="Identidade Aurora"
-          data-desc="Sistema visual completo com paleta, tipografia e aplicações."
-          style="--g: linear-gradient(135deg,#ff5c8a,#7b6cff)">
-          <div class="thumb" style="background-image:linear-gradient(135deg,#ff5c8a,#7b6cff)"></div>
-          <span class="badge">Branding</span>
-          <div class="overlay"><span>Branding</span><h3>Identidade Aurora</h3></div>
+        <article class="item revelar" data-cat="monitor" data-titulo="Qual Monitor usar no Setup?" data-desc="IPS, VA ou TN? Guia rápido para escolher o monitor certo. — 5,3 mil views" data-link="https://www.youtube.com/shorts/038pgyjOlsQ">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/038pgyjOlsQ/hq720.jpg')"></div>
+          <span class="badge">Monitores</span>
+          <div class="overlay"><span>Monitores</span><h3>Qual Monitor usar no Setup?</h3></div>
         </article>
 
-        <article class="item revelar alto" data-cat="ilustracao" data-titulo="Série Cosmos"
-          data-desc="Ilustrações digitais inspiradas no espaço profundo.">
-          <div class="thumb" style="background-image:linear-gradient(135deg,#1e3c72,#2a5298)"></div>
-          <span class="badge">Ilustração</span>
-          <div class="overlay"><span>Ilustração</span><h3>Série Cosmos</h3></div>
+        <article class="item revelar alto" data-cat="dicas" data-titulo="Como evitar taxas do AliExpress" data-desc="Dica para economizar nas compras internacionais. — 16 mil views" data-link="https://www.youtube.com/shorts/z8JIcAsEh5U">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/z8JIcAsEh5U/hq720.jpg')"></div>
+          <span class="badge">Dicas</span>
+          <div class="overlay"><span>Dicas</span><h3>Como evitar taxas do AliExpress</h3></div>
         </article>
 
-        <article class="item revelar" data-cat="ui" data-titulo="App Fintech"
-          data-desc="Design de interface para aplicativo financeiro.">
-          <div class="thumb" style="background-image:linear-gradient(135deg,#11998e,#38ef7d)"></div>
-          <span class="badge">UI / Web</span>
-          <div class="overlay"><span>UI / Web</span><h3>App Fintech</h3></div>
+        <article class="item revelar" data-cat="gabinete" data-titulo="O ÚNICO Gabinete que você precisa" data-desc="Review do gabinete Redragon que vale a pena. — 8,4 mil views" data-link="https://www.youtube.com/shorts/tgcy_N7uOwY">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/tgcy_N7uOwY/hq720.jpg')"></div>
+          <span class="badge">Gabinetes</span>
+          <div class="overlay"><span>Gabinetes</span><h3>O ÚNICO Gabinete que você precisa</h3></div>
         </article>
 
-        <article class="item revelar" data-cat="arte" data-titulo="Neon Dreams"
-          data-desc="Arte digital em estilo retrô-futurista.">
-          <div class="thumb" style="background-image:linear-gradient(135deg,#fc466b,#3f5efb)"></div>
-          <span class="badge">Arte digital</span>
-          <div class="overlay"><span>Arte digital</span><h3>Neon Dreams</h3></div>
+        <article class="item revelar" data-cat="cooler" data-titulo="Como refrigerar bem seu processador" data-desc="Water cooler ou air cooler? AMD e Intel. — 2,6 mil views" data-link="https://www.youtube.com/shorts/jbpOjjiCx7A">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/jbpOjjiCx7A/hq720.jpg')"></div>
+          <span class="badge">Refrigeração</span>
+          <div class="overlay"><span>Refrigeração</span><h3>Como refrigerar bem seu processador</h3></div>
         </article>
 
-        <article class="item revelar" data-cat="branding" data-titulo="Marca Café Puro"
-          data-desc="Identidade e embalagem para marca de café artesanal.">
-          <div class="thumb" style="background-image:linear-gradient(135deg,#c79081,#dfa579)"></div>
-          <span class="badge">Branding</span>
-          <div class="overlay"><span>Branding</span><h3>Marca Café Puro</h3></div>
+        <article class="item revelar" data-cat="teclado" data-titulo="Teclado Mecânico RGB Barato" data-desc="Um teclado mecânico bom e barato. — 3,9 mil views" data-link="https://www.youtube.com/shorts/J5PWTnt_rGk">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/J5PWTnt_rGk/hq720.jpg')"></div>
+          <span class="badge">Teclados</span>
+          <div class="overlay"><span>Teclados</span><h3>Teclado Mecânico RGB Barato</h3></div>
         </article>
 
-        <article class="item revelar alto" data-cat="ui" data-titulo="Landing Studio"
-          data-desc="Página de apresentação para estúdio criativo.">
-          <div class="thumb" style="background-image:linear-gradient(135deg,#654ea3,#eaafc8)"></div>
-          <span class="badge">UI / Web</span>
-          <div class="overlay"><span>UI / Web</span><h3>Landing Studio</h3></div>
+        <article class="item revelar alto" data-cat="teclado" data-titulo="O Melhor Switch de Teclado Gamer" data-desc="Qual switch escolher para jogar. — 3,2 mil views" data-link="https://www.youtube.com/shorts/cYzRxLCy0TQ">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/cYzRxLCy0TQ/hq720.jpg')"></div>
+          <span class="badge">Teclados</span>
+          <div class="overlay"><span>Teclados</span><h3>O Melhor Switch de Teclado Gamer</h3></div>
         </article>
       </div>
     </div>
@@ -312,35 +315,35 @@
       <div class="revelar">
         <div class="sec-head">
           <div class="kicker">Sobre mim</div>
-          <h2 class="display">Design com propósito</h2>
+          <h2 class="display">Tech que ajuda de verdade</h2>
         </div>
-        <p>Sou um criador visual apaixonado por transformar ideias em imagens que comunicam. Trabalho com branding, ilustração e design de interfaces.</p>
-        <p>Este é um texto de exemplo — edite no arquivo <code>index.html</code> para contar a sua história.</p>
+        <p>Sou o Lukitas, criador de conteúdo de tecnologia desde 2013. Produzo vídeos e shorts sobre periféricos, hardware e PC gamer, sempre com dicas práticas para o seu dia a dia.</p>
+        <p>Já são <strong>1,8 milhão de visualizações</strong> e uma comunidade que cresce todo dia. Meu objetivo é simplificar a tecnologia para você montar o setup dos sonhos sem gastar demais.</p>
         <div class="skills">
-          <span>Branding</span><span>Ilustração</span><span>UI/UX</span>
-          <span>Photoshop</span><span>Illustrator</span><span>Figma</span>
+          <span>Reviews</span><span>Periféricos</span><span>Hardware</span>
+          <span>PC Gamer</span><span>Dicas de Compra</span><span>Edição de Vídeo</span>
         </div>
       </div>
-      <div class="retrato revelar">🎨</div>
+      <div class="retrato revelar">🎮</div>
     </div>
   </section>
 
   <!-- ===== CONTATO ===== -->
   <section id="contato">
     <div class="wrap">
-      <h2 class="display revelar">Vamos criar algo juntos?</h2>
-      <p class="revelar">Disponível para projetos freelance e colaborações. Me chame por e-mail ou redes sociais.</p>
-      <a href="mailto:seu@email.com" class="btn primary revelar">seu@email.com</a>
+      <h2 class="display revelar">Vamos montar seu setup?</h2>
+      <p class="revelar">Quer parcerias, reviews ou divulgação de produtos? Me chame nas redes ou pelo canal.</p>
+      <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener" class="btn primary revelar">Inscreva-se no canal</a>
       <div class="redes revelar">
+        <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener">YouTube</a>
         <a href="#">Instagram</a>
-        <a href="#">Behance</a>
-        <a href="#">Dribbble</a>
-        <a href="#">LinkedIn</a>
+        <a href="#">TikTok</a>
+        <a href="mailto:seu@email.com">E-mail</a>
       </div>
     </div>
   </section>
 
-  <footer>© 2025 Seu Nome · Portfólio visual feito à mão</footer>
+  <footer>© 2025 Lukitas · Portfólio de conteúdo tech · @Lukitas_Yg</footer>
 
   <!-- ===== LIGHTBOX ===== -->
   <div class="lightbox" id="lightbox">
@@ -350,6 +353,7 @@
       <div class="texto">
         <h3 id="lb-titulo"></h3>
         <p id="lb-desc"></p>
+        <a id="lb-link" class="btn primary" target="_blank" rel="noopener" style="margin-top:16px">Assistir no YouTube ▶</a>
       </div>
     </div>
   </div>
@@ -382,6 +386,9 @@
       lbImg.style.backgroundImage = thumb.style.backgroundImage;
       lbTit.textContent = it.dataset.titulo || '';
       lbDesc.textContent = it.dataset.desc || '';
+      const lbLink = document.getElementById('lb-link');
+      if (it.dataset.link) { lbLink.href = it.dataset.link; lbLink.style.display = 'inline-block'; }
+      else { lbLink.style.display = 'none'; }
       lb.classList.add('aberto');
     });
   });
