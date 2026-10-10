@@ -86,6 +86,12 @@
   }
   .btn.ghost { background: transparent; color: var(--txt); border: 1px solid rgba(255,255,255,.2); }
   .btn:hover { transform: translateY(-3px); }
+  .roles { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .roles span {
+    font-size: 13px; color: #fff; padding: 7px 16px; border-radius: 999px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+  }
+  .roles span:first-child { background: linear-gradient(120deg, var(--accent), var(--accent2)); border-color: transparent; }
   .stats { display: flex; gap: 40px; margin-top: 44px; flex-wrap: wrap; }
   .stats div { display: flex; flex-direction: column; }
   .stats strong { font-size: 30px; font-weight: 800; color: #fff; }
@@ -230,24 +236,27 @@
   <header>
     <div class="logo">LUKI<span>TAS</span></div>
     <nav>
-      <a href="#trabalhos">Vídeos</a>
+      <a href="#trabalhos">Trabalhos</a>
       <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
     </nav>
   </header>
 
   <section class="hero">
-    <span class="tag">Criador de Conteúdo · Tech &amp; PC Gamer</span>
-    <h1 class="display">Conteúdo de <em>tech</em><br>que monta seu setup.</h1>
-    <p>Sou o Lukitas, criador de conteúdo sobre tecnologia, periféricos e PC gamer. Aqui reúno meus melhores vídeos — reviews, dicas e guias para você montar o setup perfeito.</p>
+    <span class="tag">Direção · Fotografia · Roteiro · Edição</span>
+    <h1 class="display">Histórias que <em>ganham vida</em> na tela.</h1>
+    <p>Sou o Lukitas — diretor de fotografia, diretor, apresentador, roteirista e editor de vídeo. Crio narrativas visuais do roteiro à finalização, unindo técnica, luz e emoção.</p>
+    <div class="roles">
+      <span>Diretor de Fotografia</span><span>Diretor</span><span>Apresentador</span><span>Roteirista</span><span>Editor de Vídeo</span>
+    </div>
     <div class="stats">
+      <div><strong>12+</strong><span>anos de estrada</span></div>
       <div><strong>1,8M</strong><span>visualizações</span></div>
-      <div><strong>1,47K</strong><span>inscritos</span></div>
-      <div><strong>18</strong><span>vídeos</span></div>
+      <div><strong>18</strong><span>vídeos publicados</span></div>
     </div>
     <div class="cta">
-      <a href="#trabalhos" class="btn primary">Ver vídeos</a>
-      <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener" class="btn ghost">Inscreva-se</a>
+      <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
+      <a href="#contato" class="btn ghost">Trabalhe comigo</a>
     </div>
   </section>
 
@@ -255,54 +264,78 @@
   <section id="trabalhos">
     <div class="wrap">
       <div class="sec-head revelar">
-        <div class="kicker">Selecionados</div>
-        <h2 class="display">Vídeos recentes</h2>
+        <div class="kicker">Portfólio</div>
+        <h2 class="display">Trabalhos selecionados</h2>
       </div>
 
       <div class="filtros revelar">
         <button class="filtro ativo" data-filtro="todos">Todos</button>
-        <button class="filtro" data-filtro="monitor">Monitores</button>
-        <button class="filtro" data-filtro="teclado">Teclados</button>
-        <button class="filtro" data-filtro="gabinete">Gabinetes</button>
-        <button class="filtro" data-filtro="cooler">Refrigeração</button>
-        <button class="filtro" data-filtro="dicas">Dicas</button>
+        <button class="filtro" data-filtro="direcao">Direção</button>
+        <button class="filtro" data-filtro="fotografia">Fotografia</button>
+        <button class="filtro" data-filtro="roteiro">Roteiro</button>
+        <button class="filtro" data-filtro="edicao">Edição</button>
+        <button class="filtro" data-filtro="apresentacao">Apresentação</button>
       </div>
 
       <div class="grid" id="grid">
-        <article class="item revelar" data-cat="monitor" data-titulo="Qual Monitor usar no Setup?" data-desc="IPS, VA ou TN? Guia rápido para escolher o monitor certo. — 5,3 mil views" data-link="https://www.youtube.com/shorts/038pgyjOlsQ">
+        <article class="item revelar" data-cat="apresentacao" data-titulo="Qual Monitor usar no Setup?" data-desc="IPS, VA ou TN? Guia rápido de monitores. — 5,3 mil views" data-link="https://www.youtube.com/shorts/038pgyjOlsQ">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/038pgyjOlsQ/hq720.jpg')"></div>
-          <span class="badge">Monitores</span>
-          <div class="overlay"><span>Monitores</span><h3>Qual Monitor usar no Setup?</h3></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>Qual Monitor usar no Setup?</h3></div>
         </article>
 
-        <article class="item revelar alto" data-cat="dicas" data-titulo="Como evitar taxas do AliExpress" data-desc="Dica para economizar nas compras internacionais. — 16 mil views" data-link="https://www.youtube.com/shorts/z8JIcAsEh5U">
+        <article class="item revelar alto" data-cat="apresentacao" data-titulo="Como evitar taxas do AliExpress" data-desc="Dica rápida sobre compras internacionais. — 16 mil views" data-link="https://www.youtube.com/shorts/z8JIcAsEh5U">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/z8JIcAsEh5U/hq720.jpg')"></div>
-          <span class="badge">Dicas</span>
-          <div class="overlay"><span>Dicas</span><h3>Como evitar taxas do AliExpress</h3></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>Como evitar taxas do AliExpress</h3></div>
         </article>
 
-        <article class="item revelar" data-cat="gabinete" data-titulo="O ÚNICO Gabinete que você precisa" data-desc="Review do gabinete Redragon que vale a pena. — 8,4 mil views" data-link="https://www.youtube.com/shorts/tgcy_N7uOwY">
+        <article class="item revelar" data-cat="apresentacao" data-titulo="O ÚNICO Gabinete que você precisa" data-desc="Review do gabinete Redragon. — 8,4 mil views" data-link="https://www.youtube.com/shorts/tgcy_N7uOwY">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/tgcy_N7uOwY/hq720.jpg')"></div>
-          <span class="badge">Gabinetes</span>
-          <div class="overlay"><span>Gabinetes</span><h3>O ÚNICO Gabinete que você precisa</h3></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>O ÚNICO Gabinete que você precisa</h3></div>
         </article>
 
-        <article class="item revelar" data-cat="cooler" data-titulo="Como refrigerar bem seu processador" data-desc="Water cooler ou air cooler? AMD e Intel. — 2,6 mil views" data-link="https://www.youtube.com/shorts/jbpOjjiCx7A">
+        <article class="item revelar" data-cat="apresentacao" data-titulo="Como refrigerar bem seu processador" data-desc="Water cooler x air cooler. — 2,6 mil views" data-link="https://www.youtube.com/shorts/jbpOjjiCx7A">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/jbpOjjiCx7A/hq720.jpg')"></div>
-          <span class="badge">Refrigeração</span>
-          <div class="overlay"><span>Refrigeração</span><h3>Como refrigerar bem seu processador</h3></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>Como refrigerar bem seu processador</h3></div>
         </article>
 
-        <article class="item revelar" data-cat="teclado" data-titulo="Teclado Mecânico RGB Barato" data-desc="Um teclado mecânico bom e barato. — 3,9 mil views" data-link="https://www.youtube.com/shorts/J5PWTnt_rGk">
+        <article class="item revelar" data-cat="apresentacao" data-titulo="Teclado Mecânico RGB Barato" data-desc="Um teclado bom e barato. — 3,9 mil views" data-link="https://www.youtube.com/shorts/J5PWTnt_rGk">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/J5PWTnt_rGk/hq720.jpg')"></div>
-          <span class="badge">Teclados</span>
-          <div class="overlay"><span>Teclados</span><h3>Teclado Mecânico RGB Barato</h3></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>Teclado Mecânico RGB Barato</h3></div>
         </article>
 
-        <article class="item revelar alto" data-cat="teclado" data-titulo="O Melhor Switch de Teclado Gamer" data-desc="Qual switch escolher para jogar. — 3,2 mil views" data-link="https://www.youtube.com/shorts/cYzRxLCy0TQ">
+        <article class="item revelar alto" data-cat="apresentacao" data-titulo="O Melhor Switch de Teclado Gamer" data-desc="Qual switch escolher para jogar. — 3,2 mil views" data-link="https://www.youtube.com/shorts/cYzRxLCy0TQ">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/cYzRxLCy0TQ/hq720.jpg')"></div>
-          <span class="badge">Teclados</span>
-          <div class="overlay"><span>Teclados</span><h3>O Melhor Switch de Teclado Gamer</h3></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>O Melhor Switch de Teclado Gamer</h3></div>
+        </article>
+
+        <article class="item revelar placeholder" data-cat="direcao" data-titulo="Nome do seu filme" data-desc="Adicione aqui um projeto que você dirigiu.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#2b5876,#4e4376);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
+          <span class="badge">Direção</span>
+          <div class="overlay"><span>Direção</span><h3>Nome do seu filme</h3></div>
+        </article>
+
+        <article class="item revelar placeholder" data-cat="fotografia" data-titulo="Nome do seu projeto" data-desc="Adicione aqui um trabalho de câmera e luz.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#0f2027,#2c5364);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
+          <span class="badge">Direção de Fotografia</span>
+          <div class="overlay"><span>Direção de Fotografia</span><h3>Nome do seu projeto</h3></div>
+        </article>
+
+        <article class="item revelar placeholder" data-cat="roteiro" data-titulo="Nome do seu roteiro" data-desc="Adicione aqui um roteiro de sua autoria.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#42275a,#734b6d);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
+          <span class="badge">Roteiro</span>
+          <div class="overlay"><span>Roteiro</span><h3>Nome do seu roteiro</h3></div>
+        </article>
+
+        <article class="item revelar placeholder" data-cat="edicao" data-titulo="Nome da sua edição" data-desc="Adicione aqui um trabalho de montagem e finalização.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#16222a,#3a6073);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
+          <span class="badge">Edição</span>
+          <div class="overlay"><span>Edição</span><h3>Nome da sua edição</h3></div>
         </article>
       </div>
     </div>
@@ -315,25 +348,25 @@
       <div class="revelar">
         <div class="sec-head">
           <div class="kicker">Sobre mim</div>
-          <h2 class="display">Tech que ajuda de verdade</h2>
+          <h2 class="display">Do roteiro à tela</h2>
         </div>
-        <p>Sou o Lukitas, criador de conteúdo de tecnologia desde 2013. Produzo vídeos e shorts sobre periféricos, hardware e PC gamer, sempre com dicas práticas para o seu dia a dia.</p>
-        <p>Já são <strong>1,8 milhão de visualizações</strong> e uma comunidade que cresce todo dia. Meu objetivo é simplificar a tecnologia para você montar o setup dos sonhos sem gastar demais.</p>
+        <p>Sou o Lukitas, profissional de audiovisual desde 2013. Atuo como <strong>diretor de fotografia, diretor, apresentador, roteirista e editor de vídeo</strong> — cuidando de cada etapa da produção, da ideia à entrega final.</p>
+        <p>Gosto de contar histórias com identidade visual forte: luz, enquadramento e ritmo a serviço da narrativa. Já assinei projetos que somam mais de <strong>1,8 milhão de visualizações</strong>.</p>
         <div class="skills">
-          <span>Reviews</span><span>Periféricos</span><span>Hardware</span>
-          <span>PC Gamer</span><span>Dicas de Compra</span><span>Edição de Vídeo</span>
+          <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span>
+          <span>Edição</span><span>Color Grading</span><span>Apresentação</span>
         </div>
       </div>
-      <div class="retrato revelar">🎮</div>
+      <div class="retrato revelar">🎬</div>
     </div>
   </section>
 
   <!-- ===== CONTATO ===== -->
   <section id="contato">
     <div class="wrap">
-      <h2 class="display revelar">Vamos montar seu setup?</h2>
-      <p class="revelar">Quer parcerias, reviews ou divulgação de produtos? Me chame nas redes ou pelo canal.</p>
-      <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener" class="btn primary revelar">Inscreva-se no canal</a>
+      <h2 class="display revelar">Vamos criar juntos?</h2>
+      <p class="revelar">Disponível para projetos de vídeo, comerciais, documentários e conteúdo para marcas. Direção, fotografia, roteiro e edição sob o mesmo olhar.</p>
+      <a href="mailto:seu@email.com" class="btn primary revelar">Fale comigo</a>
       <div class="redes revelar">
         <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener">YouTube</a>
         <a href="#">Instagram</a>
@@ -343,7 +376,7 @@
     </div>
   </section>
 
-  <footer>© 2025 Lukitas · Portfólio de conteúdo tech · @Lukitas_Yg</footer>
+  <footer>© 2025 Lukitas · Direção · Fotografia · Roteiro · Edição</footer>
 
   <!-- ===== LIGHTBOX ===== -->
   <div class="lightbox" id="lightbox">
