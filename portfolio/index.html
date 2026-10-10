@@ -246,11 +246,67 @@
     nav a { margin-left: 16px; font-size: 13px; }
   }
 
+
+  /* ---------- Texturas de fundo ---------- */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(60% 45% at 12% 0%, rgba(92,200,189,.12), transparent 62%),
+      radial-gradient(55% 40% at 88% 12%, rgba(127,156,201,.12), transparent 62%),
+      radial-gradient(80% 55% at 50% 108%, rgba(92,200,189,.07), transparent 72%);
+  }
+  .grain {
+    position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Hero com imagem de fundo ---------- */
+  .hero::before {
+    content: ''; position: absolute; inset: -80px 0 0 0; z-index: 0;
+    background-image: url('https://images.pexels.com/photos/37952639/pexels-photo-37952639.jpeg?auto=compress&cs=tinysrgb&w=1600');
+    background-size: cover; background-position: center 25%; opacity: .22;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(to bottom, rgba(10,11,13,.30), var(--bg) 90%);
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .lens {
+    position: absolute; right: -70px; top: 90px; width: 440px; height: 440px;
+    z-index: 1; color: var(--accent); opacity: .16; pointer-events: none;
+    animation: girar 80s linear infinite;
+  }
+  .lens svg { width: 100%; height: 100%; }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  @media (max-width: 980px) { .lens { display: none; } }
+
+  /* ---------- Faixa de bastidores ---------- */
+  #bastidores { padding: 90px 0 0; position: relative; z-index: 1; }
+  .bts-strip {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+    margin-top: 34px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .bts-strip figure { overflow: hidden; height: 260px; margin: 0; position: relative; }
+  .bts-strip img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(1) contrast(1.05) brightness(.55);
+    transition: filter .6s ease, transform .9s ease;
+  }
+  .bts-strip figure:hover img { filter: grayscale(0) contrast(1) brightness(.95); transform: scale(1.06); }
+  @media (max-width: 860px) { .bts-strip { grid-template-columns: repeat(2, 1fr); } .bts-strip figure { height: 180px; } }
+
+  /* ---------- Fundo translucido p/ textura aparecer ---------- */
+  #sobre { background: rgba(255,255,255,.018); }
+  #marcas { background: rgba(255,255,255,.018); }
 </style>
 </head>
 <body>
   <div class="glow a"></div>
   <div class="glow b"></div>
+  <div class="grain"></div>
 
   <header>
     <div class="logo">LUKI<span>TAS</span></div>
@@ -264,6 +320,20 @@
   </header>
 
   <section class="hero">
+    <div class="lens" aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="100" cy="100" r="96" opacity=".5"/>
+        <circle cx="100" cy="100" r="74" opacity=".4"/>
+        <circle cx="100" cy="100" r="52" opacity=".3"/>
+        <circle cx="100" cy="100" r="30" opacity=".25"/>
+        <g opacity=".5">
+          <line x1="100" y1="4" x2="100" y2="30"/><line x1="100" y1="170" x2="100" y2="196"/>
+          <line x1="4" y1="100" x2="30" y2="100"/><line x1="170" y1="100" x2="196" y2="100"/>
+          <line x1="32" y1="32" x2="50" y2="50"/><line x1="150" y1="150" x2="168" y2="168"/>
+          <line x1="168" y1="32" x2="150" y2="50"/><line x1="50" y1="150" x2="32" y2="168"/>
+        </g>
+      </svg>
+    </div>
     <span class="tag">Audiovisual · Direção de Fotografia · Apresentação</span>
     <h1 class="display">Histórias que <em>ganham vida</em> na tela.</h1>
     <p>Sou o Lukitas — diretor de fotografia, diretor, apresentador, roteirista e editor de vídeo. Crio narrativas visuais do roteiro à finalização, unindo técnica, luz e emoção.</p>
@@ -362,6 +432,24 @@
     </div>
   </section>
 
+
+  <!-- ===== BASTIDORES ===== -->
+  <section id="bastidores">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Bastidores</div>
+        <h2 class="display">Por trás das câmeras</h2>
+        <p>Um pouco do universo de luz, lentes e narrativa que move o meu trabalho.</p>
+      </div>
+    </div>
+    <div class="bts-strip revelar">
+        <figure><img src="https://images.pexels.com/photos/38059008/pexels-photo-38059008.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Câmera de cinema em set de filmagem" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/37593308/pexels-photo-37593308.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Setup de câmera profissional" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Diretor de fotografia operando a câmera" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/34516677/pexels-photo-34516677.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Equipamento de produção de vídeo" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/15779000/pexels-photo-15779000.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Câmera de cinema em estúdio" loading="lazy"></figure>
+    </div>
+  </section>
 
   <!-- ===== TRAJETÓRIA ===== -->
   <section id="trajetoria">
