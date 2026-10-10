@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lukitas — Portfólio Tech &amp; Setup</title>
+<title>Lukitas — Direção, Fotografia &amp; Vídeo</title>
 <style>
   :root {
     --bg: #0b0b0f;
@@ -97,6 +97,24 @@
   .stats strong { font-size: 30px; font-weight: 800; color: #fff; }
   .stats span { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
   @media (max-width: 720px) { .stats { gap: 26px; } .stats strong { font-size: 24px; } }
+  .sec-head p { color: var(--muted); margin-top: 10px; max-width: 620px; }
+  /* Timeline */
+  #trajetoria { padding: 100px 0; }
+  .timeline { display: flex; flex-direction: column; gap: 18px; }
+  .tl-item { display: grid; grid-template-columns: 150px 1fr; gap: 26px; align-items: start; }
+  .tl-ano { color: var(--accent); font-weight: 700; font-size: 14px; padding-top: 24px; letter-spacing: 1px; }
+  .tl-card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 24px 26px; position: relative; }
+  .tl-card::before { content: ''; position: absolute; left: -13px; top: 30px; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(120deg,var(--accent),var(--accent2)); box-shadow: 0 0 0 5px rgba(123,108,255,.15); }
+  .tl-card h3 { font-size: 21px; margin-bottom: 6px; }
+  .tl-card p { color: var(--muted); font-size: 14px; }
+  .tl-stats { margin-top: 14px; font-size: 13px; color: var(--accent2); font-weight: 600; }
+  .tl-stats span { color: var(--muted); font-weight: 400; margin: 0 4px; }
+  /* Marcas */
+  #marcas { padding: 90px 0; background: var(--bg-soft); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
+  .marcas { display: flex; flex-wrap: wrap; gap: 10px; }
+  .marcas span { background: var(--card); border: 1px solid rgba(255,255,255,.09); padding: 9px 18px; border-radius: 10px; font-size: 13px; color: var(--txt); transition: all .25s; }
+  .marcas span:hover { border-color: var(--accent); transform: translateY(-2px); }
+  @media (max-width: 720px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } .tl-ano { padding-top: 0; } .tl-card::before { display: none; } }
 
   /* ---------- Seções ---------- */
   section { position: relative; z-index: 1; }
@@ -237,6 +255,8 @@
     <div class="logo">LUKI<span>TAS</span></div>
     <nav>
       <a href="#trabalhos">Trabalhos</a>
+      <a href="#trajetoria">Trajetória</a>
+      <a href="#marcas">Marcas</a>
       <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -250,9 +270,9 @@
       <span>Diretor de Fotografia</span><span>Diretor</span><span>Apresentador</span><span>Roteirista</span><span>Editor de Vídeo</span>
     </div>
     <div class="stats">
-      <div><strong>12+</strong><span>anos de estrada</span></div>
-      <div><strong>1,8M</strong><span>visualizações</span></div>
-      <div><strong>18</strong><span>vídeos publicados</span></div>
+      <div><strong>1,09M+</strong><span>inscritos</span></div>
+      <div><strong>260M+</strong><span>visualizações</span></div>
+      <div><strong>5,1K+</strong><span>vídeos</span></div>
     </div>
     <div class="cta">
       <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
@@ -342,6 +362,89 @@
   </section>
 
 
+  <!-- ===== TRAJETÓRIA ===== -->
+  <section id="trajetoria">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Trajetória</div>
+        <h2 class="display">Onde eu construí</h2>
+      </div>
+      <div class="timeline">
+        <div class="tl-item revelar">
+          <div class="tl-ano">2023 — hoje</div>
+          <div class="tl-card">
+            <h3>PipocaTech</h3>
+            <p>Criação e comando do canal de tecnologia — reviews, hardware e entretenimento, direto ao ponto.</p>
+            <div class="tl-stats">316 mil inscritos <span>·</span> 118M visualizações <span>·</span> 2,3 mil vídeos</div>
+          </div>
+        </div>
+        <div class="tl-item revelar">
+          <div class="tl-ano">2018 — 2023</div>
+          <div class="tl-card">
+            <h3>TJ Gaming</h3>
+            <p>Criação e comando do canal de games e tecnologia, com foco em hardware e conteúdo gamer.</p>
+            <div class="tl-stats">775 mil inscritos <span>·</span> 142M visualizações <span>·</span> 2,78 mil vídeos</div>
+          </div>
+        </div>
+        <div class="tl-item revelar">
+          <div class="tl-ano">Parceria</div>
+          <div class="tl-card">
+            <h3>Solid Importadora</h3>
+            <p>Trabalho com as marcas internacionais trazidas pela Solid para o Brasil, em conteúdo, reviews e divulgação.</p>
+            <div class="tl-stats">Marcas de hardware, periféricos e tecnologia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARCAS ===== -->
+  <section id="marcas">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Marcas &amp; Parceiros</div>
+        <h2 class="display">Marcas que trabalhei</h2>
+        <p>Através da Solid Importadora, atuei com marcas internacionais trazidas para o Brasil.</p>
+      </div>
+      <div class="marcas revelar">
+        <span>Redragon</span>
+        <span>NZXT</span>
+        <span>Lian Li</span>
+        <span>Gamdias</span>
+        <span>Phanteks</span>
+        <span>Akko Gear</span>
+        <span>be quiet!</span>
+        <span>Deepcool</span>
+        <span>Fnatic</span>
+        <span>FSP</span>
+        <span>Divoom</span>
+        <span>Creative Labs</span>
+        <span>Scythe</span>
+        <span>XP-Pen</span>
+        <span>Maono</span>
+        <span>Sapphire</span>
+        <span>Cudy</span>
+        <span>Monsgeek</span>
+        <span>Hiksemi</span>
+        <span>Biostar</span>
+        <span>Manli</span>
+        <span>Thermal Grizzly</span>
+        <span>T-Dagger</span>
+        <span>Cougar</span>
+        <span>Philips</span>
+        <span>Trust</span>
+        <span>Gigabyte</span>
+        <span>Kalkan</span>
+        <span>Lamzu</span>
+        <span>Keytime</span>
+        <span>Zomoplus</span>
+        <span>Hoto</span>
+        <span>Geometric Future</span>
+        <span>Iceberg Thermal</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== SOBRE ===== -->
   <section id="sobre">
     <div class="wrap sobre-grid">
@@ -351,7 +454,7 @@
           <h2 class="display">Do roteiro à tela</h2>
         </div>
         <p>Sou o Lukitas, profissional de audiovisual desde 2013. Atuo como <strong>diretor de fotografia, diretor, apresentador, roteirista e editor de vídeo</strong> — cuidando de cada etapa da produção, da ideia à entrega final.</p>
-        <p>Gosto de contar histórias com identidade visual forte: luz, enquadramento e ritmo a serviço da narrativa. Já assinei projetos que somam mais de <strong>1,8 milhão de visualizações</strong>.</p>
+        <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil.</p>
         <div class="skills">
           <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span>
           <span>Edição</span><span>Color Grading</span><span>Apresentação</span>
