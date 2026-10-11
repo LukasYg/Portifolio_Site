@@ -65,8 +65,16 @@
   .hero {
     position: relative; z-index: 1;
     max-width: var(--maxw); margin: 0 auto;
-    padding: 180px 6vw 100px;
+    padding: 170px 6vw 90px;
+    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    column-gap: 56px; row-gap: 34px; align-items: center;
   }
+  .hero-esq { min-width: 0; }
+  .hero-dir { display: flex; flex-direction: column; gap: 26px; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px; }
+  .hero .scroll-cue { grid-column: 1 / -1; }
+  .hero-dir .roles { margin-top: 0; }
+  .hero-dir .stats { margin-top: 0; }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-dir { padding: 24px 22px; } }
   .tag {
     display: inline-block; font-size: 12px; letter-spacing: 3px;
     text-transform: uppercase; color: var(--accent);
@@ -130,15 +138,20 @@
   .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .pilha-foto { position: absolute; inset: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 16px 36px rgba(0,0,0,.5); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
   .pilha-foto img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.5) brightness(.7); }
-  .pilha-foto.f1 { z-index: 1; transform: translate(-4%, 5%) rotate(-7deg); }
-  .pilha-foto.f2 { z-index: 2; transform: translate(4%, 5%) rotate(6deg); }
-  .pilha-foto.f3 { z-index: 3; transform: translate(0, 7%) rotate(-2deg); }
-  .foto-pilha:hover .f1 { transform: translate(-13%, 9%) rotate(-12deg); }
-  .foto-pilha:hover .f2 { transform: translate(14%, 9%) rotate(10deg); }
-  .foto-pilha:hover .f3 { transform: translate(0, 13%) rotate(-3deg); }
+  .pilha-foto.f1 { z-index: 1; transform: translate(-7%, 8%) rotate(-9deg); }
+  .pilha-foto.f2 { z-index: 2; transform: translate(7%, 8%) rotate(8deg); }
+  .pilha-foto.f3 { z-index: 3; transform: translate(0, 11%) rotate(-3deg); }
+  .foto-pilha:hover .f1 { transform: translate(-22%, 22%) rotate(-16deg); }
+  .foto-pilha:hover .f2 { transform: translate(23%, 22%) rotate(15deg); }
+  .foto-pilha:hover .f3 { transform: translate(0, 30%) rotate(-6deg); }
   .sobre-esq p { color: var(--muted); margin-bottom: 14px; }
   .sobre-esq .skills { margin-top: 20px; }
-  .tl-titulo { font-size: 20px; font-weight: 600; margin-bottom: 22px; }
+  .tl-titulo { font-size: 20px; font-weight: 600; margin-bottom: 20px; }
+  .abas { display: flex; gap: 6px; margin-bottom: 26px; background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 999px; padding: 5px; width: fit-content; }
+  .aba { background: transparent; border: none; color: var(--muted); font-size: 13px; font-weight: 600; padding: 8px 20px; border-radius: 999px; cursor: pointer; transition: all .25s; font-family: inherit; }
+  .aba:hover { color: var(--txt); }
+  .aba.ativa { background: var(--accent); color: #05130f; }
+  .aba-painel.oculto { display: none; }
   @media (max-width: 880px) { .sobre-junto { grid-template-columns: 1fr; gap: 34px; } }
   .marca { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 140px; flex: 0 0 auto; }
   .marca img { height: 40px; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1) brightness(1.8); opacity: .72; transition: filter .3s, opacity .3s; }
@@ -323,12 +336,10 @@
 
   /* Entrada do hero */
   @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
-  .hero > :not(.hero-video):not(h1) { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
-  .hero .tag { animation-delay: .05s; }
-  .hero p { animation-delay: .32s; }
-  .hero .roles { animation-delay: .46s; }
-  .hero .stats { animation-delay: .6s; }
-  .hero .cta { animation-delay: .74s; }
+  .hero > :not(.hero-video) { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
+  .hero .hero-esq { animation-delay: .05s; }
+  .hero .hero-dir { animation-delay: .35s; }
+  .hero .scroll-cue { animation-delay: .7s; }
 
   /* Video de fundo do hero */
   .hero-video { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100vw; height: 100vh; object-fit: cover; opacity: .16; z-index: 0; pointer-events: none;
@@ -388,6 +399,26 @@
   .sec-head.revelar.visivel h2 { clip-path: inset(0 0 0 0); }
 
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+  /* Minigame */
+  #minigame { padding: 90px 0; }
+  .arena { position: relative; height: 420px; border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; cursor: crosshair;
+    background: radial-gradient(120% 100% at 50% 0%, rgba(92,200,189,.06), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 40px), #0d0f13; }
+  .hud { position: absolute; top: 14px; left: 16px; right: 16px; display: flex; justify-content: space-between; font-family: ui-monospace, Menlo, monospace; font-size: 13px; color: var(--muted); z-index: 3; pointer-events: none; letter-spacing: 1px; }
+  .hud span { background: rgba(0,0,0,.35); border: 1px solid var(--line); padding: 4px 12px; border-radius: 8px; }
+  .mira { position: absolute; inset: 0; z-index: 2; }
+  .alvo { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #bff3ea, var(--accent) 55%, #2b6f68); box-shadow: 0 0 0 2px rgba(92,200,189,.35), 0 8px 24px rgba(92,200,189,.25); cursor: crosshair; animation: surgir .18s ease-out; }
+  .alvo::after { content: ''; position: absolute; inset: 32%; border-radius: 50%; background: rgba(10,11,13,.85); }
+  @keyframes surgir { from { transform: scale(.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .alvo.errou { animation: sumir .2s ease-in forwards; }
+  @keyframes sumir { to { transform: scale(.3); opacity: 0; } }
+  .arena-msg { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; background: rgba(10,11,13,.72); backdrop-filter: blur(4px); padding: 20px; transition: opacity .3s; }
+  .arena-msg.oculto { opacity: 0; visibility: hidden; }
+  .arena-msg p { color: var(--muted); max-width: 430px; font-size: 14px; }
+  .arena-msg strong { color: var(--txt); }
+  @media (max-width: 720px) { .arena { height: 340px; } }
 </style>
 </head>
 <body>
@@ -422,20 +453,24 @@
     <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://images.pexels.com/photos/37952639/pexels-photo-37952639.jpeg?auto=compress&cs=tinysrgb&w=1600">
       <source src="https://videos.pexels.com/video-files/7451809/7451809-hd_1920_1080_30fps.mp4" type="video/mp4">
     </video>
-    <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
-    <h1 class="display"><em>Histórias</em> que <em>ganham vida</em> na tela.</h1>
-    <p>Salve! Eu sou o <strong>Lucas Yago</strong>, mas você pode me chamar de <strong>Lukitas</strong>. Diretor de fotografia, apresentador e editor de vídeo — crio narrativas visuais que conectam.</p>
-    <div class="roles">
-      <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>Criação de Vídeo com IA</span><span>TI</span>
+    <div class="hero-esq">
+      <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
+      <h1 class="display"><em>Histórias</em> que <em>ganham vida</em> na tela.</h1>
+      <p>Salve! Eu sou o <strong>Lucas Yago</strong>, mas você pode me chamar de <strong>Lukitas</strong>. Diretor de fotografia, apresentador e editor de vídeo — crio narrativas visuais que conectam.</p>
+      <div class="cta">
+        <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
+        <a href="#contato" class="btn ghost">Trabalhe comigo</a>
+      </div>
     </div>
-    <div class="stats">
-      <div><strong>1,09M+</strong><span>inscritos</span></div>
-      <div><strong>260M+</strong><span>visualizações</span></div>
-      <div><strong>5,1K+</strong><span>vídeos</span></div>
-    </div>
-    <div class="cta">
-      <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
-      <a href="#contato" class="btn ghost">Trabalhe comigo</a>
+    <div class="hero-dir">
+      <div class="roles">
+        <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span class="princ">Ator</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>Criação de Vídeo com IA</span><span>TI</span>
+      </div>
+      <div class="stats">
+        <div><strong>1,09M+</strong><span>inscritos</span></div>
+        <div><strong>260M+</strong><span>visualizações</span></div>
+        <div><strong>5,1K+</strong><span>vídeos</span></div>
+      </div>
     </div>
     <div class="scroll-cue"><span></span>Role para explorar</div>
   </section>
@@ -461,43 +496,70 @@
           <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil. Atualmente curso <strong>Audiovisual na Univali</strong>.</p>
           <p>Estou presente desde a idealização e roteiro até a finalização e entrega, unindo técnicas avançadas de iluminação, domínio de câmera e direção para que, através das imagens, a emoção seja transmitida.</p>
           <p>Também exploro a <strong>criação de vídeos com inteligência artificial</strong>, unindo a técnica tradicional às novas ferramentas generativas.</p>
+          <p>Também sou <strong>ator desde 2004</strong> — meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, para a CCXP em 2017.</p>
           <div class="skills">
-            <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>Vídeo com IA</span><span>TI</span>
+            <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>Atuação</span><span>Vídeo com IA</span><span>TI</span>
           </div>
         </div>
         <div class="sobre-dir revelar">
           <h3 class="tl-titulo">Onde construí a carreira</h3>
-          <div class="timeline">
-            <div class="tl-item">
-              <div class="tl-ano">2018 — 2023</div>
-              <div class="tl-card">
-                <h3>TJ Gaming</h3>
-                <p>Assumi o canal com poucos inscritos e conduzi o crescimento até ultrapassar o marco de <strong>100 mil inscritos</strong>. Conteúdo de games e tecnologia, com foco em hardware.</p>
-                <div class="tl-stats">775 mil inscritos <span>·</span> 142M visualizações <span>·</span> 2,78 mil vídeos</div>
+          <div class="abas">
+            <button class="aba ativa" data-aba="carreira">Carreira</button>
+            <button class="aba" data-aba="estudos">Estudos</button>
+          </div>
+          <div class="aba-painel" data-painel="carreira">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-ano">2004 — 2017</div>
+                <div class="tl-card">
+                  <h3>Ator</h3>
+                  <p>Atuação desde 2004. Meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, apresentado na <strong>CCXP 2017</strong>.</p>
+                  <div class="tl-stats">Atuação <span>·</span> Cinema e cena</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-ano">2018 — 2023</div>
+                <div class="tl-card">
+                  <h3>TJ Gaming</h3>
+                  <p>Assumi o canal com poucos inscritos e conduzi o crescimento até ultrapassar o marco de <strong>100 mil inscritos</strong>. Conteúdo de games e tecnologia, com foco em hardware.</p>
+                  <div class="tl-stats">775 mil inscritos <span>·</span> 142M visualizações <span>·</span> 2,78 mil vídeos</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-ano">2023 — hoje</div>
+                <div class="tl-card">
+                  <h3>PipocaTech</h3>
+                  <p>Criação e comando do canal de tecnologia — reviews, hardware e entretenimento, direto ao ponto.</p>
+                  <div class="tl-stats">316 mil inscritos <span>·</span> 118M visualizações <span>·</span> 2,3 mil vídeos</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-ano">2023 — hoje</div>
+                <div class="tl-card">
+                  <h3>Solid Importadora</h3>
+                  <p>Trabalho com as marcas internacionais trazidas pela Solid para o Brasil — conteúdo, reviews e divulgação.</p>
+                  <div class="tl-stats">Marcas de hardware, periféricos e tecnologia</div>
+                </div>
               </div>
             </div>
-            <div class="tl-item">
-              <div class="tl-ano">2023 — hoje</div>
-              <div class="tl-card">
-                <h3>PipocaTech</h3>
-                <p>Criação e comando do canal de tecnologia — reviews, hardware e entretenimento, direto ao ponto.</p>
-                <div class="tl-stats">316 mil inscritos <span>·</span> 118M visualizações <span>·</span> 2,3 mil vídeos</div>
+          </div>
+          <div class="aba-painel oculto" data-painel="estudos">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-ano">2026 — hoje</div>
+                <div class="tl-card">
+                  <h3>Univali — Audiovisual</h3>
+                  <p>Faculdade de Audiovisual (em curso), aprofundando linguagem, técnica e direção.</p>
+                  <div class="tl-stats">Graduação em andamento</div>
+                </div>
               </div>
-            </div>
-            <div class="tl-item">
-              <div class="tl-ano">2023 — hoje</div>
-              <div class="tl-card">
-                <h3>Solid Importadora</h3>
-                <p>Trabalho com as marcas internacionais trazidas pela Solid para o Brasil — conteúdo, reviews e divulgação.</p>
-                <div class="tl-stats">Marcas de hardware, periféricos e tecnologia</div>
-              </div>
-            </div>
-            <div class="tl-item">
-              <div class="tl-ano">2026 — hoje</div>
-              <div class="tl-card">
-                <h3>Univali — Audiovisual</h3>
-                <p>Faculdade de Audiovisual (em curso), aprofundando linguagem, técnica e direção.</p>
-                <div class="tl-stats">Graduação em andamento</div>
+              <div class="tl-item">
+                <div class="tl-ano">Desde 2004</div>
+                <div class="tl-card">
+                  <h3>Formação em Atuação</h3>
+                  <p>Cursos e prática contínua em atuação para cinema e cena (adicione aqui suas escolas e cursos).</p>
+                  <div class="tl-stats">Atuação</div>
+                </div>
               </div>
             </div>
           </div>
@@ -676,6 +738,29 @@
         <figure><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Diretor de fotografia operando a câmera" loading="lazy"></figure>
         <figure><img src="https://images.pexels.com/photos/34516677/pexels-photo-34516677.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Equipamento de produção de vídeo" loading="lazy"></figure>
         <figure><img src="https://images.pexels.com/photos/15779000/pexels-photo-15779000.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Câmera de cinema em estúdio" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <!-- ===== MINIGAME ===== -->
+  <section id="minigame">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Desafio</div>
+        <h2 class="display">Teste a minha mira</h2>
+        <p>Um minigame rápido: clique nos alvos antes que desapareçam. Sou criativo, penso rápido e adoro FPS.</p>
+      </div>
+      <div class="arena revelar" id="arena">
+        <div class="hud">
+          <span id="hudTempo">20.0s</span>
+          <span id="hudScore">0 pts</span>
+          <span id="hudPrec">100%</span>
+        </div>
+        <div class="mira" id="mira"></div>
+        <div class="arena-msg" id="arenaMsg">
+          <p id="arenaTexto">Clique em <strong>Jogar</strong> e acerte o máximo de alvos em 20 segundos.</p>
+          <button class="btn primary" id="btnJogar">Jogar</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -914,24 +999,31 @@
   addEventListener('resize', parallax);
   parallax();
 
-  // ---------- Musica ambiente (Web Audio, gerada no navegador) ----------
+  // ---------- Abas (Carreira / Estudos) ----------
+  document.querySelectorAll('.aba').forEach(function (b) {
+    b.addEventListener('click', function () {
+      const alvo = b.dataset.aba;
+      document.querySelectorAll('.aba').forEach(function (x) { x.classList.toggle('ativa', x === b); });
+      document.querySelectorAll('.aba-painel').forEach(function (pl) { pl.classList.toggle('oculto', pl.dataset.painel !== alvo); });
+    });
+  });
+
+  // ---------- Audio: musica ambiente + efeitos de UI ----------
   (function () {
     const btn = document.getElementById('somBtn');
     if (!btn || !(window.AudioContext || window.webkitAudioContext)) return;
-    let ctx = null, master = null, tocando = false;
-    function impulso(contexto, dur, decay) {
-      const rate = contexto.sampleRate, len = Math.floor(rate * dur);
-      const buf = contexto.createBuffer(2, len, rate);
+    let ctx = null, master = null, sfx = null, tocando = false;
+    function impulso(dur, decay) {
+      const rate = ctx.sampleRate, len = Math.floor(rate * dur);
+      const buf = ctx.createBuffer(2, len, rate);
       for (let c = 0; c < 2; c++) {
         const d = buf.getChannelData(c);
         for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
       }
       return buf;
     }
-    function construir() {
-      ctx = new (window.AudioContext || window.webkitAudioContext)();
-      master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
-      const conv = ctx.createConvolver(); conv.buffer = impulso(ctx, 3.6, 2.2);
+    function montarPad() {
+      const conv = ctx.createConvolver(); conv.buffer = impulso(3.6, 2.2);
       const wet = ctx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
       const filtro = ctx.createBiquadFilter(); filtro.type = 'lowpass'; filtro.frequency.value = 900; filtro.Q.value = 0.5;
       filtro.connect(master); filtro.connect(conv);
@@ -949,20 +1041,127 @@
       const fg = ctx.createGain(); fg.gain.value = 420;
       flfo.connect(fg); fg.connect(filtro.frequency); flfo.start();
     }
-    function ligar() {
-      if (!ctx) construir();
+    function garantir() {
+      if (!ctx) {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+        sfx = ctx.createGain(); sfx.gain.value = 0.9; sfx.connect(ctx.destination);
+        montarPad();
+      }
       if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    }
+    function tom(freq, dur, vol, tipo, atraso) {
+      if (!tocando) return;
+      garantir();
+      const t0 = ctx.currentTime + (atraso || 0);
+      const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t0);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(sfx);
+      o.start(t0); o.stop(t0 + dur + 0.03);
+    }
+    function ligar() {
+      garantir();
       master.gain.cancelScheduledValues(ctx.currentTime);
       master.gain.linearRampToValueAtTime(0.10, ctx.currentTime + 2.5);
       tocando = true; btn.classList.add('ativo'); btn.textContent = '🔊';
     }
     function desligar() {
-      if (!ctx) return;
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.2);
       tocando = false; btn.classList.remove('ativo'); btn.textContent = '🔈';
+      if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.0); }
     }
     btn.addEventListener('click', function () { tocando ? desligar() : ligar(); });
+    let ultimoHover = 0;
+    function hoverSom() {
+      const a = performance.now();
+      if (a - ultimoHover < 70) return;
+      ultimoHover = a;
+      tom(1200, 0.08, 0.035, 'sine');
+      tom(1800, 0.06, 0.018, 'sine', 0.02);
+    }
+    function cliqueSom() {
+      tom(680, 0.12, 0.055, 'triangle');
+      tom(1020, 0.14, 0.04, 'sine', 0.05);
+      tom(1360, 0.16, 0.028, 'sine', 0.11);
+    }
+    const alvosHover = '.item, .filtro, .marca, .btn, nav a, .aba, .foto-pilha';
+    document.querySelectorAll(alvosHover).forEach(function (el) { el.addEventListener('mouseenter', hoverSom); });
+    document.querySelectorAll('a, button, .item, .filtro').forEach(function (el) { el.addEventListener('click', cliqueSom); });
+  })();
+
+  // ---------- Minigame (mira) ----------
+  (function () {
+    const arena = document.getElementById('arena');
+    const mira = document.getElementById('mira');
+    const msg = document.getElementById('arenaMsg');
+    const texto = document.getElementById('arenaTexto');
+    const btn = document.getElementById('btnJogar');
+    const hudTempo = document.getElementById('hudTempo');
+    const hudScore = document.getElementById('hudScore');
+    const hudPrec = document.getElementById('hudPrec');
+    if (!arena) return;
+    let jogando = false, score = 0, tiros = 0, acertos = 0, tempo = 20, timer = null, spawner = null;
+    function limpar() { mira.innerHTML = ''; }
+    function atualizarPrec() { hudPrec.textContent = (tiros > 0 ? Math.round((acertos / tiros) * 100) : 100) + '%'; }
+    function criarAlvo() {
+      if (!jogando) return;
+      const tam = 34 + Math.random() * 36;
+      const r = arena.getBoundingClientRect();
+      const x = Math.random() * (r.width - tam - 24) + 12;
+      const y = Math.random() * (r.height - tam - 74) + 58;
+      const el = document.createElement('div');
+      el.className = 'alvo';
+      el.style.width = tam + 'px'; el.style.height = tam + 'px';
+      el.style.left = x + 'px'; el.style.top = y + 'px';
+      mira.appendChild(el);
+      let vivo = true;
+      const to = setTimeout(function () {
+        if (!vivo) return;
+        vivo = false;
+        el.classList.add('errou');
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+      }, Math.max(720, 1500 - (20 - tempo) * 34));
+      el.addEventListener('mousedown', function (ev) {
+        ev.stopPropagation();
+        if (!jogando || !vivo) return;
+        vivo = false; clearTimeout(to);
+        tiros++; acertos++; score += 100;
+        hudScore.textContent = score + ' pts'; atualizarPrec();
+        el.classList.add('errou');
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+      });
+    }
+    arena.addEventListener('mousedown', function () { if (jogando) { tiros++; atualizarPrec(); } });
+    function iniciar() {
+      jogando = true; score = 0; tiros = 0; acertos = 0; tempo = 20;
+      hudScore.textContent = '0 pts'; hudPrec.textContent = '100%'; hudTempo.textContent = '20.0s';
+      msg.classList.add('oculto');
+      limpar();
+      timer = setInterval(function () {
+        tempo -= 0.1;
+        if (tempo <= 0) { terminar(); return; }
+        hudTempo.textContent = tempo.toFixed(1) + 's';
+      }, 100);
+      spawner = setInterval(criarAlvo, 650);
+      criarAlvo(); criarAlvo();
+    }
+    function terminar() {
+      jogando = false;
+      clearInterval(timer); clearInterval(spawner);
+      limpar();
+      const pr = tiros > 0 ? Math.round((acertos / tiros) * 100) : 0;
+      let rank = 'Continue treinando!';
+      if (score >= 2000) rank = 'Mira de elite! 🎯';
+      else if (score >= 1200) rank = 'Ótima mira! 🔥';
+      else if (score >= 600) rank = 'Boa! 💪';
+      texto.innerHTML = '<strong>' + score + ' pts</strong> · precisão <strong>' + pr + '%</strong> · ' + rank;
+      btn.textContent = 'Jogar de novo';
+      msg.classList.remove('oculto');
+    }
+    btn.addEventListener('click', iniciar);
   })();
   </script>
 
