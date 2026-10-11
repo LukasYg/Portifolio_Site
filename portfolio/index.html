@@ -3,17 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Lukitas — Direção, Fotografia &amp; Vídeo</title>
 <style>
   :root {
-    --bg: #0c0d10;
-    --bg-soft: #12141a;
-    --card: #15181f;
-    --txt: #edeef2;
-    --muted: #9096a3;
-    --accent: #a9d8cc;
-    --accent2: #bcc6ea;
-    --accent3: #e6c6d8;
+    --bg: #0a0b0d;
+    --bg-soft: #101216;
+    --card: #14161a;
+    --txt: #e9ebee;
+    --muted: #868d96;
+    --accent: #5cc8bd;
+    --accent2: #7f9cc9;
     --line: rgba(255,255,255,.08);
     --radius: 16px;
     --maxw: 1180px;
@@ -29,18 +31,18 @@
   }
   body::before {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image: radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(255,255,255,.032) 1px, transparent 1px);
     background-size: 28px 28px;
   }
-  .display { font-family: 'Georgia', 'Times New Roman', serif; }
+  .display { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; letter-spacing: -0.02em; }
 
   /* ---------- Fundo decorativo ---------- */
   .glow {
     position: fixed; border-radius: 50%; filter: blur(150px); opacity: .12;
     pointer-events: none; z-index: 0;
   }
-  .glow.a { width: 520px; height: 520px; background: #2c4a44; top: -180px; left: -140px; }
-  .glow.b { width: 460px; height: 460px; background: #2b3350; top: 45%; right: -160px; }
+  .glow.a { width: 520px; height: 520px; background: #2f6f68; top: -180px; left: -140px; }
+  .glow.b { width: 460px; height: 460px; background: #2a3a5c; top: 45%; right: -160px; }
 
   /* ---------- Nav ---------- */
   header {
@@ -69,22 +71,22 @@
     display: inline-block; font-size: 12px; letter-spacing: 3px;
     text-transform: uppercase; color: var(--accent);
     font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    border: 1px solid rgba(169,216,204,.38); border-radius: 999px;
+    border: 1px solid rgba(92,200,189,.35); border-radius: 999px;
     padding: 6px 16px; margin-bottom: 26px;
   }
   .hero h1 {
-    font-size: clamp(42px, 8vw, 92px); line-height: 1.02;
-    font-weight: 400; letter-spacing: -1px; margin-bottom: 22px;
+    font-size: clamp(30px, 4.4vw, 56px); line-height: 1.14;
+    font-weight: 600; letter-spacing: -0.018em; margin-bottom: 26px;
   }
-  .hero h1 em { font-style: italic; background: linear-gradient(100deg, var(--accent), var(--accent2) 55%, var(--accent3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .hero p { color: var(--muted); font-size: clamp(15px, 2vw, 19px); max-width: 560px; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { color: var(--muted); font-size: clamp(14px, 1.5vw, 16.5px); max-width: 640px; line-height: 1.8; }
   .cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
   .btn {
     padding: 13px 28px; border-radius: 999px; font-size: 14px; font-weight: 600;
     text-decoration: none; transition: transform .25s, box-shadow .25s;
     display: inline-block; cursor: pointer; border: none;
   }
-  .btn.primary { background: var(--accent); color: #0c0d10; box-shadow: 0 8px 22px rgba(169,216,204,.18); }
+  .btn.primary { background: var(--accent); color: #05130f; box-shadow: 0 6px 18px rgba(92,200,189,.14); }
   .btn.ghost { background: transparent; color: var(--txt); border: 1px solid var(--line); }
   .btn.ghost:hover { border-color: var(--accent); }
   .btn:hover { transform: translateY(-2px); }
@@ -93,7 +95,7 @@
     font-size: 13px; color: var(--txt); padding: 8px 16px; border-radius: 999px;
     background: rgba(255,255,255,.035); border: 1px solid var(--line);
   }
-  .roles span.princ { background: rgba(169,216,204,.12); border-color: rgba(169,216,204,.42); color: #eafaf5; }
+  .roles span.princ { background: rgba(92,200,189,.10); border-color: rgba(92,200,189,.40); color: #d6fff9; }
   .stats { display: flex; gap: 40px; margin-top: 44px; flex-wrap: wrap; }
   .stats div { display: flex; flex-direction: column; }
   .stats strong { font-size: 30px; font-weight: 800; color: #fff; }
@@ -106,7 +108,7 @@
   .tl-item { display: grid; grid-template-columns: 150px 1fr; gap: 26px; align-items: start; }
   .tl-ano { color: var(--accent); font-weight: 700; font-size: 14px; padding-top: 24px; letter-spacing: 1px; }
   .tl-card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 24px 26px; position: relative; }
-  .tl-card::before { content: ''; position: absolute; left: -13px; top: 30px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(169,216,204,.14); }
+  .tl-card::before { content: ''; position: absolute; left: -13px; top: 30px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(92,200,189,.14); }
   .tl-card h3 { font-size: 21px; margin-bottom: 6px; }
   .tl-card p { color: var(--muted); font-size: 14px; }
   .tl-stats { margin-top: 14px; font-size: 13px; color: var(--accent); font-weight: 600; }
@@ -146,7 +148,7 @@
     font-family: ui-monospace, 'SF Mono', Menlo, monospace;
   }
   .sec-head h2 {
-    font-size: clamp(30px, 5vw, 52px); font-weight: 400; margin-top: 10px;
+    font-size: clamp(26px, 3.6vw, 42px); font-weight: 600; letter-spacing: -0.02em; margin-top: 10px;
   }
 
   /* ---------- Filtros ---------- */
@@ -157,7 +159,7 @@
     transition: all .25s;
   }
   .filtro:hover { color: var(--txt); border-color: rgba(255,255,255,.25); }
-  .filtro.ativo { background: var(--accent); color: #0c0d10; border-color: transparent; }
+  .filtro.ativo { background: var(--accent); color: #05130f; border-color: transparent; }
 
   /* ---------- Galeria ---------- */
   #trabalhos { padding: 60px 0 100px; }
@@ -217,7 +219,7 @@
 
   /* ---------- Contato ---------- */
   #contato { padding: 110px 0; text-align: center; }
-  #contato h2 { font-size: clamp(34px, 6vw, 64px); font-weight: 400; margin-bottom: 20px; }
+  #contato h2 { font-size: clamp(28px, 4.4vw, 50px); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; }
   #contato p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; }
   .redes { display: flex; gap: 16px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
   .redes a {
@@ -270,37 +272,21 @@
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(60% 45% at 12% 0%, rgba(169,216,204,.13), transparent 62%),
-      radial-gradient(55% 40% at 88% 12%, rgba(188,198,234,.13), transparent 62%),
-      radial-gradient(85% 55% at 50% 108%, rgba(230,198,216,.10), transparent 72%);
+      radial-gradient(60% 45% at 12% 0%, rgba(92,200,189,.08), transparent 62%),
+      radial-gradient(55% 40% at 88% 12%, rgba(127,156,201,.08), transparent 62%);
   }
   .grain {
-    position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .05;
+    position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .035;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   /* ---------- Hero com imagem de fundo ---------- */
-  .hero::before {
-    content: ''; position: absolute; inset: -80px 0 0 0; z-index: 0;
-    background-image: url('https://images.pexels.com/photos/37952639/pexels-photo-37952639.jpeg?auto=compress&cs=tinysrgb&w=1600');
-    background-size: cover; background-position: center 25%; opacity: .22;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
-    mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
-  }
   .hero::after {
     content: ''; position: absolute; inset: 0; z-index: 0;
     background: linear-gradient(to bottom, rgba(10,11,13,.30), var(--bg) 90%);
   }
   .hero > * { position: relative; z-index: 1; }
-  .lens {
-    position: absolute; right: -70px; top: 90px; width: 440px; height: 440px;
-    z-index: 1; color: var(--accent); opacity: .16; pointer-events: none;
-    animation: girar 80s linear infinite;
-  }
-  .lens svg { width: 100%; height: 100%; }
-  @keyframes girar { to { transform: rotate(360deg); } }
-  @media (max-width: 980px) { .lens { display: none; } }
 
   /* ---------- Faixa de bastidores ---------- */
   #bastidores { padding: 90px 0 0; position: relative; z-index: 1; }
@@ -323,12 +309,12 @@
 
   /* ---------- Animações extras ---------- */
   .scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; background: rgba(255,255,255,.05); }
-  .scroll-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 12px rgba(169,216,204,.45); }
-  .spotlight { position: fixed; width: 640px; height: 640px; border-radius: 50%; pointer-events: none; z-index: 0; left: 0; top: 0; background: radial-gradient(circle, rgba(169,216,204,.10), transparent 62%); transform: translate(-50%,-50%); opacity: 0; transition: opacity .5s; }
+  .scroll-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 10px rgba(92,200,189,.35); }
+  .spotlight { position: fixed; width: 640px; height: 640px; border-radius: 50%; pointer-events: none; z-index: 0; left: 0; top: 0; background: radial-gradient(circle, rgba(92,200,189,.06), transparent 62%); transform: translate(-50%,-50%); opacity: 0; transition: opacity .5s; }
 
   /* Entrada do hero */
   @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
-  .hero > :not(.lens):not(.hero-video):not(h1) { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
+  .hero > :not(.hero-video):not(h1) { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
   .hero .tag { animation-delay: .05s; }
   .hero p { animation-delay: .32s; }
   .hero .roles { animation-delay: .46s; }
@@ -336,8 +322,8 @@
   .hero .cta { animation-delay: .74s; }
 
   /* Video de fundo do hero */
-  .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .30; z-index: 0;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 90%); mask-image: linear-gradient(to bottom, #000 0%, transparent 90%); }
+  .hero-video { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100vw; height: 100vh; object-fit: cover; opacity: .16; z-index: 0; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 82%); mask-image: linear-gradient(to bottom, #000 0%, transparent 82%); }
 
   /* Titulo letra por letra */
   @keyframes letra { to { opacity: 1; transform: none; } }
@@ -365,7 +351,7 @@
   body::after { animation: flutuar 32s ease-in-out infinite; }
 
   /* Granulado de filme */
-  @keyframes graozinho { 0%,100% { opacity: .045; } 50% { opacity: .075; } }
+  @keyframes graozinho { 0%,100% { opacity: .03; } 50% { opacity: .05; } }
   .grain { animation: graozinho 7s steps(2,end) infinite; }
 
   /* Nav underline */
@@ -381,7 +367,7 @@
   body.tem-cursor a, body.tem-cursor button { cursor: none; }
   .cursor { position: fixed; top: 0; left: 0; width: 34px; height: 34px; border: 1px solid var(--accent); border-radius: 50%; pointer-events: none; z-index: 150; transform: translate(-50%,-50%); transition: width .28s, height .28s, background .28s, border-color .28s, opacity .3s; opacity: .8; }
   .cursor-dot { position: fixed; top: 0; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 151; transform: translate(-50%,-50%); }
-  .cursor.grande { width: 68px; height: 68px; background: rgba(169,216,204,.14); border-color: transparent; opacity: 1; }
+  .cursor.grande { width: 68px; height: 68px; background: rgba(92,200,189,.12); border-color: transparent; opacity: 1; }
   @media (hover: none) { .cursor, .cursor-dot { display: none; } }
 
   /* Cortina nas secoes */
@@ -422,20 +408,6 @@
     <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://images.pexels.com/photos/37952639/pexels-photo-37952639.jpeg?auto=compress&cs=tinysrgb&w=1600">
       <source src="https://videos.pexels.com/video-files/7451809/7451809-hd_1920_1080_30fps.mp4" type="video/mp4">
     </video>
-    <div class="lens" aria-hidden="true">
-      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
-        <circle cx="100" cy="100" r="96" opacity=".5"/>
-        <circle cx="100" cy="100" r="74" opacity=".4"/>
-        <circle cx="100" cy="100" r="52" opacity=".3"/>
-        <circle cx="100" cy="100" r="30" opacity=".25"/>
-        <g opacity=".5">
-          <line x1="100" y1="4" x2="100" y2="30"/><line x1="100" y1="170" x2="100" y2="196"/>
-          <line x1="4" y1="100" x2="30" y2="100"/><line x1="170" y1="100" x2="196" y2="100"/>
-          <line x1="32" y1="32" x2="50" y2="50"/><line x1="150" y1="150" x2="168" y2="168"/>
-          <line x1="168" y1="32" x2="150" y2="50"/><line x1="50" y1="150" x2="32" y2="168"/>
-        </g>
-      </svg>
-    </div>
     <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
     <h1 class="display">Histórias que <em>ganham vida</em> na tela.</h1>
     <p>Salve! Eu sou o Lucas Yago, mas talvez você me conheça como Lukitas! Sou diretor de fotografia, apresentador, editor de vídeo e estou aqui para criar narrativas visuais que conectam! Estou presente desde a idealização e roteiro, até a finalização e entrega. Unindo técnicas avançadas de iluminação, domínio de câmera e direção para que, através das imagens, a emoção seja transmitida!</p>
