@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
 <title>Lukitas — Direção, Fotografia &amp; Vídeo</title>
 <style>
   :root {
@@ -16,6 +16,9 @@
     --muted: #868d96;
     --accent: #5cc8bd;
     --accent2: #7f9cc9;
+    --vermelho: #e8543f;
+    --azul-ceu: #7fc4e8;
+    --areia: #e8c9a0;
     --line: rgba(255,255,255,.08);
     --radius: 16px;
     --maxw: 1180px;
@@ -34,7 +37,7 @@
     background-image: radial-gradient(rgba(255,255,255,.032) 1px, transparent 1px);
     background-size: 28px 28px;
   }
-  .display { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; letter-spacing: -0.02em; }
+  .display { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 800; letter-spacing: -0.012em; }
 
   /* ---------- Fundo decorativo ---------- */
   .glow {
@@ -77,16 +80,16 @@
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-dir { padding: 24px 22px; } }
   .tag {
     display: inline-block; font-size: 12px; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--accent);
+    text-transform: uppercase; color: var(--vermelho);
     font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    border: 1px solid rgba(92,200,189,.35); border-radius: 999px;
+    border: 1px solid rgba(232,84,63,.38); border-radius: 999px;
     padding: 6px 16px; margin-bottom: 26px;
   }
   .hero h1 {
-    font-size: clamp(38px, 5.6vw, 72px); line-height: 1.08;
-    font-weight: 700; letter-spacing: -0.025em; margin-bottom: 24px;
+    font-size: clamp(40px, 5.8vw, 78px); line-height: 1.04;
+    font-weight: 800; letter-spacing: -0.022em; margin-bottom: 24px;
   }
-  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero h1 em { font-style: italic; color: var(--vermelho); }
   .hero p { color: var(--muted); font-size: clamp(15px, 1.6vw, 18px); max-width: 620px; line-height: 1.7; }
   .cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
   .btn {
@@ -176,7 +179,7 @@
     font-family: ui-monospace, 'SF Mono', Menlo, monospace;
   }
   .sec-head h2 {
-    font-size: clamp(26px, 3.6vw, 42px); font-weight: 600; letter-spacing: -0.02em; margin-top: 10px;
+    font-size: clamp(26px, 3.8vw, 44px); font-weight: 700; letter-spacing: -0.015em; margin-top: 10px;
   }
 
   /* ---------- Filtros ---------- */
@@ -355,7 +358,8 @@
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
       radial-gradient(60% 45% at 12% 0%, rgba(92,200,189,.08), transparent 62%),
-      radial-gradient(55% 40% at 88% 12%, rgba(127,156,201,.08), transparent 62%);
+      radial-gradient(55% 40% at 88% 12%, rgba(127,196,232,.10), transparent 62%),
+      radial-gradient(70% 50% at 50% 100%, rgba(232,84,63,.06), transparent 70%);
   }
   .grain {
     position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .035;
@@ -417,6 +421,31 @@
   @keyframes roda { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 12px); } }
 
   .pre-dica { color: var(--muted); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; animation: pulsaDica 2s ease-in-out infinite; }
+  /* Glitch dos textos (sincroniza com a abertura) */
+  @keyframes glitche {
+    0% { text-shadow: none; transform: translate(0); }
+    6% { text-shadow: -4px 0 var(--vermelho), 4px 0 var(--azul-ceu); transform: translate(4px, -2px); }
+    12% { text-shadow: 4px 0 var(--vermelho), -4px 0 var(--azul-ceu); transform: translate(-4px, 2px); }
+    18% { text-shadow: -3px 0 var(--vermelho), 3px 0 var(--azul-ceu); transform: translate(2px, 1px); }
+    24% { text-shadow: 3px 0 var(--vermelho), -3px 0 var(--azul-ceu); transform: translate(-2px, -1px); }
+    30% { text-shadow: none; transform: translate(0); }
+    36% { opacity: .55; }
+    40% { opacity: 1; }
+    46% { text-shadow: -2px 0 var(--vermelho), 2px 0 var(--azul-ceu); transform: translate(3px, 0); }
+    52% { text-shadow: 2px 0 var(--vermelho), -2px 0 var(--azul-ceu); transform: translate(-3px, 0); }
+    62% { text-shadow: none; transform: translate(0); }
+    70% { opacity: .7; }
+    74% { opacity: 1; }
+    100% { text-shadow: none; transform: none; }
+  }
+  .hero h1.glitche { animation: glitche 1.5s steps(1, end) 1 both; }
+  @keyframes flick {
+    0%, 100% { opacity: 1; }
+    15%, 45% { opacity: .25; }
+    30% { opacity: 1; }
+    60% { opacity: .55; }
+  }
+  .tag.flick { animation: flick 1.4s steps(1, end) 1 both; }
   /* Palco: movimento de camera */
   #palco { overflow: hidden; }
   @keyframes camera {
@@ -1053,6 +1082,10 @@
       if (palco) palco.classList.add('camera');
       if (window.__player && window.__player.iniciar) window.__player.iniciar();
       if (window.__intro && window.__intro.iniciar) window.__intro.iniciar();
+      const h1g = document.querySelector('.hero h1');
+      if (h1g) { h1g.classList.add('glitche'); setTimeout(function () { h1g.classList.remove('glitche'); }, 1600); }
+      const tagg = document.querySelector('.hero .tag');
+      if (tagg) { tagg.classList.add('flick'); setTimeout(function () { tagg.classList.remove('flick'); }, 1600); }
       if (pre) { pre.classList.add('oculto'); setTimeout(function () { if (pre.parentNode) pre.parentNode.removeChild(pre); }, 900); }
     }
     window.__abrir = abrir;
