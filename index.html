@@ -41,6 +41,8 @@
     background-image: radial-gradient(rgba(180,215,255,.05) 1px, transparent 1px);
     background-size: 28px 28px;
   }
+  .hero h1, .sec-head h2, #contato h2, .tl-titulo, .arena-msg p { text-shadow: 0 2px 20px rgba(3,8,18,.8), 0 1px 4px rgba(3,8,18,.65); }
+  .hero p, .sec-head p, .tl-card p, .tl-stats, .muted { text-shadow: 0 1px 10px rgba(3,8,18,.85); }
   .display { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 800; letter-spacing: -0.012em; }
 
   /* ---------- Fundo decorativo ---------- */
@@ -358,8 +360,12 @@
 
   .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .38; pointer-events: none; filter: saturate(.75) brightness(1.05) contrast(1.05); mix-blend-mode: screen; }
   /* Colagem de fundo (mixed media) */
-  #colagem { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  #colagem .cg { position: absolute; opacity: .42; will-change: transform; animation: flutuaColagem linear infinite; }
+  body { position: relative; }
+  #scrim { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(6,13,26,.45) 0%, rgba(6,13,26,.60) 45%, rgba(6,13,26,.72) 100%); }
+  #colagem { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  #colagem .cg { position: absolute; opacity: 0; transition: opacity 1s ease; will-change: transform, opacity; animation: flutuaColagem linear infinite; }
+  #colagem .cg.vis { opacity: .5; }
   #colagem .bloco { box-shadow: 0 12px 34px rgba(0,0,0,.35); border-radius: 4px; }
   #colagem .stk { color: #141418; filter: drop-shadow(0 8px 16px rgba(0,0,0,.5)); }
   #colagem .stk svg { display: block; width: 100%; height: 100%; }
@@ -582,6 +588,7 @@
   <div class="grain"></div>
   <div id="recortes" aria-hidden="true"></div>
   <div id="colagem" aria-hidden="true"></div>
+  <div id="scrim" aria-hidden="true"></div>
   <div class="scroll-progress"><span id="progress"></span></div>
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
@@ -1610,6 +1617,9 @@
   (function () {
     const c = document.getElementById('colagem');
     if (!c) return;
+    const obs = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('vis'); obs.unobserve(en.target); } });
+    }, { threshold: 0.12 });
     const CAM = '<svg viewBox="0 0 64 48" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="5" y="13" width="40" height="27" rx="4"/><path d="M45 23 l13-7 v24 l-13-7z"/><circle cx="22" cy="26.5" r="7" fill="#fff" stroke="#141418"/></svg>';
     const CAS = '<svg viewBox="0 0 68 46" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="4" y="7" width="60" height="32" rx="4"/><rect x="12" y="12" width="44" height="6" fill="#fff" stroke="none"/><circle cx="21" cy="29" r="7" fill="#fff" stroke="#141418"/><circle cx="47" cy="29" r="7" fill="#fff" stroke="#141418"/></svg>';
     const MIC = '<svg viewBox="0 0 44 68" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="14" y="6" width="16" height="30" rx="8"/><path d="M10 32 a12 12 0 0 0 24 0" fill="none"/><path d="M22 44 v12 M15 56 h14" fill="none"/></svg>';
@@ -1619,16 +1629,18 @@
     }
     const DR = '<svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="10" fill="#182430" stroke="rgba(255,255,255,.55)" stroke-width="2"/><circle cx="24" cy="24" r="11" fill="none" stroke="#e8552f" stroke-width="3.4"/><path d="M24 13 a11 11 0 0 1 9.5 5.6" fill="none" stroke="#f5c451" stroke-width="3.4"/><path d="M33.5 29.4 a11 11 0 0 1 -9.5 5.6" fill="none" stroke="#3fbf7f" stroke-width="3.4"/><path d="M14.5 29.4 a11 11 0 0 1 9.5 -16.4" fill="none" stroke="#3f8fe8" stroke-width="3.4"/></svg>';
     const itens = [
-      ['s', app('#2b0a4d', '#b39dff', 'Pr'), '6%', '13%', 76, 76, -10, 21],
-      ['s', app('#1e0a3c', '#b39dff', 'Ae'), '80%', '66%', 72, 72, 8, 25],
-      ['s', app('#001e36', '#31a8ff', 'Ps'), '12%', '72%', 68, 68, 6, 23],
-      ['s', DR, '74%', '9%', 74, 74, -6, 19],
-      ['s', app('#1b1b1b', '#ff8b25', 'Bl'), '46%', '4%', 66, 66, 7, 24],
-      ['s', app('#1a0d33', '#00e4bb', 'Au'), '38%', '82%', 62, 62, -9, 22],
-      ['s', CAM, '90%', '38%', 104, 78, -7, 22],
-      ['s', CAS, '6%', '40%', 108, 73, 7, 26],
-      ['s', MIC, '56%', '88%', 50, 78, -11, 20],
-      ['s', CLA, '24%', '6%', 96, 68, 9, 24]
+      ['s', app('#2b0a4d', '#b39dff', 'Pr'), '6%', '3%', 76, 76, -10, 21],
+      ['s', app('#1e0a3c', '#b39dff', 'Ae'), '82%', '11%', 72, 72, 8, 25],
+      ['s', CAM, '9%', '18%', 104, 78, -7, 22],
+      ['s', app('#001e36', '#31a8ff', 'Ps'), '76%', '26%', 68, 68, 6, 23],
+      ['s', DR, '11%', '34%', 74, 74, -6, 19],
+      ['s', CAS, '85%', '41%', 108, 73, 7, 26],
+      ['s', app('#1b1b1b', '#ff8b25', 'Bl'), '45%', '48%', 66, 66, 7, 24],
+      ['s', app('#1a0d33', '#00e4bb', 'Au'), '7%', '58%', 62, 62, -9, 22],
+      ['s', MIC, '89%', '64%', 50, 78, -11, 20],
+      ['s', CLA, '15%', '72%', 96, 68, 9, 24],
+      ['s', app('#2b0a4d', '#b39dff', 'Me'), '81%', '80%', 64, 64, -8, 23],
+      ['s', CAS, '28%', '90%', 100, 68, 6, 25]
     ];
     itens.forEach(function (o, i) {
       const d = document.createElement('span');
@@ -1641,6 +1653,7 @@
       d.style.animationDuration = o[7] + 's';
       d.style.animationDelay = (-i * 2.3) + 's';
       c.appendChild(d);
+      obs.observe(d);
     });
   })();
   </script>
