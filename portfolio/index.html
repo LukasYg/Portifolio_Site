@@ -319,12 +319,47 @@
   /* ---------- Fundo translucido p/ textura aparecer ---------- */
   #sobre { background: rgba(255,255,255,.018); }
   #marcas { background: rgba(255,255,255,.018); }
+
+  /* ---------- Animações extras ---------- */
+  .scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; background: rgba(255,255,255,.05); }
+  .scroll-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 12px rgba(92,200,189,.6); }
+  .spotlight { position: fixed; width: 640px; height: 640px; border-radius: 50%; pointer-events: none; z-index: 0; left: 0; top: 0; background: radial-gradient(circle, rgba(92,200,189,.09), transparent 62%); transform: translate(-50%,-50%); opacity: 0; transition: opacity .5s; }
+
+  /* Entrada do hero */
+  @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  .hero > *:not(.lens) { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
+  .hero .tag { animation-delay: .05s; }
+  .hero h1 { animation-delay: .16s; }
+  .hero p { animation-delay: .32s; }
+  .hero .roles { animation-delay: .46s; }
+  .hero .stats { animation-delay: .6s; }
+  .hero .cta { animation-delay: .74s; }
+
+  /* Fundo em movimento */
+  @keyframes flutuar { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-2.5%,2%) scale(1.09); } }
+  body::after { animation: flutuar 32s ease-in-out infinite; }
+
+  /* Granulado de filme */
+  @keyframes graozinho { 0%,100% { opacity: .045; } 50% { opacity: .075; } }
+  .grain { animation: graozinho 7s steps(2,end) infinite; }
+
+  /* Nav underline */
+  nav a { position: relative; }
+  nav a::after { content: ''; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0; background: var(--accent); transition: width .3s; }
+  nav a:hover::after { width: 100%; }
+
+  /* Tilt dos cards */
+  .item { will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
   <div class="glow a"></div>
   <div class="glow b"></div>
   <div class="grain"></div>
+  <div class="scroll-progress"><span id="progress"></span></div>
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
   <header>
     <div class="logo">LUKI<span>TAS</span></div>
@@ -677,6 +712,73 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
+
+  // ---------- Barra de progresso ----------
+  const progressEl = document.getElementById('progress');
+  let agendado = false;
+  function aoRolar() {
+    if (agendado) return;
+    agendado = true;
+    requestAnimationFrame(() => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - innerHeight;
+      const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+      if (progressEl) progressEl.style.width = (p * 100) + '%';
+      agendado = false;
+    });
+  }
+  addEventListener('scroll', aoRolar, { passive: true });
+  aoRolar();
+
+  // ---------- Spotlight segue o mouse ----------
+  const spot = document.getElementById('spotlight');
+  if (spot) {
+    addEventListener('mousemove', (e) => {
+      spot.style.opacity = '1';
+      spot.style.left = e.clientX + 'px';
+      spot.style.top = e.clientY + 'px';
+    }, { passive: true });
+    addEventListener('mouseleave', () => { spot.style.opacity = '0'; });
+  }
+
+  // ---------- Contadores das estatisticas ----------
+  function formatar(v, dec) { return v.toFixed(dec).replace('.', ','); }
+  const obsCont = new IntersectionObserver((ents) => {
+    ents.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      obsCont.unobserve(el);
+      const raw = el.textContent.trim();
+      const m = raw.match(/^([\d.,]+)(.*)$/);
+      if (!m) return;
+      const ns = m[1].replace(',', '.');
+      const suf = m[2];
+      const alvo = parseFloat(ns);
+      const dec = (ns.split('.')[1] || '').length;
+      const t0 = performance.now();
+      const dur = 1500;
+      const passo = (now) => {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - k, 3);
+        el.textContent = formatar(alvo * e, dec) + suf;
+        if (k < 1) requestAnimationFrame(passo); else el.textContent = raw;
+      };
+      requestAnimationFrame(passo);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.stats strong').forEach((c) => obsCont.observe(c));
+
+  // ---------- Revelar em cascata + tilt nos cards ----------
+  document.querySelectorAll('.grid .item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 55) + 'ms';
+    el.addEventListener('mousemove', (ev) => {
+      const r = el.getBoundingClientRect();
+      const x = (ev.clientX - r.left) / r.width - 0.5;
+      const y = (ev.clientY - r.top) / r.height - 0.5;
+      el.style.transform = 'perspective(760px) rotateY(' + (x * 7).toFixed(2) + 'deg) rotateX(' + (-y * 7).toFixed(2) + 'deg) translateY(-6px) scale(1.015)';
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
   </script>
 
 </body>
