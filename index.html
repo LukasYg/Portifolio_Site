@@ -353,6 +353,15 @@
 
 
   .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .20; pointer-events: none; filter: saturate(.85) brightness(.72); }
+  /* Recortes de papel (fundo DIY) */
+  #recortes { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .recorte { position: absolute; animation: flutuaPapel linear infinite; will-change: transform; }
+  .recorte svg { display: block; width: 100%; height: 100%; }
+  @keyframes flutuaPapel {
+    0% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    50% { transform: translateY(-26px) rotate(calc(var(--rot, 0deg) + 7deg)); }
+    100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  }
   /* ---------- Texturas de fundo ---------- */
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -362,9 +371,9 @@
       radial-gradient(70% 50% at 50% 100%, rgba(232,84,63,.06), transparent 70%);
   }
   .grain {
-    position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .035;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .085;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   /* ---------- Hero com imagem de fundo ---------- */
@@ -469,7 +478,7 @@
   body::after { animation: flutuar 32s ease-in-out infinite; }
 
   /* Granulado de filme */
-  @keyframes graozinho { 0%,100% { opacity: .03; } 50% { opacity: .05; } }
+  @keyframes graozinho { 0%,100% { opacity: .07; } 50% { opacity: .10; } }
   .grain { animation: graozinho 7s steps(2,end) infinite; }
 
   /* Nav underline */
@@ -556,6 +565,7 @@
   <audio id="auAbertura" src="assets/audio/abertura.wav" preload="auto"></audio>
   <audio id="auTrilha" src="assets/audio/trilha.mp3" preload="auto" loop></audio>
   <div class="grain"></div>
+  <div id="recortes" aria-hidden="true"></div>
   <div class="scroll-progress"><span id="progress"></span></div>
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
@@ -1377,8 +1387,8 @@
       tocando ? desligar() : ligar();
     });
     let ultimoHover = 0;
-    function hoverSom() { const a = performance.now(); if (a - ultimoHover < 70) return; ultimoHover = a; tom(1200, 0.08, 0.035, 'sine'); tom(1800, 0.06, 0.018, 'sine', 0.02); }
-    function cliqueSom() { tom(680, 0.12, 0.055, 'triangle'); tom(1020, 0.14, 0.04, 'sine', 0.05); tom(1360, 0.16, 0.028, 'sine', 0.11); }
+    function hoverSom() { const a = performance.now(); if (a - ultimoHover < 70) return; ultimoHover = a; tom(1200, 0.09, 0.06, 'sine'); tom(1800, 0.07, 0.032, 'sine', 0.02); }
+    function cliqueSom() { tom(680, 0.13, 0.095, 'triangle'); tom(1020, 0.15, 0.068, 'sine', 0.05); tom(1360, 0.17, 0.048, 'sine', 0.11); }
     const alvosHover = '.item, .filtro, .marca, .btn, nav a, .aba, .foto-pilha';
     document.querySelectorAll(alvosHover).forEach(function (el) { el.addEventListener('mouseenter', hoverSom); });
     document.querySelectorAll('a, button, .item, .filtro').forEach(function (el) { el.addEventListener('click', cliqueSom); });
@@ -1388,8 +1398,8 @@
       const a = performance.now();
       if (a - ultimoRolar < 65) return;
       ultimoRolar = a;
-      tom(780 + Math.random() * 190, 0.05, 0.016, 'sine');
-      tom(1560, 0.035, 0.008, 'sine', 0.015);
+      tom(780 + Math.random() * 190, 0.06, 0.03, 'sine');
+      tom(1560, 0.04, 0.015, 'sine', 0.015);
     }, { passive: true });
     window.__synthVol = function (v) { volSynth = v; if (ctx && master && tocando) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0.62 * v / 0.7, ctx.currentTime + 0.25); } };
     window.__sfx = {
@@ -1544,5 +1554,40 @@
       else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') { vol = Math.max(0, vol - 0.05); pintar(); e.preventDefault(); }
     });
     pintar();
+  })();
+  // ---------- Recortes de papel (fundo DIY) ----------
+  (function () {
+    const c = document.getElementById('recortes');
+    if (!c) return;
+    const S = {
+      estrela: "M16 2 L20 12 L31 12 L22 19 L25 30 L16 23 L7 30 L10 19 L1 12 L12 12 Z",
+      risco: "M2 16 C8 4 12 28 18 16 S26 4 30 16",
+      circulo: "M6 16 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0",
+      seta: "M3 21 L28 6 M28 6 l-9 1.5 M28 6 l-1.5 9",
+      faisca: "M16 3 L18 14 L29 16 L18 18 L16 29 L14 18 L3 16 L14 14 Z",
+      mais: "M16 5 v22 M5 16 h22",
+      zigue: "M2 22 L9 10 L16 22 L23 10 L30 22",
+      sol: "M16 7 v-5 M16 30 v-5 M7 16 h-5 M30 16 h-5 M9.5 9.5 L6 6 M22.5 22.5 l3.5 3.5 M22.5 9.5 L26 6 M9.5 22.5 L6 26"
+    };
+    const lista = [
+      ['estrela', '7%', '16%', 30, 15, -8, 0], ['risco', '88%', '12%', 34, 19, 6, 1],
+      ['circulo', '13%', '72%', 38, 17, 12, 0], ['seta', '78%', '64%', 40, 21, -14, 0],
+      ['faisca', '48%', '7%', 26, 13, 4, 1], ['mais', '92%', '40%', 24, 16, 20, 0],
+      ['zigue', '4%', '44%', 36, 18, -6, 0], ['sol', '64%', '85%', 32, 20, 0, 1],
+      ['estrela', '72%', '26%', 20, 12, 16, 0], ['risco', '30%', '89%', 28, 22, -18, 0],
+      ['circulo', '56%', '30%', 22, 14, 8, 0], ['faisca', '20%', '34%', 18, 11, -10, 0]
+    ];
+    lista.forEach(function (o, i) {
+      const d = document.createElement('div');
+      d.className = 'recorte';
+      d.style.left = o[1]; d.style.top = o[2];
+      d.style.width = o[3] + 'px'; d.style.height = o[3] + 'px';
+      d.style.color = o[6] ? 'rgba(232,84,63,.22)' : 'rgba(255,255,255,.16)';
+      d.style.animationDuration = o[4] + 's';
+      d.style.animationDelay = (-i * 1.9) + 's';
+      d.style.setProperty('--rot', o[5] + 'deg');
+      d.innerHTML = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + S[o[0]] + '"/></svg>';
+      c.appendChild(d);
+    });
   })();
   </script>
