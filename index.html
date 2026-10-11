@@ -416,6 +416,18 @@
   .scroll-cue span::after { content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 6px; border-radius: 2px; background: var(--accent); transform: translateX(-50%); animation: roda 1.6s ease-in-out infinite; }
   @keyframes roda { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 12px); } }
 
+  .pre-dica { color: var(--muted); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; animation: pulsaDica 2s ease-in-out infinite; }
+  /* Palco: movimento de camera */
+  #palco { overflow: hidden; }
+  @keyframes camera {
+    0% { transform: translate3d(3.5%, 5.5%, 0) rotate(0.9deg) scale(1.06); opacity: .25; }
+    60% { opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) rotate(0) scale(1); opacity: 1; }
+  }
+  #palco.camera { animation: camera 8s cubic-bezier(.16,.7,.2,1) both; }
+  /* Hero so anima depois de "entrar" */
+  .hero > *, .hero h1 .letra { animation-play-state: paused; }
+  body.entrou .hero > *, body.entrou .hero h1 .letra { animation-play-state: running; }
   /* Preloader claquete */
   .preloader { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; background: var(--bg); transition: opacity .6s, visibility .6s; }
   .preloader.oculto { opacity: 0; visibility: hidden; }
@@ -505,6 +517,7 @@
       <div class="claquete-corpo">LUKITAS</div>
     </div>
     <div class="pre-barra"><span></span></div>
+    <div class="pre-dica">Clique para entrar</div>
   </div>
   <div class="glow a"></div>
   <div class="glow b"></div>
@@ -541,6 +554,7 @@
     </nav>
   </header>
 
+  <div id="palco">
   <section class="hero">
     <div class="hero-esq">
       <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
@@ -895,6 +909,7 @@
   </section>
 
   <footer>© 2025 Lukitas · Direção · Fotografia · Roteiro · Edição</footer>
+  </div><!-- /palco -->
 
   <!-- ===== LIGHTBOX ===== -->
   <div class="lightbox" id="lightbox">
@@ -954,7 +969,7 @@
       if (en.isIntersecting) { en.target.classList.add('visivel'); obs.unobserve(en.target); }
     });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
+  function iniciarReveals() { document.querySelectorAll('.revelar').forEach(el => obs.observe(el)); }
 
   // ---------- Barra de progresso ----------
   const progressEl = document.getElementById('progress');
@@ -1009,7 +1024,8 @@
       requestAnimationFrame(passo);
     });
   }, { threshold: 0.6 });
-  document.querySelectorAll('.stats strong').forEach((c) => obsCont.observe(c));
+  function iniciarContadores() { document.querySelectorAll('.stats strong').forEach((c) => obsCont.observe(c)); }
+  window.__intro = { iniciar: function () { iniciarReveals(); iniciarContadores(); } };
 
   // ---------- Revelar em cascata + tilt nos cards ----------
   document.querySelectorAll('.grid .item').forEach((el, i) => {
@@ -1023,14 +1039,24 @@
     el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
 
-  // ---------- Preloader ----------
+  // ---------- Claquete / Gate de entrada ----------
   (function () {
     const pre = document.getElementById('preloader');
-    if (!pre) return;
-    let feito = false;
-    const esconder = () => { if (feito) return; feito = true; pre.classList.add('oculto'); setTimeout(() => pre.remove(), 700); };
-    addEventListener('load', () => setTimeout(esconder, 900));
-    setTimeout(esconder, 2800);
+    const palco = document.getElementById('palco');
+    let aberto = false;
+    function abrir() {
+      if (aberto) return; aberto = true;
+      document.body.classList.add('entrou');
+      if (palco) palco.classList.add('camera');
+      if (window.__player && window.__player.iniciar) window.__player.iniciar();
+      if (window.__intro && window.__intro.iniciar) window.__intro.iniciar();
+      if (pre) { pre.classList.add('oculto'); setTimeout(function () { if (pre.parentNode) pre.parentNode.removeChild(pre); }, 900); }
+    }
+    window.__abrir = abrir;
+    ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'].forEach(function (ev) {
+      addEventListener(ev, abrir, { once: true, passive: true });
+    });
+    setTimeout(abrir, 9000);
   })();
 
   // ---------- Titulo letra por letra ----------
@@ -1139,14 +1165,14 @@
 
     function tocarTrilha() {
       if (tocandoTrilha) return; tocandoTrilha = true;
-      T.volume = 0.55; T.loop = true; T.muted = mudo;
+      T.volume = 0.32; T.loop = true; T.muted = mudo;
       const p = T.play(); if (p && p.catch) p.catch(function () {});
     }
 
     function tentarTocar() {
       if (tentando || tocandoTrilha) return;
       tentando = true;
-      A.volume = 0.95; A.muted = false;
+      A.volume = 0.5; A.muted = false;
       const p = A.play();
       if (p && p.then) {
         p.then(function () { tentando = false; comSom(); })
@@ -1176,13 +1202,7 @@
     window.__player.alternar = alternar;
     document.body.classList.add('audio-arquivo');
 
-    // Tenta tocar assim que possivel (play() espera o buffer sozinho)
-    if (A.readyState >= 2) { tentarTocar(); }
-    else {
-      A.addEventListener('loadedmetadata', tentarTocar, { once: true });
-      A.addEventListener('canplay', tentarTocar, { once: true });
-      setTimeout(tentarTocar, 300);
-    }
+    window.__player.iniciar = tentarTocar;
   })();
 
   // ---------- Audio: trilha epica + efeitos de UI ----------
