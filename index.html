@@ -3,288 +3,1416 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meu Personagem 3D — Demo Gratuita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Lukitas — Direção, Fotografia &amp; Vídeo</title>
 <style>
+  :root {
+    --bg: #0a0b0d;
+    --bg-soft: #101216;
+    --card: #14161a;
+    --txt: #e9ebee;
+    --muted: #868d96;
+    --accent: #5cc8bd;
+    --accent2: #7f9cc9;
+    --line: rgba(255,255,255,.08);
+    --radius: 16px;
+    --maxw: 1180px;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: #05060f; font-family: system-ui, sans-serif; }
-  #scene { display: block; width: 100%; height: 100%; }
-  #titulo {
-    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
-    color: #fff; text-align: center; pointer-events: none; user-select: none;
-    text-shadow: 0 0 20px rgba(90,170,255,.8);
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--txt);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
   }
-  #titulo h1 { font-size: clamp(20px, 4vw, 40px); letter-spacing: 2px; font-weight: 800; }
-  #titulo p { font-size: clamp(11px, 1.6vw, 15px); opacity: .75; margin-top: 6px; }
-  #dica {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    color: #9fd0ff; font-size: 13px; background: rgba(20,40,80,.55);
-    padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(120,180,255,.35);
-    backdrop-filter: blur(6px); pointer-events: none; user-select: none;
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.032) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
-  #loader {
-    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
-    color: #7fb8ff; font-size: 15px; background: #05060f; z-index: 10; transition: opacity .6s;
+  .display { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; letter-spacing: -0.02em; }
+
+  /* ---------- Fundo decorativo ---------- */
+  .glow {
+    position: fixed; border-radius: 50%; filter: blur(150px); opacity: .12;
+    pointer-events: none; z-index: 0;
   }
+  .glow.a { width: 520px; height: 520px; background: #2f6f68; top: -180px; left: -140px; }
+  .glow.b { width: 460px; height: 460px; background: #2a3a5c; top: 45%; right: -160px; }
+
+  /* ---------- Nav ---------- */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 6vw;
+    backdrop-filter: blur(12px);
+    background: rgba(10,11,13,.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .logo { font-weight: 800; letter-spacing: 1px; font-size: 18px; }
+  .logo span { color: var(--accent); }
+  nav a {
+    color: var(--muted); text-decoration: none; margin-left: 26px;
+    font-size: 14px; transition: color .25s;
+  }
+  nav a:hover { color: var(--txt); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; z-index: 1;
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 170px 6vw 90px;
+    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    column-gap: 56px; row-gap: 34px; align-items: center;
+  }
+  .hero-esq { min-width: 0; }
+  .hero-dir { display: flex; flex-direction: column; gap: 26px; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px; }
+  .hero .scroll-cue { grid-column: 1 / -1; }
+  .hero-dir .roles { margin-top: 0; }
+  .hero-dir .stats { margin-top: 0; }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-dir { padding: 24px 22px; } }
+  .tag {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    border: 1px solid rgba(92,200,189,.35); border-radius: 999px;
+    padding: 6px 16px; margin-bottom: 26px;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 5.6vw, 72px); line-height: 1.08;
+    font-weight: 700; letter-spacing: -0.025em; margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { color: var(--muted); font-size: clamp(15px, 1.6vw, 18px); max-width: 620px; line-height: 1.7; }
+  .cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 28px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: transform .25s, box-shadow .25s;
+    display: inline-block; cursor: pointer; border: none;
+  }
+  .btn.primary { background: var(--accent); color: #05130f; box-shadow: 0 6px 18px rgba(92,200,189,.14); }
+  .btn.ghost { background: transparent; color: var(--txt); border: 1px solid var(--line); }
+  .btn.ghost:hover { border-color: var(--accent); }
+  .btn:hover { transform: translateY(-2px); }
+  .roles { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .roles span {
+    font-size: 13px; color: var(--txt); padding: 8px 16px; border-radius: 999px;
+    background: rgba(255,255,255,.035); border: 1px solid var(--line);
+  }
+  .roles span.princ { background: rgba(92,200,189,.10); border-color: rgba(92,200,189,.40); color: #d6fff9; }
+  .stats { display: flex; gap: 40px; margin-top: 44px; flex-wrap: wrap; }
+  .stats div { display: flex; flex-direction: column; }
+  .stats strong { font-size: 30px; font-weight: 800; color: #fff; }
+  .stats span { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 720px) { .stats { gap: 26px; } .stats strong { font-size: 24px; } }
+  .sec-head p { color: var(--muted); margin-top: 10px; max-width: 620px; }
+  /* Timeline */
+  #trajetoria { padding: 100px 0; }
+  .timeline { display: flex; flex-direction: column; gap: 22px; }
+  .tl-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .tl-ano { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: 1.6px; text-transform: uppercase; margin-bottom: 9px; }
+  .tl-card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 22px 26px; position: relative; width: 100%; text-align: center; }
+  .tl-titulo { text-align: center; }
+  .abas { margin: 0 auto 26px; }
+  .tl-card h3 { font-size: 21px; margin-bottom: 6px; }
+  .tl-card p { color: var(--muted); font-size: 14px; }
+  .tl-stats { margin-top: 14px; font-size: 13px; color: var(--accent); font-weight: 600; }
+  .tl-card a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(92,200,189,.4); }
+  .tl-card a:hover { border-bottom-color: var(--accent); }
+  .tl-stats span { color: var(--muted); font-weight: 400; margin: 0 4px; }
+  /* Marcas */
+  #marcas { padding: 90px 0; background: var(--bg-soft); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
+  .carrossel-duplo { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+  .marquee { position: relative; overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee-track { display: flex; gap: 46px; width: max-content; animation: rolar 80s linear infinite; }
+  .marquee-track.rev { animation-direction: reverse; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* Quem sou eu */
+  .sobre-junto { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 52px; align-items: start; }
+  .foto-pilha { position: relative; margin-bottom: 66px; }
+  .foto { position: relative; z-index: 4; width: 84%; margin: 0 auto; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4/5; background: var(--card); }
+  .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pilha-foto { position: absolute; top: 0; left: 8%; width: 84%; height: 100%; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 16px 36px rgba(0,0,0,.5); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .pilha-foto img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.5) brightness(.7); }
+  .pilha-foto.f1 { z-index: 1; transform: translate(-7%, 3%) rotate(-10deg); }
+  .pilha-foto.f2 { z-index: 2; transform: translate(7%, 3%) rotate(9deg); }
+  .pilha-foto.f3 { z-index: 3; transform: translate(0, 6%) rotate(-3deg); }
+  .foto-pilha:hover .f1 { transform: translate(-16%, 9%) rotate(-14deg); }
+  .foto-pilha:hover .f2 { transform: translate(17%, 9%) rotate(12deg); }
+  .foto-pilha:hover .f3 { transform: translate(0, 13%) rotate(-5deg); }
+  .sobre-esq p { color: var(--muted); margin-bottom: 14px; }
+  .sobre-esq .skills { margin-top: 20px; }
+  .tl-titulo { font-size: 20px; font-weight: 600; margin-bottom: 20px; }
+  .abas { display: flex; gap: 6px; margin-bottom: 26px; background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 999px; padding: 5px; width: fit-content; }
+  .aba { background: transparent; border: none; color: var(--muted); font-size: 13px; font-weight: 600; padding: 8px 20px; border-radius: 999px; cursor: pointer; transition: all .25s; font-family: inherit; }
+  .aba:hover { color: var(--txt); }
+  .aba.ativa { background: var(--accent); color: #05130f; }
+  .aba-painel.oculto { display: none; }
+  @media (max-width: 880px) { .sobre-junto { grid-template-columns: 1fr; gap: 34px; } }
+  .marca { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 140px; flex: 0 0 auto; }
+  .marca .lg { height: 40px; display: flex; align-items: center; justify-content: center; }
+  .marca img { height: 40px; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1) brightness(1.8); opacity: .72; transition: filter .3s, opacity .3s; }
+  .marca .mono { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,.03); display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: 800; font-size: 13px; letter-spacing: .5px; transition: color .3s, border-color .3s; }
+  .marca:hover .mono { color: var(--accent); border-color: var(--accent); }
+  .marca:hover .lg img { filter: grayscale(0) brightness(1); opacity: 1; }
+  .marca span { font-size: 11px; letter-spacing: .6px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+  @media (max-width: 720px) { .marca { width: 110px; } .marca img { height: 32px; } }
+  @media (max-width: 720px) { .tl-card { padding: 18px 20px; } }
+
+  /* ---------- Seções ---------- */
+  section { position: relative; z-index: 1; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 6vw; }
+  .sec-head { margin-bottom: 44px; }
+  .sec-head .kicker {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  .sec-head h2 {
+    font-size: clamp(26px, 3.6vw, 42px); font-weight: 600; letter-spacing: -0.02em; margin-top: 10px;
+  }
+
+  /* ---------- Filtros ---------- */
+  .filtros { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; }
+  .filtro {
+    background: var(--card); color: var(--muted); border: 1px solid rgba(255,255,255,.08);
+    padding: 8px 20px; border-radius: 999px; font-size: 13px; cursor: pointer;
+    transition: all .25s;
+  }
+  .filtro:hover { color: var(--txt); border-color: rgba(255,255,255,.25); }
+  .filtro.ativo { background: var(--accent); color: #05130f; border-color: transparent; }
+
+  /* ---------- Galeria ---------- */
+  #trabalhos { padding: 60px 0 100px; }
+  .grid {
+    display: grid; gap: 22px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .item {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    cursor: pointer; background: var(--card);
+    border: 1px solid rgba(255,255,255,.07);
+    aspect-ratio: 4 / 3;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, opacity .4s;
+  }
+  .item.alto { grid-row: span 2; aspect-ratio: 3 / 4; }
+  .item:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,.5); }
+  .item .thumb {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .item:hover .thumb { transform: scale(1.08); }
+  .item .overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 24px;
+    background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,0) 55%);
+    opacity: 0; transition: opacity .4s;
+  }
+  .item:hover .overlay { opacity: 1; }
+  .item .overlay h3 { font-size: 19px; font-weight: 700; }
+  .item .overlay span { font-size: 12px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+  .item .badge {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
+    color: #fff; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15);
+  }
+  .item.oculto { display: none; }
+
+  /* ---------- Sobre ---------- */
+  #sobre { padding: 100px 0; background: var(--bg-soft); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .sobre-grid p { color: var(--muted); margin-bottom: 16px; }
+  .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .skills span {
+    background: var(--card); border: 1px solid rgba(255,255,255,.1);
+    padding: 7px 16px; border-radius: 999px; font-size: 13px; color: var(--txt);
+  }
+  .retrato {
+    aspect-ratio: 1; border-radius: var(--radius);
+    background: linear-gradient(160deg, #131a20, #0e1418);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px; color: var(--accent);
+    box-shadow: 0 24px 50px rgba(0,0,0,.4);
+  }
+
+  /* ---------- Contato ---------- */
+  /* Palco 3D do contato */
+  .contato-palco { position: relative; width: fit-content; margin: 0 auto; perspective: 900px; transform-style: preserve-3d; }
+  .contato-palco h2 { position: relative; z-index: 3; }
+  .contato-palco::after { content: ''; position: absolute; left: 50%; top: 50%; width: 112%; height: 230%; transform: translate(-50%,-50%); z-index: 2; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(10,11,13,.98), rgba(10,11,13,.82) 58%, rgba(10,11,13,0) 100%); }
+  .orbita { position: absolute; inset: -80px; pointer-events: none; }
+  .orbita.atras { z-index: 1; }
+  .orbita.frente { z-index: 4; }
+  .pt { position: absolute; left: 50%; top: 50%; color: var(--accent); will-change: transform, opacity; }
+  .pt svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(92,200,189,.6)); }
+  .orbita.frente .pt { color: var(--accent2); }
+  .orbita.frente .pt svg { filter: drop-shadow(0 0 10px rgba(127,156,201,.65)); }
+  .pt.a1 { width: 13px; height: 13px; }
+  .pt.a2 { width: 20px; height: 20px; }
+  .pt.a3 { width: 15px; height: 15px; }
+  .pt.a4 { width: 17px; height: 17px; }
+  .pt.a5 { width: 16px; height: 16px; }
+  .pt.a6 { width: 12px; height: 12px; }
+  .pt.f1 { width: 16px; height: 16px; }
+  .pt.f2 { width: 13px; height: 13px; }
+  .pt.f3 { width: 22px; height: 22px; }
+  .pt.a1 { animation: giro1 11s linear infinite; }
+  .pt.a2 { animation: giro2 14s linear infinite; }
+  .pt.a3 { animation: giro3 8.5s linear infinite; }
+  .pt.a4 { animation: giro1 13s linear infinite; animation-delay: -5s; }
+  .pt.a5 { animation: giro2 9.5s linear infinite; animation-delay: -3s; }
+  .pt.a6 { animation: giro3 12s linear infinite; animation-delay: -7s; }
+  .pt.f1 { animation: giro2 10s linear infinite; animation-delay: -2s; }
+  .pt.f2 { animation: giro3 9s linear infinite; animation-delay: -4.5s; }
+  .pt.f3 { animation: giro1 15s linear infinite; animation-delay: -6s; }
+  @keyframes giro1 {
+    0% { transform: translate(-200px, 4px) scale(.55); opacity: .35; }
+    25% { transform: translate(-34px, -88px) scale(1.15); opacity: 1; }
+    50% { transform: translate(200px, 4px) scale(.55); opacity: .35; }
+    75% { transform: translate(34px, 92px) scale(1.2); opacity: 1; }
+    100% { transform: translate(-200px, 4px) scale(.55); opacity: .35; }
+  }
+  @keyframes giro2 {
+    0% { transform: translate(190px, 0) scale(.5); opacity: .3; }
+    25% { transform: translate(30px, 84px) scale(1.2); opacity: 1; }
+    50% { transform: translate(-190px, 0) scale(.5); opacity: .3; }
+    75% { transform: translate(-30px, -80px) scale(1.1); opacity: 1; }
+    100% { transform: translate(190px, 0) scale(.5); opacity: .3; }
+  }
+  @keyframes giro3 {
+    0% { transform: translate(-140px, -52px) scale(.7); opacity: .45; }
+    33% { transform: translate(150px, -66px) scale(1.05); opacity: 1; }
+    66% { transform: translate(40px, 78px) scale(.9); opacity: .8; }
+    100% { transform: translate(-140px, -52px) scale(.7); opacity: .45; }
+  }
+  @media (max-width: 720px) { .contato-palco { transform: scale(.62); } .orbita { inset: -60px; } }
+
+  #contato { padding: 110px 0; text-align: center; }
+  #contato h2 { font-size: clamp(28px, 4.4vw, 50px); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; }
+  #contato p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; }
+  .redes { display: flex; gap: 16px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+  .redes a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    border: 1px solid rgba(255,255,255,.12); padding: 9px 20px; border-radius: 999px;
+    transition: all .25s; display: inline-flex; align-items: center; gap: 9px;
+  }
+  .redes a svg { width: 17px; height: 17px; }
+  .redes a:hover { color: #fff; border-color: var(--accent); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    position: relative; z-index: 1; text-align: center;
+    padding: 30px; color: var(--muted); font-size: 13px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 100; display: none;
+    align-items: center; justify-content: center; padding: 5vw;
+    background: rgba(5,5,8,.92); backdrop-filter: blur(10px);
+  }
+  .lightbox.aberto { display: flex; animation: fade .3s; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .lightbox .conteudo {
+    max-width: 900px; width: 100%; border-radius: var(--radius); overflow: hidden;
+    background: var(--card); border: 1px solid rgba(255,255,255,.1);
+  }
+  .lightbox .imagem { aspect-ratio: 16/10; background-size: cover; background-position: center; }
+  .lightbox .texto { padding: 24px 28px; }
+  .lightbox .texto h3 { font-size: 22px; }
+  .lightbox .texto p { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .lightbox .fechar {
+    position: absolute; top: 24px; right: 28px; font-size: 34px; color: #fff;
+    cursor: pointer; line-height: 1; opacity: .7; transition: opacity .2s;
+  }
+  .lightbox .fechar:hover { opacity: 1; }
+
+  /* ---------- Revelar ao rolar ---------- */
+  .revelar { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s; }
+  .revelar.visivel { opacity: 1; transform: none; }
+
+  @media (max-width: 720px) {
+    .sobre-grid { grid-template-columns: 1fr; gap: 36px; }
+    nav a { margin-left: 16px; font-size: 13px; }
+  }
+
+
+  .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .20; pointer-events: none; filter: saturate(.85) brightness(.72); }
+  /* ---------- Texturas de fundo ---------- */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(60% 45% at 12% 0%, rgba(92,200,189,.08), transparent 62%),
+      radial-gradient(55% 40% at 88% 12%, rgba(127,156,201,.08), transparent 62%);
+  }
+  .grain {
+    position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Hero com imagem de fundo ---------- */
+  .hero::after {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(to bottom, rgba(10,11,13,.30), var(--bg) 90%);
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  /* ---------- Faixa de bastidores ---------- */
+  #bastidores { padding: 90px 0 0; position: relative; z-index: 1; }
+  .bts-strip {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+    margin-top: 34px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .bts-strip figure { overflow: hidden; height: 260px; margin: 0; position: relative; }
+  .bts-strip img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(1) contrast(1.05) brightness(.55);
+    transition: filter .6s ease, transform .9s ease;
+  }
+  .bts-strip figure:hover img { filter: grayscale(0) contrast(1) brightness(.95); transform: scale(1.06); }
+  @media (max-width: 860px) { .bts-strip { grid-template-columns: repeat(2, 1fr); } .bts-strip figure { height: 180px; } }
+
+  /* ---------- Fundo translucido p/ textura aparecer ---------- */
+  #sobre { background: rgba(255,255,255,.018); }
+  #marcas { background: rgba(255,255,255,.018); }
+
+  /* ---------- Animações extras ---------- */
+  .scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; background: rgba(255,255,255,.05); }
+  .scroll-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 10px rgba(92,200,189,.35); }
+  .spotlight { position: fixed; width: 640px; height: 640px; border-radius: 50%; pointer-events: none; z-index: 0; left: 0; top: 0; background: radial-gradient(circle, rgba(92,200,189,.06), transparent 62%); transform: translate(-50%,-50%); opacity: 0; transition: opacity .5s; }
+
+  /* Entrada do hero */
+  @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  .hero > * { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
+  .hero .hero-esq { animation-delay: .05s; }
+  .hero .hero-dir { animation-delay: .35s; }
+  .hero .scroll-cue { animation-delay: .7s; }
+
+  /* Brilho suave no topo do hero */
+  .hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(85% 65% at 50% 0%, rgba(92,200,189,.07), transparent 62%); }
+
+  /* Titulo letra por letra */
+  @keyframes letra { to { opacity: 1; transform: none; } }
+  .hero h1 .letra { display: inline-block; opacity: 0; transform: translateY(.55em); animation: letra .7s cubic-bezier(.2,.8,.2,1) both; }
+  .hero h1 .palavra { display: inline-block; white-space: nowrap; }
+
+  /* Indicador de rolagem */
+  .scroll-cue { display: flex; align-items: center; gap: 10px; margin-top: 46px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .scroll-cue span { width: 22px; height: 34px; border: 1px solid var(--line); border-radius: 12px; position: relative; }
+  .scroll-cue span::after { content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 6px; border-radius: 2px; background: var(--accent); transform: translateX(-50%); animation: roda 1.6s ease-in-out infinite; }
+  @keyframes roda { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 12px); } }
+
+  /* Preloader claquete */
+  .preloader { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; background: var(--bg); transition: opacity .6s, visibility .6s; }
+  .preloader.oculto { opacity: 0; visibility: hidden; }
+  .claquete { width: 190px; }
+  .claquete-topo { height: 26px; border-radius: 4px 4px 0 0; transform-origin: left bottom; background: repeating-linear-gradient(115deg, var(--txt) 0 14px, #0c0d10 14px 28px); animation: clap 1.2s ease-in-out infinite; }
+  .claquete-corpo { height: 84px; margin-top: 6px; border-radius: 4px; background: linear-gradient(160deg, #1a1d24, #101216); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; letter-spacing: 5px; font-weight: 800; color: var(--muted); font-size: 13px; }
+  @keyframes clap { 0%,100% { transform: rotate(0); } 45% { transform: rotate(-18deg); } 55% { transform: rotate(-18deg); } }
+  .pre-barra { width: 190px; height: 3px; background: rgba(255,255,255,.08); border-radius: 99px; overflow: hidden; }
+  .pre-barra span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); animation: carregar 1.6s ease forwards; }
+  @keyframes carregar { to { width: 100%; } }
+
+  /* Fundo em movimento */
+  @keyframes flutuar { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-2.5%,2%) scale(1.09); } }
+  body::after { animation: flutuar 32s ease-in-out infinite; }
+
+  /* Granulado de filme */
+  @keyframes graozinho { 0%,100% { opacity: .03; } 50% { opacity: .05; } }
+  .grain { animation: graozinho 7s steps(2,end) infinite; }
+
+  /* Nav underline */
+  nav a { position: relative; }
+  nav a::after { content: ''; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0; background: var(--accent); transition: width .3s; }
+  nav a:hover::after { width: 100%; }
+
+  /* Tilt dos cards */
+  .item { will-change: transform; }
+
+  /* Cursor personalizado */
+  body.tem-cursor { cursor: none; }
+  body.tem-cursor a, body.tem-cursor button { cursor: none; }
+  .cursor { position: fixed; top: 0; left: 0; width: 34px; height: 34px; border: 1px solid var(--accent); border-radius: 50%; pointer-events: none; z-index: 150; transform: translate(-50%,-50%); transition: width .28s, height .28s, background .28s, border-color .28s, opacity .3s; opacity: .8; }
+  .cursor-dot { position: fixed; top: 0; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 151; transform: translate(-50%,-50%); }
+  .cursor.grande { width: 68px; height: 68px; background: rgba(92,200,189,.12); border-color: transparent; opacity: 1; }
+  @media (hover: none) { .cursor, .cursor-dot { display: none; } }
+  .som-btn { position: fixed; bottom: 22px; right: 22px; z-index: 90; width: 46px; height: 46px; border-radius: 50%; background: rgba(16,18,22,.72); border: 1px solid var(--line); color: var(--txt); font-size: 17px; line-height: 1; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); cursor: pointer; transition: border-color .3s, transform .3s, box-shadow .3s; }
+  .som-btn:hover { border-color: var(--accent); transform: scale(1.06); }
+  .som-btn.ativo { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(92,200,189,.15); color: var(--accent); }
+  .som-btn svg { width: 22px; height: 22px; }
+  .som-btn.ativo svg { animation: pulsarSom 2.4s ease-in-out infinite; }
+  @keyframes pulsarSom { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+  .som-hint { position: fixed; bottom: 26px; right: 78px; z-index: 90; background: rgba(16,18,22,.85); border: 1px solid var(--line); color: var(--txt); font-size: 12px; padding: 7px 14px; border-radius: 999px; white-space: nowrap; backdrop-filter: blur(8px); animation: pulsaDica 2.4s ease-in-out infinite; pointer-events: none; transition: opacity .4s; }
+  .som-hint.oculto { opacity: 0; }
+  @keyframes pulsaDica { 0%,100% { opacity: .55; transform: translateX(0); } 50% { opacity: 1; transform: translateX(-4px); } }
+
+  /* Cortina nas secoes */
+  .sec-head.revelar h2 { clip-path: inset(0 100% 0 0); transition: clip-path 1.1s cubic-bezier(.2,.8,.2,1) .1s; }
+  .sec-head.revelar.visivel h2 { clip-path: inset(0 0 0 0); }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+  /* Minigame */
+  #minigame { padding: 90px 0; }
+  .arena { position: relative; height: 420px; border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; cursor: crosshair;
+    background: radial-gradient(120% 100% at 50% 0%, rgba(92,200,189,.06), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 40px), #0d0f13; }
+  .hud { position: absolute; top: 14px; left: 16px; right: 16px; display: flex; justify-content: space-between; font-family: ui-monospace, Menlo, monospace; font-size: 13px; color: var(--muted); z-index: 3; pointer-events: none; letter-spacing: 1px; }
+  .hud span { background: rgba(0,0,0,.35); border: 1px solid var(--line); padding: 4px 12px; border-radius: 8px; }
+  .mira { position: absolute; inset: 0; z-index: 2; }
+  .alvo { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #bff3ea, var(--accent) 55%, #2b6f68); box-shadow: 0 0 0 2px rgba(92,200,189,.35), 0 8px 24px rgba(92,200,189,.25); cursor: crosshair; animation: surgir .18s ease-out; }
+  .alvo::after { content: ''; position: absolute; inset: 32%; border-radius: 50%; background: rgba(10,11,13,.85); }
+  @keyframes surgir { from { transform: scale(.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .alvo.errou { animation: sumir .2s ease-in forwards; }
+  @keyframes sumir { to { transform: scale(.3); opacity: 0; } }
+  .arena-msg { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; background: rgba(10,11,13,.72); backdrop-filter: blur(4px); padding: 20px; transition: opacity .3s; }
+  .arena-msg.oculto { opacity: 0; visibility: hidden; }
+  .arena-msg p { color: var(--muted); max-width: 430px; font-size: 14px; }
+  .arena-msg strong { color: var(--txt); }
+  .arena.jogando { cursor: none; }
+  .ret { position: absolute; z-index: 3; width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 2px solid rgba(92,200,189,.85); border-radius: 50%; pointer-events: none; display: none; }
+  .ret::after { content: ''; position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; background: var(--accent); border-radius: 50%; transform: translate(-50%,-50%); }
+  .arena.jogando .ret { display: block; }
+  body.mirando .cursor, body.mirando .cursor-dot { opacity: 0; }
+  .alvo.bonus { background: radial-gradient(circle at 35% 30%, #ffffff, #e6fff9 55%, #8fe0d2); box-shadow: 0 0 0 2px rgba(255,255,255,.5), 0 0 22px rgba(180,255,240,.4); }
+  .pop { position: absolute; z-index: 5; font-family: ui-monospace, Menlo, monospace; font-size: 15px; font-weight: 700; color: var(--accent); pointer-events: none; animation: poppop .8s ease-out forwards; }
+  .pop.bonus { color: #ffffff; }
+  @keyframes poppop { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-34px) scale(1.25); } }
+  .hud span#hudCombo { color: var(--accent); }
+  .sec-head .desafio { color: var(--accent); margin-top: 10px; }
+  @media (max-width: 720px) { .arena { height: 340px; } .hud { font-size: 11px; } .hud span { padding: 3px 8px; } }
 </style>
 </head>
 <body>
-  <div id="loader">Carregando o personagem 3D…</div>
-  <div id="titulo">
-    <h1>🤖 O MEU PERSONAGEM 3D</h1>
-    <p>Feito de graça com Three.js</p>
+  <div class="preloader" id="preloader">
+    <div class="claquete" aria-hidden="true">
+      <div class="claquete-topo"></div>
+      <div class="claquete-corpo">LUKITAS</div>
+    </div>
+    <div class="pre-barra"><span></span></div>
   </div>
-  <div id="dica">🖱️ Arraste para girar · 🔍 Scroll para dar zoom</div>
-  <canvas id="scene"></canvas>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+  <video class="video-fundo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="https://videos.pexels.com/video-files/855120/855120-sd_960_540_25fps.mp4" type="video/mp4">
+  </video>
+  <audio id="auAbertura" src="assets/audio/abertura.wav" preload="auto"></audio>
+  <audio id="auTrilha" src="assets/audio/trilha.mp3" preload="auto" loop></audio>
+  <div class="grain"></div>
+  <div class="scroll-progress"><span id="progress"></span></div>
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <button class="som-btn" id="somBtn" aria-label="Ligar ou desligar a musica de fundo" title="Musica">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="6" width="10" height="14" rx="2.2"/>
+      <rect x="4" y="8" width="6" height="3.6" rx="1"/>
+      <circle cx="7" cy="15.6" r="1.25"/>
+      <path d="M12 9.4c3.1.1 4.6-1.4 6.4-2.2"/>
+      <circle cx="19.4" cy="6.3" r="2.1"/>
+      <path d="M19.4 8.4v2.3"/>
+    </svg>
+  </button>
+  <div class="som-hint" id="somHint">Ativar som 🎵</div>
 
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-    }
-  }
-  </script>
+  <header>
+    <div class="logo">LUKI<span>TAS</span></div>
+    <nav>
+      <a href="#trabalhos">Trabalhos</a>
+      <a href="#trajetoria">Trajetória</a>
+      <a href="#marcas">Marcas</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
 
-  <script type="module">
-  import * as THREE from 'three';
-  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  <section class="hero">
+    <div class="hero-esq">
+      <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
+      <h1 class="display"><em>Histórias</em> que <em>ganham vida</em> na tela.</h1>
+      <p>Salve! Eu sou o <strong>Lucas Yago</strong>, mas você pode me chamar de <strong>Lukitas</strong>. Diretor de fotografia, apresentador e editor de vídeo — crio narrativas visuais que conectam.</p>
+      <div class="cta">
+        <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
+        <a href="#contato" class="btn ghost">Trabalhe comigo</a>
+      </div>
+    </div>
+    <div class="hero-dir">
+      <div class="roles">
+        <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span class="princ">Ator</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>Criação de Vídeo com IA</span><span>TI</span>
+      </div>
+      <div class="stats">
+        <div><strong>1,09M+</strong><span>inscritos</span></div>
+        <div><strong>260M+</strong><span>visualizações</span></div>
+        <div><strong>5,1K+</strong><span>vídeos</span></div>
+      </div>
+    </div>
+    <div class="scroll-cue"><span></span>Role para explorar</div>
+  </section>
+
+  <!-- ===== QUEM SOU EU ===== -->
+  <section id="sobre">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Quem sou eu</div>
+        <h2 class="display">Lucas Yago — Lukitas</h2>
+      </div>
+      <div class="sobre-junto">
+        <div class="sobre-esq revelar">
+          <div class="foto-pilha">
+            <div class="pilha-foto f1"><img src="https://images.pexels.com/photos/38059008/pexels-photo-38059008.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bastidores"></div>
+            <div class="pilha-foto f2"><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Dirigindo"></div>
+            <div class="pilha-foto f3"><img src="https://images.pexels.com/photos/37593308/pexels-photo-37593308.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Câmera"></div>
+            <div class="foto">
+              <img src="https://yt3.googleusercontent.com/X0cKDvFUOEKKOjyWTyzWIEjn_GSaIoc-XApSrpGg5uXk7ungxfVDyerB9FF5D4fBdR9kuCCxyQ=s400-c-k-c0x00ffffff-no-rj" alt="Lucas Yago (Lukitas)">
+            </div>
+          </div>
+          <p>Sou o Lukitas, profissional de audiovisual. Atuo como <strong>diretor de fotografia e apresentador</strong>, além de <strong>criador de conteúdo, diretor, roteirista, editor de vídeo e profissional de TI</strong> — cuidando de cada etapa, da ideia à entrega final.</p>
+          <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil. Atualmente curso <strong>Audiovisual na Univali</strong>.</p>
+          <p>Estou presente desde a idealização e roteiro até a finalização e entrega, unindo técnicas avançadas de iluminação, domínio de câmera e direção para que, através das imagens, a emoção seja transmitida.</p>
+          <p>Também exploro a <strong>criação de vídeos com inteligência artificial</strong>, unindo a técnica tradicional às novas ferramentas generativas.</p>
+          <p>Também sou <strong>ator desde 2004</strong> — meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, para a CCXP em 2018.</p>
+          <div class="skills">
+            <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>Atuação</span><span>Vídeo com IA</span><span>TI</span>
+          </div>
+        </div>
+        <div class="sobre-dir revelar">
+          <h3 class="tl-titulo">Onde construí a carreira</h3>
+          <div class="abas">
+            <button class="aba ativa" data-aba="carreira">Carreira</button>
+            <button class="aba" data-aba="estudos">Estudos</button>
+          </div>
+          <div class="aba-painel" data-painel="carreira">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-ano">2004 — 2018</div>
+                <div class="tl-card">
+                  <h3>Ator</h3>
+                  <p>Atuação desde 2004. Meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, apresentado na <strong>CCXP 2018</strong> — <a href="https://youtu.be/DijrR1Dr-Zw" target="_blank" rel="noopener">assista ao curta</a>.</p>
+                  <div class="tl-stats">Atuação <span>·</span> Cinema e cena</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-ano">2018 — 2023</div>
+                <div class="tl-card">
+                  <h3>TJ Gaming</h3>
+                  <p>Assumi o canal com poucos inscritos e conduzi o crescimento até ultrapassar o marco de <strong>100 mil inscritos</strong>. Conteúdo de games e tecnologia, com foco em hardware.</p>
+                  <div class="tl-stats">775 mil inscritos <span>·</span> 142M visualizações <span>·</span> 2,78 mil vídeos</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-ano">2023 — hoje</div>
+                <div class="tl-card">
+                  <h3>PipocaTech</h3>
+                  <p>Criação e comando do canal de tecnologia — reviews, hardware e entretenimento, direto ao ponto.</p>
+                  <div class="tl-stats">316 mil inscritos <span>·</span> 118M visualizações <span>·</span> 2,3 mil vídeos</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-ano">2023 — hoje</div>
+                <div class="tl-card">
+                  <h3>Solid Importadora</h3>
+                  <p>Trabalho com as marcas internacionais trazidas pela Solid para o Brasil — conteúdo, reviews e divulgação.</p>
+                  <div class="tl-stats">Marcas de hardware, periféricos e tecnologia</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="aba-painel oculto" data-painel="estudos">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-ano">2026 — hoje</div>
+                <div class="tl-card">
+                  <h3>Univali — Audiovisual</h3>
+                  <p>Faculdade de Audiovisual (em curso), aprofundando linguagem, técnica e direção.</p>
+                  <div class="tl-stats">Graduação em andamento</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-ano">Desde 2004</div>
+                <div class="tl-card">
+                  <h3>Formação em Atuação</h3>
+                  <p>Cursos e prática contínua em atuação para cinema e cena (adicione aqui suas escolas e cursos).</p>
+                  <div class="tl-stats">Atuação</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARCAS ===== -->
+  <section id="marcas">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Marcas &amp; Parceiros</div>
+        <h2 class="display">Marcas que trabalhei</h2>
+        <p>Através da Solid Importadora, atuei com marcas internacionais trazidas para o Brasil.</p>
+      </div>
+    </div>
+    <div class="carrossel-duplo">
+      <div class="marquee"><div class="marquee-track">
+          <div class="marca"><div class="lg"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"></div><span>Redragon</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"></div><span>Gigabyte</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"></div><span>Ingrem</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"></div><span>Lamzu</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"></div><span>OnePower</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"></div><span>NZXT</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"></div><span>Lian Li</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"></div><span>Phanteks</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"></div><span>Fnatic</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"></div><span>Creative Labs</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"></div><span>Scythe</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"></div><span>XP-Pen</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"></div><span>Maono</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"></div><span>Sapphire</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"></div><span>Cudy</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"></div><span>Biostar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"></div><span>Thermal Grizzly</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"></div><span>Cougar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"></div><span>Philips</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"></div><span>Redragon</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"></div><span>Gigabyte</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"></div><span>Ingrem</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"></div><span>Lamzu</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"></div><span>OnePower</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"></div><span>NZXT</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"></div><span>Lian Li</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"></div><span>Phanteks</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"></div><span>Fnatic</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"></div><span>Creative Labs</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"></div><span>Scythe</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"></div><span>XP-Pen</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"></div><span>Maono</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"></div><span>Sapphire</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"></div><span>Cudy</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"></div><span>Biostar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"></div><span>Thermal Grizzly</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"></div><span>Cougar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"></div><span>Philips</span></div>
+          </div></div>
+      <div class="marquee"><div class="marquee-track rev">
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"></div><span>Trust</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"></div><span>Kalkan</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"></div><span>Keytime</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"></div><span>Zomoplus</span></div>
+          <div class="marca"><div class="lg"><span class="mono">G</span></div><span>Gamdias</span></div>
+          <div class="marca"><div class="lg"><span class="mono">A</span></div><span>Akko Gear</span></div>
+          <div class="marca"><div class="lg"><span class="mono">b</span></div><span>be quiet!</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Deepcool</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Divoom</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Monsgeek</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Manli</span></div>
+          <div class="marca"><div class="lg"><span class="mono">T</span></div><span>T-Dagger</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hoto</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GF</span></div><span>Geometric Future</span></div>
+          <div class="marca"><div class="lg"><span class="mono">FSP</span></div><span>FSP</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hiksemi</span></div>
+          <div class="marca"><div class="lg"><span class="mono">IT</span></div><span>Iceberg Thermal</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GX</span></div><span>GXTrust</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"></div><span>Trust</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"></div><span>Kalkan</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"></div><span>Keytime</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"></div><span>Zomoplus</span></div>
+          <div class="marca"><div class="lg"><span class="mono">G</span></div><span>Gamdias</span></div>
+          <div class="marca"><div class="lg"><span class="mono">A</span></div><span>Akko Gear</span></div>
+          <div class="marca"><div class="lg"><span class="mono">b</span></div><span>be quiet!</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Deepcool</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Divoom</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Monsgeek</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Manli</span></div>
+          <div class="marca"><div class="lg"><span class="mono">T</span></div><span>T-Dagger</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hoto</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GF</span></div><span>Geometric Future</span></div>
+          <div class="marca"><div class="lg"><span class="mono">FSP</span></div><span>FSP</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hiksemi</span></div>
+          <div class="marca"><div class="lg"><span class="mono">IT</span></div><span>Iceberg Thermal</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GX</span></div><span>GXTrust</span></div>
+          </div></div>
+    </div>
+  </section>
+
+  <!-- ===== TRABALHOS ===== -->
+  <section id="trabalhos">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Portfólio</div>
+        <h2 class="display">Trabalhos selecionados</h2>
+      </div>
+
+      <div class="filtros revelar">
+        <button class="filtro ativo" data-filtro="todos">Todos</button>
+        <button class="filtro" data-filtro="atuacao">Atuação</button>
+        <button class="filtro" data-filtro="edicao">Edição criativa</button>
+        <button class="filtro" data-filtro="montagem">Montagem de PC</button>
+        <button class="filtro" data-filtro="apresentacao">Apresentação</button>
+        <button class="filtro" data-filtro="direcao">Direção</button>
+        <button class="filtro" data-filtro="fotografia">Fotografia</button>
+        <button class="filtro" data-filtro="roteiro">Roteiro</button>
+      </div>
+
+      <div class="grid" id="grid">
+        <article class="item revelar" data-cat="atuacao" data-titulo="GeekPunk — curta (CCXP 2018)" data-desc="Curta-metragem apresentado na CCXP 2018." data-link="https://youtu.be/DijrR1Dr-Zw">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/DijrR1Dr-Zw/hq720.jpg')"></div>
+          <span class="badge">Atuação</span>
+          <div class="overlay"><span>Atuação</span><h3>GeekPunk — curta (CCXP 2018)</h3></div>
+        </article>
+
+        <article class="item revelar alto" data-cat="edicao" data-titulo="Teclado Magnético Akko — MOD 007" data-desc="Edição criativa do review do teclado magnético Akko." data-link="https://youtu.be/cSLTkIp1Y4Y">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/cSLTkIp1Y4Y/hq720.jpg')"></div>
+          <span class="badge">Edição criativa</span>
+          <div class="overlay"><span>Edição criativa</span><h3>Teclado Magnético Akko — MOD 007</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="edicao" data-titulo="Raw / Log (!?)" data-desc="Cor, latitude e pós-produção." data-link="https://youtu.be/N6OqMdfs4Ig">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/N6OqMdfs4Ig/hq720.jpg')"></div>
+          <span class="badge">Edição criativa</span>
+          <div class="overlay"><span>Edição criativa</span><h3>Raw / Log (!?)</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="apresentacao" data-titulo="Water Cooler LM360 GamerStorm X Redragon" data-desc="Review no canal PipocaTech." data-link="https://youtu.be/7NXKEomK37U">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/7NXKEomK37U/hq720.jpg')"></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>Water Cooler LM360 GamerStorm X Redragon</h3></div>
+        </article>
+
+        <article class="item revelar alto" data-cat="apresentacao" data-titulo="Gamdias Neso P1 — Novo Gabinete Gamer" data-desc="Review do gabinete estilo Hyte Y60." data-link="https://youtu.be/akw8x3AZUl0">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/akw8x3AZUl0/hq720.jpg')"></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>Gamdias Neso P1 — Novo Gabinete Gamer</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="montagem" data-titulo="Ocypus Delta C70 + Sigma L36BK" data-desc="Montagem de PC no canal PipocaTech." data-link="https://youtu.be/25j6ljkPOgo">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/25j6ljkPOgo/hq720.jpg')"></div>
+          <span class="badge">Montagem de PC</span>
+          <div class="overlay"><span>Montagem de PC</span><h3>Ocypus Delta C70 + Sigma L36BK</h3></div>
+        </article>
+
+        <article class="item revelar placeholder" data-cat="direcao" data-titulo="Nome do seu filme" data-desc="Adicione aqui um projeto que você dirigiu.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#2b5876,#4e4376);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
+          <span class="badge">Direção</span>
+          <div class="overlay"><span>Direção</span><h3>Nome do seu filme</h3></div>
+        </article>
+
+        <article class="item revelar placeholder" data-cat="fotografia" data-titulo="Nome do seu projeto" data-desc="Adicione aqui um trabalho de câmera e luz.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#0f2027,#2c5364);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
+          <span class="badge">Direção de Fotografia</span>
+          <div class="overlay"><span>Direção de Fotografia</span><h3>Nome do seu projeto</h3></div>
+        </article>
+
+        <article class="item revelar placeholder" data-cat="roteiro" data-titulo="Nome do seu roteiro" data-desc="Adicione aqui um roteiro de sua autoria.">
+          <div class="thumb" style="background-image:linear-gradient(135deg,#42275a,#734b6d);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
+          <span class="badge">Roteiro</span>
+          <div class="overlay"><span>Roteiro</span><h3>Nome do seu roteiro</h3></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
 
-  // ---------- Cena, câmera e renderizador ----------
-  const canvas = document.getElementById('scene');
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x05060f, 0.035);
+  <!-- ===== BASTIDORES ===== -->
+  <section id="bastidores">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Bastidores</div>
+        <h2 class="display">Por trás das câmeras</h2>
+        <p>Um pouco do universo de luz, lentes e narrativa que move o meu trabalho.</p>
+      </div>
+    </div>
+    <div class="bts-strip revelar">
+        <figure><img src="https://images.pexels.com/photos/38059008/pexels-photo-38059008.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Câmera de cinema em set de filmagem" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/37593308/pexels-photo-37593308.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Setup de câmera profissional" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Diretor de fotografia operando a câmera" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/34516677/pexels-photo-34516677.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Equipamento de produção de vídeo" loading="lazy"></figure>
+        <figure><img src="https://images.pexels.com/photos/15779000/pexels-photo-15779000.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Câmera de cinema em estúdio" loading="lazy"></figure>
+    </div>
+  </section>
 
-  const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 200);
-  camera.position.set(0, 3.2, 9);
+  <!-- ===== MINIGAME ===== -->
+  <section id="minigame">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Desafio</div>
+        <h2 class="display">Teste a minha mira</h2>
+        <p>Um minigame rápido: clique nos alvos antes que desapareçam. Sou criativo, penso rápido e adoro FPS.</p>
+        <p class="desafio">🎁 Se você bater meu score, ganha um presentinho quando fecharmos negócio.</p>
+      </div>
+      <div class="arena revelar" id="arena">
+        <div class="hud">
+          <span id="hudTempo">20.0s</span>
+          <span id="hudCombo"></span>
+          <span id="hudScore">0 pts</span>
+          <span id="hudPrec">100%</span>
+          <span id="hudRec">Recorde: 3200</span>
+        </div>
+        <div class="mira" id="mira"></div>
+        <div class="ret" aria-hidden="true"></div>
+        <div class="arena-msg" id="arenaMsg">
+          <p id="arenaTexto">Clique em <strong>Jogar</strong> e acerte o máximo de alvos em 20 segundos. Bata o recorde de <strong>3200</strong>!</p>
+          <button class="btn primary" id="btnJogar">Jogar</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  renderer.setSize(innerWidth, innerHeight);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  <!-- ===== CONTATO ===== -->
+  <section id="contato">
+    <div class="wrap">
+      <div class="contato-palco">
+        <div class="orbita atras" aria-hidden="true">
+          <span class="pt a1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span><span class="pt a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span class="pt a3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/><rect x="17" y="13.5" width="4.5" height="7" rx="2"/></svg></span><span class="pt a4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/></svg></span><span class="pt a5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v2M4.8 5.8l1.4 1.4M19.2 5.8l-1.4 1.4M1.5 12h2M20.5 12h2"/><rect x="7" y="9" width="10" height="8" rx="2"/><path d="M12 17v4.5"/></svg></span><span class="pt a6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span>
+        </div>
+        <h2 class="display revelar">Vamos criar juntos?</h2>
+        <div class="orbita frente" aria-hidden="true">
+          <span class="pt f1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/><rect x="17" y="13.5" width="4.5" height="7" rx="2"/></svg></span><span class="pt f2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span class="pt f3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/></svg></span>
+        </div>
+      </div>
+      <p class="revelar">Disponível para projetos de vídeo, comerciais, documentários e conteúdo para marcas. Direção, fotografia, roteiro e edição sob o mesmo olhar.</p>
+      <a href="https://wa.me/5511973881154" target="_blank" rel="noopener" class="btn primary revelar">Fale comigo</a>
+      <div class="redes revelar">
+        <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4.5"/><path d="M10 9l5.5 3L10 15z" fill="currentColor" stroke="none"/></svg> YouTube</a>
+        <a href="https://www.instagram.com/lukas_yg/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg> Instagram</a>
+        <a href="https://wa.me/5511973881154" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.4A10 10 0 1 0 12 2zm0 1.8a8.2 8.2 0 0 1 0 16.4 8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8zm-2.4 3.7c-.2 0-.5.1-.7.3-.2.3-.9 1-.9 2.3s.9 2.7 1 2.9c.1.2 1.7 2.7 4.2 3.7 2 .8 2.5.7 3 .6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3l-1.5-.7c-.2-.1-.4-.1-.5.1l-.6.8c-.1.2-.3.2-.5.1-.3-.1-1.2-.5-2.2-1.4-.8-.7-1.3-1.6-1.5-1.9-.1-.2 0-.4.1-.5l.5-.6.3-.6c.1-.2 0-.4 0-.5l-.6-1.5c-.2-.4-.3-.4-.5-.4h-.5z"/></svg> WhatsApp</a>
+        <a href="mailto:lucasyago2013@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M3.6 7l8.4 6 8.4-6"/></svg> E-mail</a>
+      </div>
+    </div>
+  </section>
 
-  const controls = new OrbitControls(camera, canvas);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.06;
-  controls.target.set(0, 1.7, 0);
-  controls.minDistance = 4;
-  controls.maxDistance = 18;
-  controls.maxPolarAngle = Math.PI * 0.52;
+  <footer>© 2025 Lukitas · Direção · Fotografia · Roteiro · Edição</footer>
 
-  // ---------- Luzes ----------
-  scene.add(new THREE.HemisphereLight(0x88bbff, 0x0a0a1a, 0.8));
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox" id="lightbox">
+    <span class="fechar" id="fechar">×</span>
+    <div class="conteudo">
+      <div class="imagem" id="lb-imagem"></div>
+      <div class="texto">
+        <h3 id="lb-titulo"></h3>
+        <p id="lb-desc"></p>
+        <a id="lb-link" class="btn primary" target="_blank" rel="noopener" style="margin-top:16px">Assistir no YouTube ▶</a>
+      </div>
+    </div>
+  </div>
 
-  const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
-  keyLight.position.set(5, 9, 6);
-  keyLight.castShadow = true;
-  keyLight.shadow.mapSize.set(2048, 2048);
-  keyLight.shadow.camera.near = 1;
-  keyLight.shadow.camera.far = 40;
-  keyLight.shadow.camera.left = -8;
-  keyLight.shadow.camera.right = 8;
-  keyLight.shadow.camera.top = 8;
-  keyLight.shadow.camera.bottom = -8;
-  scene.add(keyLight);
-
-  const rimLight = new THREE.PointLight(0x4da6ff, 40, 30);
-  rimLight.position.set(-5, 3, -5);
-  scene.add(rimLight);
-
-  const warmLight = new THREE.PointLight(0xff7b4d, 25, 25);
-  warmLight.position.set(5, 2, -4);
-  scene.add(warmLight);
-
-  // ---------- Piso com brilho ----------
-  const floor = new THREE.Mesh(
-    new THREE.CircleGeometry(14, 64),
-    new THREE.MeshStandardMaterial({ color: 0x0c1230, roughness: 0.35, metalness: 0.9 })
-  );
-  floor.rotation.x = -Math.PI / 2;
-  floor.receiveShadow = true;
-  scene.add(floor);
-
-  const grid = new THREE.GridHelper(28, 40, 0x2a6bff, 0x122a5c);
-  grid.position.y = 0.01;
-  grid.material.transparent = true;
-  grid.material.opacity = 0.35;
-  scene.add(grid);
-
-  // ---------- Campo de estrelas ----------
-  const starGeo = new THREE.BufferGeometry();
-  const starCount = 1600;
-  const pos = new Float32Array(starCount * 3);
-  for (let i = 0; i < starCount * 3; i += 3) {
-    const r = 40 + Math.random() * 60;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(Math.random() * 2 - 1);
-    pos[i]     = r * Math.sin(phi) * Math.cos(theta);
-    pos[i + 1] = Math.abs(r * Math.cos(phi)) * 0.7 + 2;
-    pos[i + 2] = r * Math.sin(phi) * Math.sin(theta);
-  }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0x9fd0ff, size: 0.35, transparent: true, opacity: 0.9 })));
-
-  // ---------- Materiais do personagem ----------
-  const matBody   = new THREE.MeshStandardMaterial({ color: 0xdfe8ff, roughness: 0.25, metalness: 0.85 });
-  const matAccent = new THREE.MeshStandardMaterial({ color: 0x2f7bff, roughness: 0.3, metalness: 0.7, emissive: 0x0a2a66, emissiveIntensity: 0.6 });
-  const matDark   = new THREE.MeshStandardMaterial({ color: 0x1a2340, roughness: 0.5, metalness: 0.6 });
-  const matGlow   = new THREE.MeshStandardMaterial({ color: 0x66f0ff, emissive: 0x66f0ff, emissiveIntensity: 2.2, roughness: 0.2 });
-
-  // ---------- Personagem (robô) ----------
-  const personagem = new THREE.Group();
-  personagem.position.y = 0;
-  scene.add(personagem);
-
-  // Corpo
-  const corpo = new THREE.Mesh(new THREE.CapsuleGeometry(0.95, 1.2, 8, 24), matBody);
-  corpo.position.y = 2.05;
-  corpo.castShadow = true;
-  personagem.add(corpo);
-
-  // Peito iluminado
-  const peito = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.12, 32), matGlow);
-  peito.rotation.x = Math.PI / 2;
-  peito.position.set(0, 2.15, 0.92);
-  personagem.add(peito);
-  const anelPeito = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.05, 16, 40), matAccent);
-  anelPeito.position.set(0, 2.15, 0.9);
-  personagem.add(anelPeito);
-
-  // Cabeça
-  const cabeca = new THREE.Mesh(new THREE.SphereGeometry(0.78, 40, 40), matBody);
-  cabeca.position.y = 3.55;
-  cabeca.castShadow = true;
-  personagem.add(cabeca);
-
-  // Visor (faixa escura)
-  const visor = new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.4, 0.5), matDark);
-  visor.position.set(0, 3.62, 0.55);
-  visor.castShadow = true;
-  personagem.add(visor);
-
-  // Olhos brilhantes
-  const olhoGeo = new THREE.SphereGeometry(0.12, 20, 20);
-  const olhoEsq = new THREE.Mesh(olhoGeo, matGlow);
-  olhoEsq.position.set(-0.28, 3.63, 0.85);
-  const olhoDir = olhoEsq.clone();
-  olhoDir.position.x = 0.28;
-  personagem.add(olhoEsq, olhoDir);
-
-  // Antena
-  const hasteAntena = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.7, 12), matDark);
-  hasteAntena.position.y = 4.45;
-  personagem.add(hasteAntena);
-  const bolaAntena = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 20), matGlow);
-  bolaAntena.position.y = 4.85;
-  personagem.add(bolaAntena);
-
-  // Braços
-  function criarBraco(lado) {
-    const braco = new THREE.Group();
-    braco.position.set(lado * 1.15, 2.7, 0);
-    const superior = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 0.7, 6, 16), matAccent);
-    superior.position.y = -0.5;
-    superior.castShadow = true;
-    braco.add(superior);
-    const mao = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), matBody);
-    mao.position.y = -1.05;
-    mao.castShadow = true;
-    braco.add(mao);
-    return braco;
-  }
-  const bracoEsq = criarBraco(-1);
-  const bracoDir = criarBraco(1);
-  personagem.add(bracoEsq, bracoDir);
-
-  // Pernas
-  function criarPerna(lado) {
-    const perna = new THREE.Mesh(new THREE.CapsuleGeometry(0.26, 0.7, 6, 16), matDark);
-    perna.position.set(lado * 0.42, 0.62, 0);
-    perna.castShadow = true;
-    return perna;
-  }
-  const pernaEsq = criarPerna(-1);
-  const pernaDir = criarPerna(1);
-  personagem.add(pernaEsq, pernaDir);
-
-  // Pés
-  function criarPe(lado) {
-    const pe = new THREE.Mesh(new THREE.SphereGeometry(0.32, 20, 20), matBody);
-    pe.scale.set(1, 0.6, 1.4);
-    pe.position.set(lado * 0.42, 0.18, 0.1);
-    pe.castShadow = true;
-    return pe;
-  }
-  personagem.add(criarPe(-1), criarPe(1));
-
-  // ---------- Órbita de partículas ao redor ----------
-  const orbita = new THREE.Group();
-  personagem.add(orbita);
-  for (let i = 0; i < 60; i++) {
-    const p = new THREE.Mesh(
-      new THREE.SphereGeometry(0.045, 8, 8),
-      new THREE.MeshBasicMaterial({ color: 0x66f0ff, transparent: true, opacity: 0.85 })
-    );
-    const a = (i / 60) * Math.PI * 2;
-    const rad = 2.2 + Math.random() * 0.6;
-    p.position.set(Math.cos(a) * rad, 1.5 + Math.random() * 2.5, Math.sin(a) * rad);
-    orbita.add(p);
-  }
-
-  // ---------- Animação ----------
-  const clock = new THREE.Clock();
-  let t = 0;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    const dt = clock.getDelta();
-    t += dt;
-
-    // Flutuação suave
-    personagem.position.y = Math.sin(t * 1.6) * 0.12;
-
-    // Cabeça acompanha de leve
-    cabeca.rotation.z = Math.sin(t * 1.2) * 0.05;
-    cabeca.rotation.y = Math.sin(t * 0.6) * 0.15;
-
-    // Braços balançando (um acena)
-    bracoEsq.rotation.x = Math.sin(t * 1.8) * 0.35;
-    bracoDir.rotation.x = Math.sin(t * 1.8 + Math.PI) * 0.35;
-    bracoDir.rotation.z = -Math.sin(t * 2.4) * 0.5 - 0.3;
-
-    // Olhos piscam
-    const blink = Math.abs(Math.sin(t * 1.7)) > 0.96 ? 0.15 : 1;
-    olhoEsq.scale.y = olhoDir.scale.y = blink;
-
-    // Antena pulsa
-    const pulse = 1 + Math.sin(t * 5) * 0.25;
-    bolaAntena.scale.setScalar(pulse);
-    peito.material.emissiveIntensity = 1.8 + Math.sin(t * 3) * 0.8;
-
-    // Órbita gira
-    orbita.rotation.y = t * 0.5;
-
-    controls.update();
-    renderer.render(scene, camera);
-  }
-
-  // ---------- Responsivo ----------
-  addEventListener('resize', () => {
-    camera.aspect = innerWidth / innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(innerWidth, innerHeight);
+  <script>
+  // ---------- Filtros ----------
+  const filtros = document.querySelectorAll('.filtro');
+  const itens = document.querySelectorAll('.item');
+  filtros.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filtros.forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      const cat = btn.dataset.filtro;
+      itens.forEach(it => {
+        const mostra = cat === 'todos' || it.dataset.cat === cat;
+        it.classList.toggle('oculto', !mostra);
+      });
+    });
   });
 
-  // Esconde o loader
-  const loader = document.getElementById('loader');
-  loader.style.opacity = '0';
-  setTimeout(() => loader.remove(), 600);
+  // ---------- Lightbox ----------
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-imagem');
+  const lbTit = document.getElementById('lb-titulo');
+  const lbDesc = document.getElementById('lb-desc');
 
-  animate();
+  itens.forEach(it => {
+    it.addEventListener('click', () => {
+      const thumb = it.querySelector('.thumb');
+      lbImg.style.backgroundImage = thumb.style.backgroundImage;
+      lbTit.textContent = it.dataset.titulo || '';
+      lbDesc.textContent = it.dataset.desc || '';
+      const lbLink = document.getElementById('lb-link');
+      if (it.dataset.link) { lbLink.href = it.dataset.link; lbLink.style.display = 'inline-block'; }
+      else { lbLink.style.display = 'none'; }
+      lb.classList.add('aberto');
+    });
+  });
+  function fecharLb() { lb.classList.remove('aberto'); }
+  document.getElementById('fechar').addEventListener('click', fecharLb);
+  lb.addEventListener('click', e => { if (e.target === lb) fecharLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+
+  // ---------- Revelar ao rolar ----------
+  const obs = new IntersectionObserver(entradas => {
+    entradas.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('visivel'); obs.unobserve(en.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
+
+  // ---------- Barra de progresso ----------
+  const progressEl = document.getElementById('progress');
+  let agendado = false;
+  function aoRolar() {
+    if (agendado) return;
+    agendado = true;
+    requestAnimationFrame(() => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - innerHeight;
+      const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+      if (progressEl) progressEl.style.width = (p * 100) + '%';
+      agendado = false;
+    });
+  }
+  addEventListener('scroll', aoRolar, { passive: true });
+  aoRolar();
+
+  // ---------- Spotlight segue o mouse ----------
+  const spot = document.getElementById('spotlight');
+  if (spot) {
+    addEventListener('mousemove', (e) => {
+      spot.style.opacity = '1';
+      spot.style.left = e.clientX + 'px';
+      spot.style.top = e.clientY + 'px';
+    }, { passive: true });
+    addEventListener('mouseleave', () => { spot.style.opacity = '0'; });
+  }
+
+  // ---------- Contadores das estatisticas ----------
+  function formatar(v, dec) { return v.toFixed(dec).replace('.', ','); }
+  const obsCont = new IntersectionObserver((ents) => {
+    ents.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      obsCont.unobserve(el);
+      const raw = el.textContent.trim();
+      const m = raw.match(/^([\d.,]+)(.*)$/);
+      if (!m) return;
+      const ns = m[1].replace(',', '.');
+      const suf = m[2];
+      const alvo = parseFloat(ns);
+      const dec = (ns.split('.')[1] || '').length;
+      const t0 = performance.now();
+      const dur = 2600;
+      const passo = (now) => {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - k, 3);
+        el.textContent = formatar(alvo * e, dec) + suf;
+        if (k < 1) requestAnimationFrame(passo); else el.textContent = raw;
+      };
+      requestAnimationFrame(passo);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.stats strong').forEach((c) => obsCont.observe(c));
+
+  // ---------- Revelar em cascata + tilt nos cards ----------
+  document.querySelectorAll('.grid .item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 55) + 'ms';
+    el.addEventListener('mousemove', (ev) => {
+      const r = el.getBoundingClientRect();
+      const x = (ev.clientX - r.left) / r.width - 0.5;
+      const y = (ev.clientY - r.top) / r.height - 0.5;
+      el.style.transform = 'perspective(760px) rotateY(' + (x * 7).toFixed(2) + 'deg) rotateX(' + (-y * 7).toFixed(2) + 'deg) translateY(-6px) scale(1.015)';
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+
+  // ---------- Preloader ----------
+  (function () {
+    const pre = document.getElementById('preloader');
+    if (!pre) return;
+    let feito = false;
+    const esconder = () => { if (feito) return; feito = true; pre.classList.add('oculto'); setTimeout(() => pre.remove(), 700); };
+    addEventListener('load', () => setTimeout(esconder, 900));
+    setTimeout(esconder, 2800);
+  })();
+
+  // ---------- Titulo letra por letra ----------
+  (function () {
+    const h1 = document.querySelector('.hero h1');
+    if (!h1) return;
+    const quebrar = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach((part) => {
+            if (part === '') return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const palavra = document.createElement('span');
+            palavra.className = 'palavra';
+            [...part].forEach((ch) => {
+              const sp = document.createElement('span');
+              sp.className = 'letra';
+              sp.textContent = ch;
+              palavra.appendChild(sp);
+            });
+            frag.appendChild(palavra);
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === 1) { quebrar(child); }
+      });
+    };
+    quebrar(h1);
+    h1.querySelectorAll('.letra').forEach((l, i) => { l.style.animationDelay = (0.05 + i * 0.028).toFixed(3) + 's'; });
+  })();
+
+  // ---------- Cursor personalizado ----------
+  (function () {
+    if (matchMedia('(hover: none)').matches) return;
+    const anel = document.getElementById('cursor');
+    const ponto = document.getElementById('cursor-dot');
+    if (!anel || !ponto) return;
+    document.body.classList.add('tem-cursor');
+    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+    addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      ponto.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
+    }, { passive: true });
+    (function loop() {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      anel.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    })();
+    const alvos = 'a, button, .item, .filtro, .marca, .foto';
+    document.querySelectorAll(alvos).forEach((el) => {
+      el.addEventListener('mouseenter', () => anel.classList.add('grande'));
+      el.addEventListener('mouseleave', () => anel.classList.remove('grande'));
+    });
+  })();
+
+  // ---------- Parallax ----------
+  const paraEls = [];
+  document.querySelectorAll('.bts-strip figure').forEach((el, i) => {
+    el.style.willChange = 'transform';
+    paraEls.push({ el: el, f: (i % 2 ? 0.09 : -0.09) });
+  });
+  const fotoImg = document.querySelector('.foto img');
+  if (fotoImg) { fotoImg.style.height = '118%'; paraEls.push({ el: fotoImg, f: -0.06 }); }
+
+  function parallax() {
+    const meio = innerHeight / 2;
+    paraEls.forEach((item) => {
+      const r = item.el.getBoundingClientRect();
+      const off = (r.top + r.height / 2 - meio) * item.f;
+      item.el.style.transform = 'translateY(' + off.toFixed(1) + 'px)';
+    });
+  }
+
+  // parallax no scroll
+  let paraAgendado = false;
+  addEventListener('scroll', () => {
+    if (paraAgendado) return;
+    paraAgendado = true;
+    requestAnimationFrame(() => { parallax(); paraAgendado = false; });
+  }, { passive: true });
+  addEventListener('resize', parallax);
+  parallax();
+
+  // ---------- Abas (Carreira / Estudos) ----------
+  document.querySelectorAll('.aba').forEach(function (b) {
+    b.addEventListener('click', function () {
+      const alvo = b.dataset.aba;
+      document.querySelectorAll('.aba').forEach(function (x) { x.classList.toggle('ativa', x === b); });
+      document.querySelectorAll('.aba-painel').forEach(function (pl) { pl.classList.toggle('oculto', pl.dataset.painel !== alvo); });
+    });
+  });
+
+  // ---------- Player de arquivos (abertura + trilha) ----------
+  (function () {
+    const A = document.getElementById('auAbertura');
+    const T = document.getElementById('auTrilha');
+    const btn = document.getElementById('somBtn');
+    const dica = document.getElementById('somHint');
+    if (!A || !T) return;
+    let mudo = false, tentando = false, tocandoTrilha = false;
+    window.__player = { ativo: true, alternar: null };
+
+    function mostrarDica() { if (dica) dica.classList.remove('oculto'); }
+    function esconderDica() { if (dica) dica.classList.add('oculto'); }
+    function comSom() { mudo = false; A.muted = false; T.muted = false; if (btn) btn.classList.add('ativo'); esconderDica(); }
+
+    function tocarTrilha() {
+      if (tocandoTrilha) return; tocandoTrilha = true;
+      T.volume = 0.55; T.loop = true; T.muted = mudo;
+      const p = T.play(); if (p && p.catch) p.catch(function () {});
+    }
+
+    function tentarTocar() {
+      if (tentando || tocandoTrilha) return;
+      tentando = true;
+      A.volume = 0.95; A.muted = false;
+      const p = A.play();
+      if (p && p.then) {
+        p.then(function () { tentando = false; comSom(); })
+         .catch(function (er) {
+            tentando = false;
+            if (er && (er.name === 'NotAllowedError' || er.name === 'AbortError')) { aguardar(); }
+            else { window.__player.ativo = false; }
+         });
+      } else { tentando = false; comSom(); }
+    }
+
+    function aguardar() {
+      mostrarDica();
+      const evs = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
+      function h() { evs.forEach(function (e2) { removeEventListener(e2, h); }); tentarTocar(); }
+      evs.forEach(function (e2) { addEventListener(e2, h, { passive: true }); });
+    }
+
+    function alternar() {
+      if (mudo) { comSom(); if (tocandoTrilha && T.paused) { T.play().catch(function () {}); } }
+      else { mudo = true; A.muted = true; T.muted = true; if (btn) btn.classList.remove('ativo'); }
+    }
+
+    A.addEventListener('ended', tocarTrilha, { once: true });
+    A.addEventListener('error', function () { window.__player.ativo = false; });
+    T.addEventListener('error', function () { window.__player.ativo = false; });
+    window.__player.alternar = alternar;
+    document.body.classList.add('audio-arquivo');
+
+    // Tenta tocar assim que possivel (play() espera o buffer sozinho)
+    if (A.readyState >= 2) { tentarTocar(); }
+    else {
+      A.addEventListener('loadedmetadata', tentarTocar, { once: true });
+      A.addEventListener('canplay', tentarTocar, { once: true });
+      setTimeout(tentarTocar, 300);
+    }
+  })();
+
+  // ---------- Audio: trilha epica + efeitos de UI ----------
+  (function () {
+    const btn = document.getElementById('somBtn');
+    if (!btn || !(window.AudioContext || window.webkitAudioContext)) return;
+    let ctx = null, master = null, sfx = null, bus = null, tocando = false, seqTimer = null;
+    let proximoTempo = 0, passo = 0;
+    const BPM = 100, passoDur = 60 / BPM / 4;
+    const acordes = [
+      { root: 110.00, arp: [220.00, 261.63, 329.63, 440.00], pad: [164.81, 220.00, 329.63] },
+      { root: 87.31,  arp: [174.61, 220.00, 261.63, 349.23], pad: [130.81, 174.61, 261.63] },
+      { root: 130.81, arp: [261.63, 329.63, 392.00, 523.25], pad: [196.00, 261.63, 392.00] },
+      { root: 98.00,  arp: [196.00, 246.94, 293.66, 392.00], pad: [146.83, 196.00, 293.66] }
+    ];
+    function impulso(dur, decay) {
+      const rate = ctx.sampleRate, len = Math.floor(rate * dur);
+      const buf = ctx.createBuffer(2, len, rate);
+      for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c);
+        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay); }
+      return buf;
+    }
+    function montarAudio() {
+      const conv = ctx.createConvolver(); conv.buffer = impulso(2.8, 2.2);
+      const wet = ctx.createGain(); wet.gain.value = 0.4; conv.connect(wet); wet.connect(master);
+      const revIn = ctx.createGain(); revIn.gain.value = 1; revIn.connect(conv);
+      bus = ctx.createGain(); bus.gain.value = 1; bus.connect(master); bus.connect(revIn);
+    }
+    function garantir() {
+      if (!ctx) {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+        sfx = ctx.createGain(); sfx.gain.value = 0.9; sfx.connect(ctx.destination);
+        montarAudio();
+      }
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    }
+    function voz(freq, t, dur, vol, tipo, dest) {
+      const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(dest || bus); o.start(t); o.stop(t + dur + 0.03);
+    }
+    function kick(t) {
+      const o = ctx.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(135, t); o.frequency.exponentialRampToValueAtTime(44, t + 0.13);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.6, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+      o.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.22);
+    }
+    function ruido(t, dur, freq, vol, tipo) {
+      const len = Math.max(1, Math.floor(ctx.sampleRate * dur));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+      const s = ctx.createBufferSource(); s.buffer = buf;
+      const f = ctx.createBiquadFilter(); f.type = tipo || 'highpass'; f.frequency.value = freq;
+      const g = ctx.createGain(); g.gain.value = vol;
+      s.connect(f); f.connect(g); g.connect(bus); s.start(t);
+    }
+    function tocarPasso() {
+      const t = proximoTempo;
+      const barra = Math.floor(passo / 16) % 4;
+      const ac = acordes[barra];
+      const p = passo % 16;
+      const b = Math.floor(passo / 16);
+      if (b >= 2) { const i = (passo % 8); voz(ac.arp[i % ac.arp.length], t, 0.22, 0.045, 'triangle'); }
+      if (p === 0) { voz(ac.root, t, 1.5, 0.16, 'triangle'); ac.pad.forEach(function (f) { voz(f, t, 3.2, 0.035, 'sine'); }); }
+      if (p === 3 || p === 6 || p === 11 || p === 14) voz(ac.root, t, 0.35, 0.11, 'triangle');
+      if (p === 8) voz(ac.root * 1.5, t, 1.1, 0.13, 'triangle');
+      if (b >= 4) {
+        if (p === 0 || p === 8) kick(t);
+        if (p === 4 || p === 12) ruido(t, 0.16, 1400, 0.18, 'bandpass');
+        if (p % 2 === 1) ruido(t, 0.05, 7500, 0.04, 'highpass');
+      }
+      if (b >= 6 && (p === 0 || p === 10)) voz(ac.arp[(p ? 2 : 0)] * 2, t, 1.6, 0.05, 'sine');
+    }
+    function agendar() {
+      if (!tocando || !ctx) return;
+      while (proximoTempo < ctx.currentTime + 0.25) { tocarPasso(); proximoTempo += passoDur; passo++; }
+    }
+    function tom(freq, dur, vol, tipo, atraso, dest) {
+      if (!tocando) return;
+      garantir();
+      const t0 = ctx.currentTime + (atraso || 0);
+      const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t0);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(dest || sfx); o.start(t0); o.stop(t0 + dur + 0.03);
+    }
+    function ligar() {
+      garantir();
+      const t0 = ctx.currentTime;
+      master.gain.cancelScheduledValues(t0);
+      master.gain.setValueAtTime(0.0001, t0);
+      master.gain.linearRampToValueAtTime(0.3, t0 + 2.5);
+      master.gain.linearRampToValueAtTime(0.62, t0 + 40);
+      tocando = true; proximoTempo = t0 + 0.12; passo = 0;
+      if (!seqTimer) seqTimer = setInterval(agendar, 60);
+      btn.classList.add('ativo');
+    }
+    function desligar() {
+      tocando = false;
+      if (seqTimer) { clearInterval(seqTimer); seqTimer = null; }
+      btn.classList.remove('ativo');
+      if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8); }
+    }
+    const dica = document.getElementById('somHint');
+    btn.addEventListener('click', function () {
+      if (dica) dica.classList.add('oculto');
+      if (window.__player && window.__player.ativo) { window.__player.alternar(); return; }
+      tocando ? desligar() : ligar();
+    });
+    let ultimoHover = 0;
+    function hoverSom() { const a = performance.now(); if (a - ultimoHover < 70) return; ultimoHover = a; tom(1200, 0.08, 0.035, 'sine'); tom(1800, 0.06, 0.018, 'sine', 0.02); }
+    function cliqueSom() { tom(680, 0.12, 0.055, 'triangle'); tom(1020, 0.14, 0.04, 'sine', 0.05); tom(1360, 0.16, 0.028, 'sine', 0.11); }
+    const alvosHover = '.item, .filtro, .marca, .btn, nav a, .aba, .foto-pilha';
+    document.querySelectorAll(alvosHover).forEach(function (el) { el.addEventListener('mouseenter', hoverSom); });
+    document.querySelectorAll('a, button, .item, .filtro').forEach(function (el) { el.addEventListener('click', cliqueSom); });
+    window.__sfx = {
+      hit: function () { tom(1500, 0.09, 0.06, 'sine'); tom(2250, 0.11, 0.03, 'sine', 0.04); },
+      bonus: function () { tom(1200, 0.09, 0.06, 'sine'); tom(1800, 0.10, 0.05, 'sine', 0.06); tom(2400, 0.14, 0.04, 'sine', 0.12); },
+      miss: function () { tom(200, 0.14, 0.045, 'sawtooth'); }
+    };
+  })();
+
+  // ---------- Minigame (mira) ----------
+  (function () {
+    const arena = document.getElementById('arena');
+    const mira = document.getElementById('mira');
+    const ret = document.querySelector('.ret');
+    const msg = document.getElementById('arenaMsg');
+    const texto = document.getElementById('arenaTexto');
+    const btn = document.getElementById('btnJogar');
+    const hudTempo = document.getElementById('hudTempo');
+    const hudScore = document.getElementById('hudScore');
+    const hudPrec = document.getElementById('hudPrec');
+    const hudCombo = document.getElementById('hudCombo');
+    if (!arena) return;
+    const RECORDE = 3200;
+    let jogando = false, score = 0, tiros = 0, acertos = 0, combo = 0, tempo = 20, timer = null, spawner = null;
+    function sfx(n) { if (window.__sfx && window.__sfx[n]) window.__sfx[n](); }
+    function mult() { return Math.min(5, 1 + Math.floor(combo / 4)); }
+    function atualizarHud() {
+      hudPrec.textContent = (tiros > 0 ? Math.round((acertos / tiros) * 100) : 100) + '%';
+      hudScore.textContent = score + ' pts';
+      hudCombo.textContent = combo >= 2 ? ('x' + mult() + '  ' + combo + ' seguidos') : '';
+    }
+    function pop(x, y, txt, bonus) {
+      const el = document.createElement('div');
+      el.className = 'pop' + (bonus ? ' bonus' : '');
+      el.textContent = txt;
+      el.style.left = x + 'px'; el.style.top = y + 'px';
+      arena.appendChild(el);
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 820);
+    }
+    function criarAlvo() {
+      if (!jogando) return;
+      const bonus = Math.random() < 0.22;
+      const tam = bonus ? (24 + Math.random() * 14) : (34 + Math.random() * 36);
+      const r = arena.getBoundingClientRect();
+      const x = Math.random() * (r.width - tam - 24) + 12;
+      const y = Math.random() * (r.height - tam - 74) + 58;
+      const el = document.createElement('div');
+      el.className = 'alvo' + (bonus ? ' bonus' : '');
+      el.style.width = tam + 'px'; el.style.height = tam + 'px';
+      el.style.left = x + 'px'; el.style.top = y + 'px';
+      mira.appendChild(el);
+      let vivo = true;
+      const to = setTimeout(function () {
+        if (!vivo) return;
+        vivo = false; el.classList.add('errou');
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+      }, bonus ? 850 : Math.max(680, 1400 - (20 - tempo) * 36));
+      el.addEventListener('mousedown', function (ev) {
+        ev.stopPropagation();
+        if (!jogando || !vivo) return;
+        vivo = false; clearTimeout(to);
+        tiros++; acertos++; combo++;
+        const pontos = (bonus ? 250 : 100) * mult();
+        score += pontos;
+        pop(x + tam / 2, y + tam / 2, '+' + pontos, bonus);
+        atualizarHud();
+        sfx(bonus ? 'bonus' : 'hit');
+        el.classList.add('errou');
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 200);
+      });
+    }
+    arena.addEventListener('mousedown', function () {
+      if (!jogando) return;
+      tiros++; combo = 0; atualizarHud(); sfx('miss');
+    });
+    arena.addEventListener('mousemove', function (e) {
+      if (!ret) return;
+      const r = arena.getBoundingClientRect();
+      ret.style.left = (e.clientX - r.left) + 'px';
+      ret.style.top = (e.clientY - r.top) + 'px';
+    });
+    function iniciar() {
+      jogando = true; score = 0; tiros = 0; acertos = 0; combo = 0; tempo = 20;
+      arena.classList.add('jogando'); document.body.classList.add('mirando');
+      atualizarHud(); hudTempo.textContent = '20.0s';
+      msg.classList.add('oculto'); mira.innerHTML = '';
+      timer = setInterval(function () {
+        tempo -= 0.1;
+        if (tempo <= 0) { terminar(); return; }
+        hudTempo.textContent = tempo.toFixed(1) + 's';
+      }, 100);
+      spawner = setInterval(criarAlvo, 480);
+      criarAlvo(); criarAlvo(); criarAlvo();
+    }
+    function terminar() {
+      jogando = false; arena.classList.remove('jogando'); document.body.classList.remove('mirando');
+      clearInterval(timer); clearInterval(spawner);
+      mira.innerHTML = ''; hudCombo.textContent = '';
+      const pr = tiros > 0 ? Math.round((acertos / tiros) * 100) : 0;
+      let rank = 'Continue treinando!';
+      if (score >= 2000) rank = 'Mira de elite! 🎯';
+      else if (score >= 1200) rank = 'Ótima mira! 🔥';
+      else if (score >= 600) rank = 'Boa! 💪';
+      const bateu = score > RECORDE ? ' 🎁 Você bateu meu recorde — o presentinho é seu!' : '';
+      texto.innerHTML = '<strong>' + score + ' pts</strong> · precisão <strong>' + pr + '%</strong> · ' + rank + bateu;
+      btn.textContent = 'Jogar de novo';
+      msg.classList.remove('oculto');
+    }
+    btn.addEventListener('click', iniciar);
+  })();
   </script>
-</body>
-</html>
-

@@ -1,0 +1,13 @@
+MUSICAS DO PORTFOLIO
+====================
+
+1) abertura.wav  -> som de abertura (toca ao carregar / 1a interacao)
+2) trilha.mp3    -> musica de fundo (loop, apos a abertura)
+
+COMO FUNCIONA:
+- Ao carregar, o player tenta tocar COM SOM.
+- Se o navegador bloquear (anti-autoplay), aguarda a 1a interacao
+  (rolar / clique / toque) e toca COM SOM desde o inicio.
+- Botao de fone/mp3 no canto direito liga/desliga o som.
+
+IMPORTANTE: mantenha a pasta assets/ junto do index.html.
