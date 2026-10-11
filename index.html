@@ -356,10 +356,10 @@
   }
 
 
-  .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .30; pointer-events: none; filter: saturate(.5) brightness(.9) contrast(1.06); mix-blend-mode: luminosity; }
+  .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .38; pointer-events: none; filter: saturate(.75) brightness(1.05) contrast(1.05); mix-blend-mode: screen; }
   /* Colagem de fundo (mixed media) */
   #colagem { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  #colagem .cg { position: absolute; opacity: .26; will-change: transform; animation: flutuaColagem linear infinite; }
+  #colagem .cg { position: absolute; opacity: .42; will-change: transform; animation: flutuaColagem linear infinite; }
   #colagem .bloco { box-shadow: 0 12px 34px rgba(0,0,0,.35); border-radius: 4px; }
   #colagem .stk { color: #141418; filter: drop-shadow(0 8px 16px rgba(0,0,0,.5)); }
   #colagem .stk svg { display: block; width: 100%; height: 100%; }
@@ -575,7 +575,7 @@
   <div class="glow a"></div>
   <div class="glow b"></div>
   <video class="video-fundo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-    <source src="https://videos.pexels.com/video-files/7898696/7898696-sd_960_540_30fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/5094475/5094475-sd_960_540_24fps.mp4" type="video/mp4">
   </video>
   <audio id="auAbertura" src="assets/audio/abertura.wav" preload="auto"></audio>
   <audio id="auTrilha" src="assets/audio/trilha.mp3" preload="auto" loop></audio>
@@ -1614,15 +1614,21 @@
     const CAS = '<svg viewBox="0 0 68 46" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="4" y="7" width="60" height="32" rx="4"/><rect x="12" y="12" width="44" height="6" fill="#fff" stroke="none"/><circle cx="21" cy="29" r="7" fill="#fff" stroke="#141418"/><circle cx="47" cy="29" r="7" fill="#fff" stroke="#141418"/></svg>';
     const MIC = '<svg viewBox="0 0 44 68" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="14" y="6" width="16" height="30" rx="8"/><path d="M10 32 a12 12 0 0 0 24 0" fill="none"/><path d="M22 44 v12 M15 56 h14" fill="none"/></svg>';
     const CLA = '<svg viewBox="0 0 68 48" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="5" y="19" width="58" height="24" rx="3"/><path d="M5 19 L57 6 l1.5 9 L7 28z"/></svg>';
+    function app(bg2, cor, txt) {
+      return '<svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="10" fill="' + bg2 + '" stroke="rgba(255,255,255,.55)" stroke-width="2"/><text x="24" y="32" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="19" fill="' + cor + '">' + txt + '</text></svg>';
+    }
+    const DR = '<svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="10" fill="#182430" stroke="rgba(255,255,255,.55)" stroke-width="2"/><circle cx="24" cy="24" r="11" fill="none" stroke="#e8552f" stroke-width="3.4"/><path d="M24 13 a11 11 0 0 1 9.5 5.6" fill="none" stroke="#f5c451" stroke-width="3.4"/><path d="M33.5 29.4 a11 11 0 0 1 -9.5 5.6" fill="none" stroke="#3fbf7f" stroke-width="3.4"/><path d="M14.5 29.4 a11 11 0 0 1 9.5 -16.4" fill="none" stroke="#3f8fe8" stroke-width="3.4"/></svg>';
     const itens = [
-      ['b', 'var(--col-magenta)', '5%', '14%', 132, 108, -11, 21],
-      ['b', 'var(--col-verde)', '82%', '68%', 150, 88, 8, 25],
-      ['b', 'var(--col-azul)', '10%', '74%', 116, 82, 6, 23],
-      ['r', 'var(--col-amarelo)', '76%', '8%', 84, 84, 0, 19],
-      ['s', CAM, '89%', '36%', 104, 78, -7, 22],
-      ['s', CAS, '7%', '38%', 108, 73, 7, 26],
-      ['s', MIC, '44%', '80%', 52, 80, -11, 20],
-      ['s', CLA, '30%', '6%', 100, 70, 9, 24]
+      ['s', app('#2b0a4d', '#b39dff', 'Pr'), '6%', '13%', 76, 76, -10, 21],
+      ['s', app('#1e0a3c', '#b39dff', 'Ae'), '80%', '66%', 72, 72, 8, 25],
+      ['s', app('#001e36', '#31a8ff', 'Ps'), '12%', '72%', 68, 68, 6, 23],
+      ['s', DR, '74%', '9%', 74, 74, -6, 19],
+      ['s', app('#1b1b1b', '#ff8b25', 'Bl'), '46%', '4%', 66, 66, 7, 24],
+      ['s', app('#1a0d33', '#00e4bb', 'Au'), '38%', '82%', 62, 62, -9, 22],
+      ['s', CAM, '90%', '38%', 104, 78, -7, 22],
+      ['s', CAS, '6%', '40%', 108, 73, 7, 26],
+      ['s', MIC, '56%', '88%', 50, 78, -11, 20],
+      ['s', CLA, '24%', '6%', 96, 68, 9, 24]
     ];
     itens.forEach(function (o, i) {
       const d = document.createElement('span');
