@@ -352,7 +352,7 @@
   }
 
 
-  .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .20; pointer-events: none; filter: saturate(.85) brightness(.72); }
+  .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .22; pointer-events: none; filter: saturate(.35) brightness(.85) contrast(1.05); mix-blend-mode: luminosity; }
   /* Recortes de papel (fundo DIY) */
   #recortes { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .recorte { position: absolute; animation: flutuaPapel linear infinite; will-change: transform; }
@@ -560,7 +560,7 @@
   <div class="glow a"></div>
   <div class="glow b"></div>
   <video class="video-fundo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-    <source src="https://videos.pexels.com/video-files/855120/855120-sd_960_540_25fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/7898696/7898696-sd_960_540_30fps.mp4" type="video/mp4">
   </video>
   <audio id="auAbertura" src="assets/audio/abertura.wav" preload="auto"></audio>
   <audio id="auTrilha" src="assets/audio/trilha.mp3" preload="auto" loop></audio>
