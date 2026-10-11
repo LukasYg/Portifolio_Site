@@ -368,10 +368,6 @@
   }
 
   /* ---------- Hero com imagem de fundo ---------- */
-  .hero::after {
-    content: ''; position: absolute; inset: 0; z-index: 0;
-    background: linear-gradient(to bottom, rgba(10,11,13,.30), var(--bg) 90%);
-  }
   .hero > * { position: relative; z-index: 1; }
 
   /* ---------- Faixa de bastidores ---------- */
@@ -564,14 +560,14 @@
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="knob" id="somBtn" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" tabindex="0" title="Volume">
+  <div class="knob" id="somBtn" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30" tabindex="0" title="Volume">
     <svg viewBox="0 0 48 48">
       <circle class="k-base" cx="24" cy="24" r="19" transform="rotate(135 24 24)"/>
       <circle class="k-arco" id="kArco" cx="24" cy="24" r="19" transform="rotate(135 24 24)"/>
       <line class="k-ponteiro" id="kPonteiro" x1="24" y1="24" x2="24" y2="8"/>
       <circle class="k-centro" cx="24" cy="24" r="2.6"/>
     </svg>
-    <span class="k-pct" id="kPct">60</span>
+    <span class="k-pct" id="kPct">30</span>
   </div>
   <div class="som-hint" id="somHint">Ativar som 🎵</div>
 
@@ -1192,7 +1188,7 @@
     const btn = document.getElementById('somBtn');
     const dica = document.getElementById('somHint');
     if (!A || !T) return;
-    let vol = 0.6, tentando = false, tocandoTrilha = false;
+    let vol = 0.3, tentando = false, tocandoTrilha = false;
     window.__player = { ativo: true, setVolume: null };
 
     function mostrarDica() { if (dica) dica.classList.remove('oculto'); }
@@ -1248,7 +1244,9 @@
 
     A.addEventListener('ended', function () { tocarTrilha(); });
     A.addEventListener('timeupdate', function () {
-      if (!tocandoTrilha && isFinite(A.duration) && A.duration - A.currentTime <= 2.2) tocarTrilha();
+      if (tocandoTrilha) return;
+      const t = A.currentTime;
+      if (t >= 2.2 || (isFinite(A.duration) && A.duration - t <= 2.5)) tocarTrilha();
     });
     A.addEventListener('error', function () { window.__player.ativo = false; });
     T.addEventListener('error', function () { window.__player.ativo = false; });
@@ -1510,7 +1508,7 @@
     const ponteiro = document.getElementById('kPonteiro');
     const pct = document.getElementById('kPct');
     const L = 89.5;
-    let vol = 0.6, arrastando = false, inicioY = 0, volInicio = 0;
+    let vol = 0.3, arrastando = false, inicioY = 0, volInicio = 0;
     function pintar() {
       if (arco) arco.style.strokeDasharray = (L * vol) + ' 200';
       if (ponteiro) ponteiro.style.transform = 'rotate(' + (-135 + vol * 270).toFixed(1) + 'deg)';
