@@ -355,14 +355,14 @@
 
   /* Entrada do hero */
   @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
-  .hero > :not(.hero-video) { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
+  .hero > * { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
   .hero .hero-esq { animation-delay: .05s; }
   .hero .hero-dir { animation-delay: .35s; }
   .hero .scroll-cue { animation-delay: .7s; }
 
-  /* Video de fundo do hero */
-  .hero-video { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100vw; height: 100vh; object-fit: cover; opacity: .16; z-index: 0; pointer-events: none;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 82%); mask-image: linear-gradient(to bottom, #000 0%, transparent 82%); }
+  /* Brilho suave no topo do hero */
+  .hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(85% 65% at 50% 0%, rgba(92,200,189,.07), transparent 62%); }
 
   /* Titulo letra por letra */
   @keyframes letra { to { opacity: 1; transform: none; } }
@@ -484,9 +484,6 @@
   </header>
 
   <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://images.pexels.com/photos/37952639/pexels-photo-37952639.jpeg?auto=compress&cs=tinysrgb&w=1600">
-      <source src="https://videos.pexels.com/video-files/7451809/7451809-hd_1920_1080_30fps.mp4" type="video/mp4">
-    </video>
     <div class="hero-esq">
       <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
       <h1 class="display"><em>Histórias</em> que <em>ganham vida</em> na tela.</h1>
@@ -1121,18 +1118,18 @@
     });
   });
 
-  // ---------- Audio: trilha + efeitos de UI ----------
+  // ---------- Audio: trilha ambiente + efeitos de UI ----------
   (function () {
     const btn = document.getElementById('somBtn');
     if (!btn || !(window.AudioContext || window.webkitAudioContext)) return;
-    let ctx = null, master = null, sfx = null, bus = null, revIn = null, tocando = false, seqTimer = null;
-    let proximoTempo = 0, passo = 0;
-    const BPM = 84, passoDur = 60 / BPM / 2;
+    let ctx = null, master = null, sfx = null, bus = null, padVozes = [], padFiltro = null;
+    let tocando = false, tAcorde = null, tMelodia = null, prox = 1, acordeAtual = null;
+    const BPM = 72, compasso = (60 / BPM) * 8;
     const acordes = [
-      { root: 110.00, arp: [220.00, 261.63, 329.63, 440.00] },
-      { root: 87.31,  arp: [174.61, 220.00, 261.63, 349.23] },
-      { root: 130.81, arp: [261.63, 329.63, 392.00, 523.25] },
-      { root: 98.00,  arp: [196.00, 246.94, 293.66, 392.00] }
+      [110.00, 164.81, 261.63, 329.63],
+      [87.31,  174.61, 261.63, 349.23],
+      [130.81, 196.00, 261.63, 392.00],
+      [98.00,  196.00, 246.94, 392.00]
     ];
     function impulso(dur, decay) {
       const rate = ctx.sampleRate, len = Math.floor(rate * dur);
@@ -1144,10 +1141,25 @@
       return buf;
     }
     function montarAudio() {
-      const conv = ctx.createConvolver(); conv.buffer = impulso(2.6, 2.4);
-      const wet = ctx.createGain(); wet.gain.value = 0.45; conv.connect(wet); wet.connect(master);
-      revIn = ctx.createGain(); revIn.gain.value = 1; revIn.connect(conv);
+      const conv = ctx.createConvolver(); conv.buffer = impulso(3.4, 2.1);
+      const wet = ctx.createGain(); wet.gain.value = 0.55; conv.connect(wet); wet.connect(master);
+      const revIn = ctx.createGain(); revIn.gain.value = 1; revIn.connect(conv);
       bus = ctx.createGain(); bus.gain.value = 1; bus.connect(master); bus.connect(revIn);
+      padFiltro = ctx.createBiquadFilter(); padFiltro.type = 'lowpass'; padFiltro.frequency.value = 900; padFiltro.Q.value = 0.5;
+      padFiltro.connect(bus);
+      const flfo = ctx.createOscillator(); flfo.frequency.value = 0.03;
+      const fg = ctx.createGain(); fg.gain.value = 300;
+      flfo.connect(fg); fg.connect(padFiltro.frequency); flfo.start();
+      acordes[0].forEach(function (f, i) {
+        const o = ctx.createOscillator(); o.type = (i % 2) ? 'sine' : 'triangle'; o.frequency.value = f;
+        const g = ctx.createGain(); g.gain.value = 0.055;
+        o.connect(g); g.connect(padFiltro);
+        const lfo = ctx.createOscillator(); lfo.frequency.value = 0.02 + i * 0.008;
+        const lg = ctx.createGain(); lg.gain.value = 6;
+        lfo.connect(lg); lg.connect(o.detune); lfo.start(); o.start();
+        padVozes.push(o);
+      });
+      acordeAtual = acordes[0];
     }
     function garantir() {
       if (!ctx) {
@@ -1159,6 +1171,15 @@
       if (ctx.state === 'suspended') ctx.resume();
       return ctx;
     }
+    function nota(freq, dur, vol, tipo, dest) {
+      const t0 = ctx.currentTime;
+      const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t0);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + (tipo === 'bell' ? 0.008 : 0.9));
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(dest || bus); o.start(t0); o.stop(t0 + dur + 0.1);
+    }
     function tom(freq, dur, vol, tipo, atraso, dest) {
       if (!tocando) return;
       garantir();
@@ -1168,63 +1189,40 @@
       g.gain.setValueAtTime(0.0001, t0);
       g.gain.exponentialRampToValueAtTime(vol, t0 + 0.015);
       g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-      o.connect(g); g.connect(dest || sfx);
-      o.start(t0); o.stop(t0 + dur + 0.03);
+      o.connect(g); g.connect(dest || sfx); o.start(t0); o.stop(t0 + dur + 0.03);
     }
-    function nota(freq, t, dur, vol, tipo) {
-      const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t);
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(vol, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      o.connect(g); g.connect(bus); o.start(t); o.stop(t + dur + 0.03);
+    function trocarAcorde() {
+      const ac = acordes[prox % acordes.length];
+      const t = ctx.currentTime;
+      padVozes.forEach(function (o, i) { o.frequency.linearRampToValueAtTime(ac[i], t + 3.5); });
+      nota(ac[0] / 2, 5.0, 0.16, 'sine');
+      acordeAtual = ac; prox++;
     }
-    function kick(t) {
-      const o = ctx.createOscillator(); o.type = 'sine';
-      o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(46, t + 0.12);
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.17);
-      o.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.19);
-    }
-    function hat(t) {
-      const len = Math.floor(ctx.sampleRate * 0.05);
-      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-      const d = buf.getChannelData(0);
-      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
-      const s = ctx.createBufferSource(); s.buffer = buf;
-      const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 7200;
-      const g = ctx.createGain(); g.gain.value = 0.045;
-      s.connect(hp); hp.connect(g); g.connect(bus); s.start(t);
-    }
-    function tocarPasso() {
-      const t = proximoTempo, p = passo % 8, ac = acordes[Math.floor(passo / 8) % 4];
-      if (p % 4 === 0) kick(t);
-      if (p % 2 === 1) hat(t);
-      if (p === 0) { nota(ac.root, t, 1.7, 0.13, 'triangle'); nota(ac.root * 2, t, 1.7, 0.045, 'sine'); }
-      const idx = passo % ac.arp.length;
-      const f = ac.arp[idx] * (Math.random() < 0.14 ? 2 : 1);
-      nota(f, t, 0.36, 0.06, 'sine');
-    }
-    function agendar() {
-      if (!tocando || !ctx) return;
-      while (proximoTempo < ctx.currentTime + 0.25) { tocarPasso(); proximoTempo += passoDur; passo++; }
+    function melodia() {
+      if (!acordeAtual || Math.random() < 0.35) return;
+      const n = acordeAtual[Math.floor(Math.random() * acordeAtual.length)] * (Math.random() < 0.5 ? 2 : 4);
+      nota(n, 2.8, 0.055, 'triangle');
+      nota(n * 2, 3.2, 0.018, 'sine');
     }
     function ligar() {
       garantir();
       const t0 = ctx.currentTime;
       master.gain.cancelScheduledValues(t0);
       master.gain.setValueAtTime(0.0001, t0);
-      master.gain.linearRampToValueAtTime(0.30, t0 + 3);
-      master.gain.linearRampToValueAtTime(0.62, t0 + 50);
-      tocando = true; proximoTempo = t0 + 0.15; passo = 0;
-      if (!seqTimer) seqTimer = setInterval(agendar, 60);
+      master.gain.linearRampToValueAtTime(0.22, t0 + 3);
+      master.gain.linearRampToValueAtTime(0.55, t0 + 50);
+      tocando = true;
+      trocarAcorde();
+      if (!tAcorde) tAcorde = setInterval(trocarAcorde, compasso * 1000);
+      if (!tMelodia) { tMelodia = setInterval(melodia, 1750); setTimeout(melodia, 900); }
       btn.classList.add('ativo'); btn.textContent = '🔊';
     }
     function desligar() {
       tocando = false;
-      if (seqTimer) { clearInterval(seqTimer); seqTimer = null; }
+      if (tAcorde) { clearInterval(tAcorde); tAcorde = null; }
+      if (tMelodia) { clearInterval(tMelodia); tMelodia = null; }
       btn.classList.remove('ativo'); btn.textContent = '🔈';
-      if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8); }
+      if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.0); }
     }
     const dica = document.getElementById('somHint');
     btn.addEventListener('click', function () { tocando ? desligar() : ligar(); if (dica) dica.classList.add('oculto'); });
