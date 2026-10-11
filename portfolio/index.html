@@ -75,11 +75,11 @@
     padding: 6px 16px; margin-bottom: 26px;
   }
   .hero h1 {
-    font-size: clamp(30px, 4.4vw, 56px); line-height: 1.14;
-    font-weight: 600; letter-spacing: -0.018em; margin-bottom: 26px;
+    font-size: clamp(38px, 5.6vw, 72px); line-height: 1.08;
+    font-weight: 700; letter-spacing: -0.025em; margin-bottom: 24px;
   }
   .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero p { color: var(--muted); font-size: clamp(14px, 1.5vw, 16.5px); max-width: 640px; line-height: 1.8; }
+  .hero p { color: var(--muted); font-size: clamp(15px, 1.6vw, 18px); max-width: 620px; line-height: 1.7; }
   .cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
   .btn {
     padding: 13px 28px; border-radius: 999px; font-size: 14px; font-weight: 600;
@@ -125,8 +125,17 @@
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   /* Quem sou eu */
   .sobre-junto { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 52px; align-items: start; }
-  .foto { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); margin-bottom: 24px; aspect-ratio: 4/5; background: var(--card); }
+  .foto-pilha { position: relative; margin-bottom: 28px; }
+  .foto { position: relative; z-index: 4; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4/5; background: var(--card); }
   .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pilha-foto { position: absolute; left: 50%; bottom: -8px; width: 62%; height: 56%; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 12px 34px rgba(0,0,0,.45); transition: transform .55s cubic-bezier(.2,.8,.2,1); }
+  .pilha-foto img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.4) brightness(.8); }
+  .pilha-foto.f1 { z-index: 1; transform: translateX(-50%) rotate(-13deg) scale(.84); }
+  .pilha-foto.f2 { z-index: 2; transform: translateX(-50%) rotate(0deg) scale(.9); }
+  .pilha-foto.f3 { z-index: 3; transform: translateX(-50%) rotate(13deg) scale(.84); }
+  .foto-pilha:hover .f1 { transform: translateX(calc(-50% - 42%)) translateY(12%) rotate(-17deg) scale(.84); }
+  .foto-pilha:hover .f2 { transform: translateX(-50%) translateY(18%) rotate(0deg) scale(.9); }
+  .foto-pilha:hover .f3 { transform: translateX(calc(-50% + 42%)) translateY(12%) rotate(17deg) scale(.84); }
   .sobre-esq p { color: var(--muted); margin-bottom: 14px; }
   .sobre-esq .skills { margin-top: 20px; }
   .tl-titulo { font-size: 20px; font-weight: 600; margin-bottom: 22px; }
@@ -410,7 +419,7 @@
     </video>
     <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
     <h1 class="display">Histórias que <em>ganham vida</em> na tela.</h1>
-    <p>Salve! Eu sou o Lucas Yago, mas talvez você me conheça como Lukitas! Sou diretor de fotografia, apresentador, editor de vídeo e estou aqui para criar narrativas visuais que conectam! Estou presente desde a idealização e roteiro, até a finalização e entrega. Unindo técnicas avançadas de iluminação, domínio de câmera e direção para que, através das imagens, a emoção seja transmitida!</p>
+    <p>Salve! Eu sou o <strong>Lucas Yago</strong>, mas você pode me chamar de <strong>Lukitas</strong>. Diretor de fotografia, apresentador e editor de vídeo — crio narrativas visuais que conectam.</p>
     <div class="roles">
       <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>TI</span>
     </div>
@@ -435,11 +444,17 @@
       </div>
       <div class="sobre-junto">
         <div class="sobre-esq revelar">
-          <div class="foto">
-            <img src="https://yt3.googleusercontent.com/X0cKDvFUOEKKOjyWTyzWIEjn_GSaIoc-XApSrpGg5uXk7ungxfVDyerB9FF5D4fBdR9kuCCxyQ=s400-c-k-c0x00ffffff-no-rj" alt="Lucas Yago (Lukitas)">
+          <div class="foto-pilha">
+            <div class="pilha-foto f1"><img src="https://images.pexels.com/photos/38059008/pexels-photo-38059008.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bastidores"></div>
+            <div class="pilha-foto f2"><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Dirigindo"></div>
+            <div class="pilha-foto f3"><img src="https://images.pexels.com/photos/37593308/pexels-photo-37593308.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Câmera"></div>
+            <div class="foto">
+              <img src="https://yt3.googleusercontent.com/X0cKDvFUOEKKOjyWTyzWIEjn_GSaIoc-XApSrpGg5uXk7ungxfVDyerB9FF5D4fBdR9kuCCxyQ=s400-c-k-c0x00ffffff-no-rj" alt="Lucas Yago (Lukitas)">
+            </div>
           </div>
           <p>Sou o Lukitas, profissional de audiovisual. Atuo como <strong>diretor de fotografia e apresentador</strong>, além de <strong>criador de conteúdo, diretor, roteirista, editor de vídeo e profissional de TI</strong> — cuidando de cada etapa, da ideia à entrega final.</p>
           <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil. Atualmente curso <strong>Audiovisual na Univali</strong>.</p>
+          <p>Estou presente desde a idealização e roteiro até a finalização e entrega, unindo técnicas avançadas de iluminação, domínio de câmera e direção para que, através das imagens, a emoção seja transmitida.</p>
           <div class="skills">
             <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>TI</span>
           </div>
