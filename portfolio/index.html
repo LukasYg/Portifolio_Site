@@ -120,6 +120,8 @@
   .tl-card h3 { font-size: 21px; margin-bottom: 6px; }
   .tl-card p { color: var(--muted); font-size: 14px; }
   .tl-stats { margin-top: 14px; font-size: 13px; color: var(--accent); font-weight: 600; }
+  .tl-card a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(92,200,189,.4); }
+  .tl-card a:hover { border-bottom-color: var(--accent); }
   .tl-stats span { color: var(--muted); font-weight: 400; margin: 0 4px; }
   /* Marcas */
   #marcas { padding: 90px 0; background: var(--bg-soft); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
@@ -524,7 +526,7 @@
           <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil. Atualmente curso <strong>Audiovisual na Univali</strong>.</p>
           <p>Estou presente desde a idealização e roteiro até a finalização e entrega, unindo técnicas avançadas de iluminação, domínio de câmera e direção para que, através das imagens, a emoção seja transmitida.</p>
           <p>Também exploro a <strong>criação de vídeos com inteligência artificial</strong>, unindo a técnica tradicional às novas ferramentas generativas.</p>
-          <p>Também sou <strong>ator desde 2004</strong> — meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, para a CCXP em 2017.</p>
+          <p>Também sou <strong>ator desde 2004</strong> — meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, para a CCXP em 2018.</p>
           <div class="skills">
             <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>Atuação</span><span>Vídeo com IA</span><span>TI</span>
           </div>
@@ -538,10 +540,10 @@
           <div class="aba-painel" data-painel="carreira">
             <div class="timeline">
               <div class="tl-item">
-                <div class="tl-ano">2004 — 2017</div>
+                <div class="tl-ano">2004 — 2018</div>
                 <div class="tl-card">
                   <h3>Ator</h3>
-                  <p>Atuação desde 2004. Meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, apresentado na <strong>CCXP 2017</strong>.</p>
+                  <p>Atuação desde 2004. Meu trabalho mais recente foi o curta <strong>“GeekPunk”</strong>, apresentado na <strong>CCXP 2018</strong> — <a href="https://youtu.be/DijrR1Dr-Zw" target="_blank" rel="noopener">assista ao curta</a>.</p>
                   <div class="tl-stats">Atuação <span>·</span> Cinema e cena</div>
                 </div>
               </div>
@@ -697,30 +699,50 @@
 
       <div class="filtros revelar">
         <button class="filtro ativo" data-filtro="todos">Todos</button>
+        <button class="filtro" data-filtro="atuacao">Atuação</button>
+        <button class="filtro" data-filtro="edicao">Edição criativa</button>
+        <button class="filtro" data-filtro="montagem">Montagem de PC</button>
+        <button class="filtro" data-filtro="apresentacao">Apresentação</button>
         <button class="filtro" data-filtro="direcao">Direção</button>
         <button class="filtro" data-filtro="fotografia">Fotografia</button>
         <button class="filtro" data-filtro="roteiro">Roteiro</button>
-        <button class="filtro" data-filtro="edicao">Edição</button>
-        <button class="filtro" data-filtro="apresentacao">Apresentação</button>
       </div>
 
       <div class="grid" id="grid">
-        <article class="item revelar" data-cat="edicao" data-titulo="Raw / Log (!?)" data-desc="Entendendo Raw e Log na prática — cor, latitude e pós-produção." data-link="https://www.youtube.com/watch?v=N6OqMdfs4Ig">
-          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/N6OqMdfs4Ig/hq720.jpg')"></div>
-          <span class="badge">Edição</span>
-          <div class="overlay"><span>Edição</span><h3>Raw / Log (!?)</h3></div>
+        <article class="item revelar" data-cat="atuacao" data-titulo="GeekPunk — curta (CCXP 2018)" data-desc="Curta-metragem apresentado na CCXP 2018." data-link="https://youtu.be/DijrR1Dr-Zw">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/DijrR1Dr-Zw/hq720.jpg')"></div>
+          <span class="badge">Atuação</span>
+          <div class="overlay"><span>Atuação</span><h3>GeekPunk — curta (CCXP 2018)</h3></div>
         </article>
 
-        <article class="item revelar alto" data-cat="apresentacao" data-titulo="Gamdias Neso P1 — Novo Gabinete Gamer" data-desc="Review do gabinete estilo Hyte Y60." data-link="https://www.youtube.com/watch?v=akw8x3AZUl0">
+        <article class="item revelar alto" data-cat="edicao" data-titulo="Teclado Magnético Akko — MOD 007" data-desc="Edição criativa do review do teclado magnético Akko." data-link="https://youtu.be/cSLTkIp1Y4Y">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/cSLTkIp1Y4Y/hq720.jpg')"></div>
+          <span class="badge">Edição criativa</span>
+          <div class="overlay"><span>Edição criativa</span><h3>Teclado Magnético Akko — MOD 007</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="edicao" data-titulo="Raw / Log (!?)" data-desc="Cor, latitude e pós-produção." data-link="https://youtu.be/N6OqMdfs4Ig">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/N6OqMdfs4Ig/hq720.jpg')"></div>
+          <span class="badge">Edição criativa</span>
+          <div class="overlay"><span>Edição criativa</span><h3>Raw / Log (!?)</h3></div>
+        </article>
+
+        <article class="item revelar" data-cat="apresentacao" data-titulo="Water Cooler LM360 GamerStorm X Redragon" data-desc="Review no canal PipocaTech." data-link="https://youtu.be/7NXKEomK37U">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/7NXKEomK37U/hq720.jpg')"></div>
+          <span class="badge">Apresentação</span>
+          <div class="overlay"><span>Apresentação</span><h3>Water Cooler LM360 GamerStorm X Redragon</h3></div>
+        </article>
+
+        <article class="item revelar alto" data-cat="apresentacao" data-titulo="Gamdias Neso P1 — Novo Gabinete Gamer" data-desc="Review do gabinete estilo Hyte Y60." data-link="https://youtu.be/akw8x3AZUl0">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/akw8x3AZUl0/hq720.jpg')"></div>
           <span class="badge">Apresentação</span>
           <div class="overlay"><span>Apresentação</span><h3>Gamdias Neso P1 — Novo Gabinete Gamer</h3></div>
         </article>
 
-        <article class="item revelar" data-cat="apresentacao" data-titulo="Teclado Magnético Akko — MOD 007" data-desc="Review do teclado magnético de 7º aniversário da Akko." data-link="https://www.youtube.com/watch?v=cSLTkIp1Y4Y">
-          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/cSLTkIp1Y4Y/hq720.jpg')"></div>
-          <span class="badge">Apresentação</span>
-          <div class="overlay"><span>Apresentação</span><h3>Teclado Magnético Akko — MOD 007</h3></div>
+        <article class="item revelar" data-cat="montagem" data-titulo="Ocypus Delta C70 + Sigma L36BK" data-desc="Montagem de PC no canal PipocaTech." data-link="https://youtu.be/25j6ljkPOgo">
+          <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/25j6ljkPOgo/hq720.jpg')"></div>
+          <span class="badge">Montagem de PC</span>
+          <div class="overlay"><span>Montagem de PC</span><h3>Ocypus Delta C70 + Sigma L36BK</h3></div>
         </article>
 
         <article class="item revelar placeholder" data-cat="direcao" data-titulo="Nome do seu filme" data-desc="Adicione aqui um projeto que você dirigiu.">
@@ -739,12 +761,6 @@
           <div class="thumb" style="background-image:linear-gradient(135deg,#42275a,#734b6d);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
           <span class="badge">Roteiro</span>
           <div class="overlay"><span>Roteiro</span><h3>Nome do seu roteiro</h3></div>
-        </article>
-
-        <article class="item revelar placeholder" data-cat="edicao" data-titulo="Nome da sua edição" data-desc="Adicione aqui um trabalho de montagem e finalização.">
-          <div class="thumb" style="background-image:linear-gradient(135deg,#16222a,#3a6073);display:flex;align-items:center;justify-content:center;font-size:44px">➕</div>
-          <span class="badge">Edição</span>
-          <div class="overlay"><span>Edição</span><h3>Nome da sua edição</h3></div>
         </article>
       </div>
     </div>
