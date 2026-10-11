@@ -128,14 +128,14 @@
   .foto-pilha { position: relative; margin-bottom: 28px; }
   .foto { position: relative; z-index: 4; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4/5; background: var(--card); }
   .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .pilha-foto { position: absolute; left: 50%; bottom: -8px; width: 62%; height: 56%; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 12px 34px rgba(0,0,0,.45); transition: transform .55s cubic-bezier(.2,.8,.2,1); }
-  .pilha-foto img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.4) brightness(.8); }
-  .pilha-foto.f1 { z-index: 1; transform: translateX(-50%) rotate(-13deg) scale(.84); }
-  .pilha-foto.f2 { z-index: 2; transform: translateX(-50%) rotate(0deg) scale(.9); }
-  .pilha-foto.f3 { z-index: 3; transform: translateX(-50%) rotate(13deg) scale(.84); }
-  .foto-pilha:hover .f1 { transform: translateX(calc(-50% - 42%)) translateY(12%) rotate(-17deg) scale(.84); }
-  .foto-pilha:hover .f2 { transform: translateX(-50%) translateY(18%) rotate(0deg) scale(.9); }
-  .foto-pilha:hover .f3 { transform: translateX(calc(-50% + 42%)) translateY(12%) rotate(17deg) scale(.84); }
+  .pilha-foto { position: absolute; inset: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 16px 36px rgba(0,0,0,.5); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .pilha-foto img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.5) brightness(.7); }
+  .pilha-foto.f1 { z-index: 1; transform: translate(-4%, 5%) rotate(-7deg); }
+  .pilha-foto.f2 { z-index: 2; transform: translate(4%, 5%) rotate(6deg); }
+  .pilha-foto.f3 { z-index: 3; transform: translate(0, 7%) rotate(-2deg); }
+  .foto-pilha:hover .f1 { transform: translate(-13%, 9%) rotate(-12deg); }
+  .foto-pilha:hover .f2 { transform: translate(14%, 9%) rotate(10deg); }
+  .foto-pilha:hover .f3 { transform: translate(0, 13%) rotate(-3deg); }
   .sobre-esq p { color: var(--muted); margin-bottom: 14px; }
   .sobre-esq .skills { margin-top: 20px; }
   .tl-titulo { font-size: 20px; font-weight: 600; margin-bottom: 22px; }
@@ -337,6 +337,7 @@
   /* Titulo letra por letra */
   @keyframes letra { to { opacity: 1; transform: none; } }
   .hero h1 .letra { display: inline-block; opacity: 0; transform: translateY(.55em); animation: letra .7s cubic-bezier(.2,.8,.2,1) both; }
+  .hero h1 .palavra { display: inline-block; white-space: nowrap; }
 
   /* Indicador de rolagem */
   .scroll-cue { display: flex; align-items: center; gap: 10px; margin-top: 46px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
@@ -378,6 +379,9 @@
   .cursor-dot { position: fixed; top: 0; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 151; transform: translate(-50%,-50%); }
   .cursor.grande { width: 68px; height: 68px; background: rgba(92,200,189,.12); border-color: transparent; opacity: 1; }
   @media (hover: none) { .cursor, .cursor-dot { display: none; } }
+  .som-btn { position: fixed; bottom: 22px; right: 22px; z-index: 90; width: 46px; height: 46px; border-radius: 50%; background: rgba(16,18,22,.72); border: 1px solid var(--line); color: var(--txt); font-size: 17px; line-height: 1; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); cursor: pointer; transition: border-color .3s, transform .3s, box-shadow .3s; }
+  .som-btn:hover { border-color: var(--accent); transform: scale(1.06); }
+  .som-btn.ativo { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(92,200,189,.15); color: var(--accent); }
 
   /* Cortina nas secoes */
   .sec-head.revelar h2 { clip-path: inset(0 100% 0 0); transition: clip-path 1.1s cubic-bezier(.2,.8,.2,1) .1s; }
@@ -401,6 +405,7 @@
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <button class="som-btn" id="somBtn" aria-label="Ligar ou desligar a musica de fundo" title="Musica ambiente">🔈</button>
 
   <header>
     <div class="logo">LUKI<span>TAS</span></div>
@@ -418,10 +423,10 @@
       <source src="https://videos.pexels.com/video-files/7451809/7451809-hd_1920_1080_30fps.mp4" type="video/mp4">
     </video>
     <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
-    <h1 class="display">Histórias que <em>ganham vida</em> na tela.</h1>
+    <h1 class="display"><em>Histórias</em> que <em>ganham vida</em> na tela.</h1>
     <p>Salve! Eu sou o <strong>Lucas Yago</strong>, mas você pode me chamar de <strong>Lukitas</strong>. Diretor de fotografia, apresentador e editor de vídeo — crio narrativas visuais que conectam.</p>
     <div class="roles">
-      <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>TI</span>
+      <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>Criação de Vídeo com IA</span><span>TI</span>
     </div>
     <div class="stats">
       <div><strong>1,09M+</strong><span>inscritos</span></div>
@@ -455,8 +460,9 @@
           <p>Sou o Lukitas, profissional de audiovisual. Atuo como <strong>diretor de fotografia e apresentador</strong>, além de <strong>criador de conteúdo, diretor, roteirista, editor de vídeo e profissional de TI</strong> — cuidando de cada etapa, da ideia à entrega final.</p>
           <p>Criei e comandei canais como <strong>TJ Gaming</strong> (2018–2023) e <strong>PipocaTech</strong> (2023–hoje), que juntos somam mais de <strong>1 milhão de inscritos</strong> e <strong>260 milhões de visualizações</strong>. Também trabalhei com a <strong>Solid Importadora</strong> e as marcas que ela trouxe para o Brasil. Atualmente curso <strong>Audiovisual na Univali</strong>.</p>
           <p>Estou presente desde a idealização e roteiro até a finalização e entrega, unindo técnicas avançadas de iluminação, domínio de câmera e direção para que, através das imagens, a emoção seja transmitida.</p>
+          <p>Também exploro a <strong>criação de vídeos com inteligência artificial</strong>, unindo a técnica tradicional às novas ferramentas generativas.</p>
           <div class="skills">
-            <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>TI</span>
+            <span>Direção de Fotografia</span><span>Direção</span><span>Roteiro</span><span>Edição</span><span>Color Grading</span><span>Apresentação</span><span>Criação de Conteúdo</span><span>Vídeo com IA</span><span>TI</span>
           </div>
         </div>
         <div class="sobre-dir revelar">
@@ -835,12 +841,18 @@
       [...node.childNodes].forEach((child) => {
         if (child.nodeType === 3) {
           const frag = document.createDocumentFragment();
-          [...child.textContent].forEach((ch) => {
-            if (ch === ' ') { frag.appendChild(document.createTextNode(' ')); return; }
-            const sp = document.createElement('span');
-            sp.className = 'letra';
-            sp.textContent = ch;
-            frag.appendChild(sp);
+          child.textContent.split(/(\s+)/).forEach((part) => {
+            if (part === '') return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const palavra = document.createElement('span');
+            palavra.className = 'palavra';
+            [...part].forEach((ch) => {
+              const sp = document.createElement('span');
+              sp.className = 'letra';
+              sp.textContent = ch;
+              palavra.appendChild(sp);
+            });
+            frag.appendChild(palavra);
           });
           node.replaceChild(frag, child);
         } else if (child.nodeType === 1) { quebrar(child); }
@@ -901,6 +913,57 @@
   }, { passive: true });
   addEventListener('resize', parallax);
   parallax();
+
+  // ---------- Musica ambiente (Web Audio, gerada no navegador) ----------
+  (function () {
+    const btn = document.getElementById('somBtn');
+    if (!btn || !(window.AudioContext || window.webkitAudioContext)) return;
+    let ctx = null, master = null, tocando = false;
+    function impulso(contexto, dur, decay) {
+      const rate = contexto.sampleRate, len = Math.floor(rate * dur);
+      const buf = contexto.createBuffer(2, len, rate);
+      for (let c = 0; c < 2; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+      }
+      return buf;
+    }
+    function construir() {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+      const conv = ctx.createConvolver(); conv.buffer = impulso(ctx, 3.6, 2.2);
+      const wet = ctx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+      const filtro = ctx.createBiquadFilter(); filtro.type = 'lowpass'; filtro.frequency.value = 900; filtro.Q.value = 0.5;
+      filtro.connect(master); filtro.connect(conv);
+      const acorde = [110, 164.81, 220, 261.63, 329.63, 392];
+      acorde.forEach(function (f, i) {
+        const o = ctx.createOscillator(); o.type = (i % 2) ? 'sine' : 'triangle'; o.frequency.value = f;
+        const g = ctx.createGain(); g.gain.value = 0.10 / acorde.length;
+        o.connect(g); g.connect(filtro);
+        const lfo = ctx.createOscillator(); lfo.frequency.value = 0.03 + i * 0.011;
+        const lg = ctx.createGain(); lg.gain.value = 6;
+        lfo.connect(lg); lg.connect(o.detune); lfo.start();
+        o.start();
+      });
+      const flfo = ctx.createOscillator(); flfo.frequency.value = 0.025;
+      const fg = ctx.createGain(); fg.gain.value = 420;
+      flfo.connect(fg); fg.connect(filtro.frequency); flfo.start();
+    }
+    function ligar() {
+      if (!ctx) construir();
+      if (ctx.state === 'suspended') ctx.resume();
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0.10, ctx.currentTime + 2.5);
+      tocando = true; btn.classList.add('ativo'); btn.textContent = '🔊';
+    }
+    function desligar() {
+      if (!ctx) return;
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.2);
+      tocando = false; btn.classList.remove('ativo'); btn.textContent = '🔈';
+    }
+    btn.addEventListener('click', function () { tocando ? desligar() : ligar(); });
+  })();
   </script>
 
 </body>
