@@ -112,11 +112,12 @@
   .sec-head p { color: var(--muted); margin-top: 10px; max-width: 620px; }
   /* Timeline */
   #trajetoria { padding: 100px 0; }
-  .timeline { display: flex; flex-direction: column; gap: 18px; }
-  .tl-item { display: grid; grid-template-columns: 150px 1fr; gap: 26px; align-items: start; }
-  .tl-ano { color: var(--accent); font-weight: 700; font-size: 14px; padding-top: 24px; letter-spacing: 1px; }
-  .tl-card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 24px 26px; position: relative; }
-  .tl-card::before { content: ''; position: absolute; left: -13px; top: 30px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(92,200,189,.14); }
+  .timeline { display: flex; flex-direction: column; gap: 22px; }
+  .tl-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .tl-ano { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: 1.6px; text-transform: uppercase; margin-bottom: 9px; }
+  .tl-card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 22px 26px; position: relative; width: 100%; text-align: center; }
+  .tl-titulo { text-align: center; }
+  .abas { margin: 0 auto 26px; }
   .tl-card h3 { font-size: 21px; margin-bottom: 6px; }
   .tl-card p { color: var(--muted); font-size: 14px; }
   .tl-stats { margin-top: 14px; font-size: 13px; color: var(--accent); font-weight: 600; }
@@ -156,11 +157,14 @@
   .aba-painel.oculto { display: none; }
   @media (max-width: 880px) { .sobre-junto { grid-template-columns: 1fr; gap: 34px; } }
   .marca { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 140px; flex: 0 0 auto; }
+  .marca .lg { height: 40px; display: flex; align-items: center; justify-content: center; }
   .marca img { height: 40px; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1) brightness(1.8); opacity: .72; transition: filter .3s, opacity .3s; }
-  .marca:hover img { filter: grayscale(0) brightness(1); opacity: 1; }
+  .marca .mono { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,.03); display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: 800; font-size: 13px; letter-spacing: .5px; transition: color .3s, border-color .3s; }
+  .marca:hover .mono { color: var(--accent); border-color: var(--accent); }
+  .marca:hover .lg img { filter: grayscale(0) brightness(1); opacity: 1; }
   .marca span { font-size: 11px; letter-spacing: .6px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
   @media (max-width: 720px) { .marca { width: 110px; } .marca img { height: 32px; } }
-  @media (max-width: 720px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } .tl-ano { padding-top: 0; } .tl-card::before { display: none; } }
+  @media (max-width: 720px) { .tl-card { padding: 18px 20px; } }
 
   /* ---------- Seções ---------- */
   section { position: relative; z-index: 1; }
@@ -250,18 +254,28 @@
   .orbita { position: absolute; inset: -80px; pointer-events: none; }
   .orbita.atras { z-index: 1; }
   .orbita.frente { z-index: 4; }
-  .pt { position: absolute; left: 50%; top: 50%; border-radius: 50%; background: var(--accent); box-shadow: 0 0 16px rgba(92,200,189,.75); will-change: transform, opacity; }
-  .pt.anel { background: transparent; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(92,200,189,.45); }
-  .pt.quad { border-radius: 4px; background: var(--accent2); box-shadow: 0 0 16px rgba(127,156,201,.7); }
-  .pt.a1 { width: 12px; height: 12px; animation: giro1 11s linear infinite; }
-  .pt.a2 { width: 22px; height: 22px; animation: giro2 14s linear infinite; }
-  .pt.a3 { width: 9px; height: 9px; animation: giro3 8.5s linear infinite; }
-  .pt.a4 { width: 14px; height: 14px; animation: giro1 13s linear infinite; animation-delay: -5s; }
-  .pt.a5 { width: 18px; height: 18px; animation: giro2 9.5s linear infinite; animation-delay: -3s; }
-  .pt.a6 { width: 10px; height: 10px; animation: giro3 12s linear infinite; animation-delay: -7s; }
-  .pt.f1 { width: 13px; height: 13px; animation: giro2 10s linear infinite; animation-delay: -2s; }
-  .pt.f2 { width: 10px; height: 10px; animation: giro3 9s linear infinite; animation-delay: -4.5s; }
-  .pt.f3 { width: 24px; height: 24px; animation: giro1 15s linear infinite; animation-delay: -6s; }
+  .pt { position: absolute; left: 50%; top: 50%; color: var(--accent); will-change: transform, opacity; }
+  .pt svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(92,200,189,.6)); }
+  .orbita.frente .pt { color: var(--accent2); }
+  .orbita.frente .pt svg { filter: drop-shadow(0 0 10px rgba(127,156,201,.65)); }
+  .pt.a1 { width: 13px; height: 13px; }
+  .pt.a2 { width: 20px; height: 20px; }
+  .pt.a3 { width: 15px; height: 15px; }
+  .pt.a4 { width: 17px; height: 17px; }
+  .pt.a5 { width: 16px; height: 16px; }
+  .pt.a6 { width: 12px; height: 12px; }
+  .pt.f1 { width: 16px; height: 16px; }
+  .pt.f2 { width: 13px; height: 13px; }
+  .pt.f3 { width: 22px; height: 22px; }
+  .pt.a1 { animation: giro1 11s linear infinite; }
+  .pt.a2 { animation: giro2 14s linear infinite; }
+  .pt.a3 { animation: giro3 8.5s linear infinite; }
+  .pt.a4 { animation: giro1 13s linear infinite; animation-delay: -5s; }
+  .pt.a5 { animation: giro2 9.5s linear infinite; animation-delay: -3s; }
+  .pt.a6 { animation: giro3 12s linear infinite; animation-delay: -7s; }
+  .pt.f1 { animation: giro2 10s linear infinite; animation-delay: -2s; }
+  .pt.f2 { animation: giro3 9s linear infinite; animation-delay: -4.5s; }
+  .pt.f3 { animation: giro1 15s linear infinite; animation-delay: -6s; }
   @keyframes giro1 {
     0% { transform: translate(-200px, 4px) scale(.55); opacity: .35; }
     25% { transform: translate(-34px, -88px) scale(1.15); opacity: 1; }
@@ -291,8 +305,9 @@
   .redes a {
     color: var(--muted); text-decoration: none; font-size: 14px;
     border: 1px solid rgba(255,255,255,.12); padding: 9px 20px; border-radius: 999px;
-    transition: all .25s;
+    transition: all .25s; display: inline-flex; align-items: center; gap: 9px;
   }
+  .redes a svg { width: 17px; height: 17px; }
   .redes a:hover { color: #fff; border-color: var(--accent); }
 
   /* ---------- Footer ---------- */
@@ -334,6 +349,7 @@
   }
 
 
+  .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .20; pointer-events: none; filter: saturate(.85) brightness(.72); }
   /* ---------- Texturas de fundo ---------- */
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -437,6 +453,9 @@
   .som-btn { position: fixed; bottom: 22px; right: 22px; z-index: 90; width: 46px; height: 46px; border-radius: 50%; background: rgba(16,18,22,.72); border: 1px solid var(--line); color: var(--txt); font-size: 17px; line-height: 1; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); cursor: pointer; transition: border-color .3s, transform .3s, box-shadow .3s; }
   .som-btn:hover { border-color: var(--accent); transform: scale(1.06); }
   .som-btn.ativo { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(92,200,189,.15); color: var(--accent); }
+  .som-btn svg { width: 22px; height: 22px; }
+  .som-btn.ativo svg { animation: pulsarSom 2.4s ease-in-out infinite; }
+  @keyframes pulsarSom { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
   .som-hint { position: fixed; bottom: 26px; right: 78px; z-index: 90; background: rgba(16,18,22,.85); border: 1px solid var(--line); color: var(--txt); font-size: 12px; padding: 7px 14px; border-radius: 999px; white-space: nowrap; backdrop-filter: blur(8px); animation: pulsaDica 2.4s ease-in-out infinite; pointer-events: none; transition: opacity .4s; }
   .som-hint.oculto { opacity: 0; }
   @keyframes pulsaDica { 0%,100% { opacity: .55; transform: translateX(0); } 50% { opacity: 1; transform: translateX(-4px); } }
@@ -489,12 +508,24 @@
   </div>
   <div class="glow a"></div>
   <div class="glow b"></div>
+  <video class="video-fundo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="https://videos.pexels.com/video-files/855120/855120-sd_960_540_25fps.mp4" type="video/mp4">
+  </video>
   <div class="grain"></div>
   <div class="scroll-progress"><span id="progress"></span></div>
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <button class="som-btn" id="somBtn" aria-label="Ligar ou desligar a musica de fundo" title="Musica ambiente">🔈</button>
+  <button class="som-btn" id="somBtn" aria-label="Ligar ou desligar a musica de fundo" title="Musica">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="6" width="10" height="14" rx="2.2"/>
+      <rect x="4" y="8" width="6" height="3.6" rx="1"/>
+      <circle cx="7" cy="15.6" r="1.25"/>
+      <path d="M12 9.4c3.1.1 4.6-1.4 6.4-2.2"/>
+      <circle cx="19.4" cy="6.3" r="2.1"/>
+      <path d="M19.4 8.4v2.3"/>
+    </svg>
+  </button>
   <div class="som-hint" id="somHint">Ativar som 🎵</div>
 
   <header>
@@ -635,82 +666,82 @@
     </div>
     <div class="carrossel-duplo">
       <div class="marquee"><div class="marquee-track">
-          <div class="marca"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"><span>Redragon</span></div>
-          <div class="marca"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"><span>Gigabyte</span></div>
-          <div class="marca"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"><span>Ingrem</span></div>
-          <div class="marca"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"><span>Lamzu</span></div>
-          <div class="marca"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"><span>OnePower</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"><span>NZXT</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"><span>Lian Li</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gamdias.com&sz=128" alt="Gamdias" loading="lazy"><span>Gamdias</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"><span>Phanteks</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=akkogear.com&sz=128" alt="Akko Gear" loading="lazy"><span>Akko Gear</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=bequiet.com&sz=128" alt="be quiet!" loading="lazy"><span>be quiet!</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=deepcool.com&sz=128" alt="Deepcool" loading="lazy"><span>Deepcool</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"><span>Fnatic</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fsp-group.com&sz=128" alt="FSP" loading="lazy"><span>FSP</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=divoom.com&sz=128" alt="Divoom" loading="lazy"><span>Divoom</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"><span>Creative Labs</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"><span>Scythe</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"><span>XP-Pen</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"><span>Maono</span></div>
-          <div class="marca"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"><span>Redragon</span></div>
-          <div class="marca"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"><span>Gigabyte</span></div>
-          <div class="marca"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"><span>Ingrem</span></div>
-          <div class="marca"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"><span>Lamzu</span></div>
-          <div class="marca"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"><span>OnePower</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"><span>NZXT</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"><span>Lian Li</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gamdias.com&sz=128" alt="Gamdias" loading="lazy"><span>Gamdias</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"><span>Phanteks</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=akkogear.com&sz=128" alt="Akko Gear" loading="lazy"><span>Akko Gear</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=bequiet.com&sz=128" alt="be quiet!" loading="lazy"><span>be quiet!</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=deepcool.com&sz=128" alt="Deepcool" loading="lazy"><span>Deepcool</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"><span>Fnatic</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=fsp-group.com&sz=128" alt="FSP" loading="lazy"><span>FSP</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=divoom.com&sz=128" alt="Divoom" loading="lazy"><span>Divoom</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"><span>Creative Labs</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"><span>Scythe</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"><span>XP-Pen</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"><span>Maono</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"></div><span>Redragon</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"></div><span>Gigabyte</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"></div><span>Ingrem</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"></div><span>Lamzu</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"></div><span>OnePower</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"></div><span>NZXT</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"></div><span>Lian Li</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"></div><span>Phanteks</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"></div><span>Fnatic</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"></div><span>Creative Labs</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"></div><span>Scythe</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"></div><span>XP-Pen</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"></div><span>Maono</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"></div><span>Sapphire</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"></div><span>Cudy</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"></div><span>Biostar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"></div><span>Thermal Grizzly</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"></div><span>Cougar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"></div><span>Philips</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/redragon.jpg" alt="Redragon" loading="lazy"></div><span>Redragon</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/gigabyte.svg" alt="Gigabyte" loading="lazy"></div><span>Gigabyte</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/ingrem.png" alt="Ingrem" loading="lazy"></div><span>Ingrem</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/lamzu.png" alt="Lamzu" loading="lazy"></div><span>Lamzu</span></div>
+          <div class="marca"><div class="lg"><img src="assets/marcas/onepower.png" alt="OnePower" loading="lazy"></div><span>OnePower</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT" loading="lazy"></div><span>NZXT</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=lian-li.com&sz=128" alt="Lian Li" loading="lazy"></div><span>Lian Li</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=phanteks.com&sz=128" alt="Phanteks" loading="lazy"></div><span>Phanteks</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=fnatic.com&sz=128" alt="Fnatic" loading="lazy"></div><span>Fnatic</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=creative.com&sz=128" alt="Creative Labs" loading="lazy"></div><span>Creative Labs</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=scytheus.com&sz=128" alt="Scythe" loading="lazy"></div><span>Scythe</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=xp-pen.com&sz=128" alt="XP-Pen" loading="lazy"></div><span>XP-Pen</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=maono.com&sz=128" alt="Maono" loading="lazy"></div><span>Maono</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"></div><span>Sapphire</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"></div><span>Cudy</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"></div><span>Biostar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"></div><span>Thermal Grizzly</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"></div><span>Cougar</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"></div><span>Philips</span></div>
           </div></div>
       <div class="marquee"><div class="marquee-track rev">
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"><span>Sapphire</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"><span>Cudy</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=monsgeek.com&sz=128" alt="Monsgeek" loading="lazy"><span>Monsgeek</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hiksemi.com&sz=128" alt="Hiksemi" loading="lazy"><span>Hiksemi</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"><span>Biostar</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=manli.com&sz=128" alt="Manli" loading="lazy"><span>Manli</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"><span>Thermal Grizzly</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=t-dagger.com&sz=128" alt="T-Dagger" loading="lazy"><span>T-Dagger</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"><span>Cougar</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"><span>Philips</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"><span>Trust</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"><span>Kalkan</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"><span>Keytime</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"><span>Zomoplus</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hoto.com&sz=128" alt="Hoto" loading="lazy"><span>Hoto</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=geometricfuture.com&sz=128" alt="Geometric Future" loading="lazy"><span>Geometric Future</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=icebergthermal.com&sz=128" alt="Iceberg Thermal" loading="lazy"><span>Iceberg Thermal</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gxtrust.com&sz=128" alt="GXTrust" loading="lazy"><span>GXTrust</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=sapphiretech.com&sz=128" alt="Sapphire" loading="lazy"><span>Sapphire</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cudy.com&sz=128" alt="Cudy" loading="lazy"><span>Cudy</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=monsgeek.com&sz=128" alt="Monsgeek" loading="lazy"><span>Monsgeek</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hiksemi.com&sz=128" alt="Hiksemi" loading="lazy"><span>Hiksemi</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=biostar.com&sz=128" alt="Biostar" loading="lazy"><span>Biostar</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=manli.com&sz=128" alt="Manli" loading="lazy"><span>Manli</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=thermal-grizzly.com&sz=128" alt="Thermal Grizzly" loading="lazy"><span>Thermal Grizzly</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=t-dagger.com&sz=128" alt="T-Dagger" loading="lazy"><span>T-Dagger</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar" loading="lazy"><span>Cougar</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips" loading="lazy"><span>Philips</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"><span>Trust</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"><span>Kalkan</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"><span>Keytime</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"><span>Zomoplus</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=hoto.com&sz=128" alt="Hoto" loading="lazy"><span>Hoto</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=geometricfuture.com&sz=128" alt="Geometric Future" loading="lazy"><span>Geometric Future</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=icebergthermal.com&sz=128" alt="Iceberg Thermal" loading="lazy"><span>Iceberg Thermal</span></div>
-          <div class="marca"><img src="https://www.google.com/s2/favicons?domain=gxtrust.com&sz=128" alt="GXTrust" loading="lazy"><span>GXTrust</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"></div><span>Trust</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"></div><span>Kalkan</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"></div><span>Keytime</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"></div><span>Zomoplus</span></div>
+          <div class="marca"><div class="lg"><span class="mono">G</span></div><span>Gamdias</span></div>
+          <div class="marca"><div class="lg"><span class="mono">A</span></div><span>Akko Gear</span></div>
+          <div class="marca"><div class="lg"><span class="mono">b</span></div><span>be quiet!</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Deepcool</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Divoom</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Monsgeek</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Manli</span></div>
+          <div class="marca"><div class="lg"><span class="mono">T</span></div><span>T-Dagger</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hoto</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GF</span></div><span>Geometric Future</span></div>
+          <div class="marca"><div class="lg"><span class="mono">FSP</span></div><span>FSP</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hiksemi</span></div>
+          <div class="marca"><div class="lg"><span class="mono">IT</span></div><span>Iceberg Thermal</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GX</span></div><span>GXTrust</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=trust.com&sz=128" alt="Trust" loading="lazy"></div><span>Trust</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=kalkan.com.br&sz=128" alt="Kalkan" loading="lazy"></div><span>Kalkan</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=keytime.com.br&sz=128" alt="Keytime" loading="lazy"></div><span>Keytime</span></div>
+          <div class="marca"><div class="lg"><img src="https://www.google.com/s2/favicons?domain=zomoplus.com&sz=128" alt="Zomoplus" loading="lazy"></div><span>Zomoplus</span></div>
+          <div class="marca"><div class="lg"><span class="mono">G</span></div><span>Gamdias</span></div>
+          <div class="marca"><div class="lg"><span class="mono">A</span></div><span>Akko Gear</span></div>
+          <div class="marca"><div class="lg"><span class="mono">b</span></div><span>be quiet!</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Deepcool</span></div>
+          <div class="marca"><div class="lg"><span class="mono">D</span></div><span>Divoom</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Monsgeek</span></div>
+          <div class="marca"><div class="lg"><span class="mono">M</span></div><span>Manli</span></div>
+          <div class="marca"><div class="lg"><span class="mono">T</span></div><span>T-Dagger</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hoto</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GF</span></div><span>Geometric Future</span></div>
+          <div class="marca"><div class="lg"><span class="mono">FSP</span></div><span>FSP</span></div>
+          <div class="marca"><div class="lg"><span class="mono">H</span></div><span>Hiksemi</span></div>
+          <div class="marca"><div class="lg"><span class="mono">IT</span></div><span>Iceberg Thermal</span></div>
+          <div class="marca"><div class="lg"><span class="mono">GX</span></div><span>GXTrust</span></div>
           </div></div>
     </div>
   </section>
@@ -843,20 +874,20 @@
     <div class="wrap">
       <div class="contato-palco">
         <div class="orbita atras" aria-hidden="true">
-          <span class="pt a1"></span><span class="pt a2 anel"></span><span class="pt a3"></span><span class="pt a4 quad"></span><span class="pt a5 anel"></span><span class="pt a6"></span>
+          <span class="pt a1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span><span class="pt a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span class="pt a3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/><rect x="17" y="13.5" width="4.5" height="7" rx="2"/></svg></span><span class="pt a4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/></svg></span><span class="pt a5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v2M4.8 5.8l1.4 1.4M19.2 5.8l-1.4 1.4M1.5 12h2M20.5 12h2"/><rect x="7" y="9" width="10" height="8" rx="2"/><path d="M12 17v4.5"/></svg></span><span class="pt a6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span>
         </div>
         <h2 class="display revelar">Vamos criar juntos?</h2>
         <div class="orbita frente" aria-hidden="true">
-          <span class="pt f1"></span><span class="pt f2 quad"></span><span class="pt f3 anel"></span>
+          <span class="pt f1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/><rect x="17" y="13.5" width="4.5" height="7" rx="2"/></svg></span><span class="pt f2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span class="pt f3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/></svg></span>
         </div>
       </div>
       <p class="revelar">Disponível para projetos de vídeo, comerciais, documentários e conteúdo para marcas. Direção, fotografia, roteiro e edição sob o mesmo olhar.</p>
       <a href="mailto:seu@email.com" class="btn primary revelar">Fale comigo</a>
       <div class="redes revelar">
-        <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener">YouTube</a>
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-        <a href="mailto:seu@email.com">E-mail</a>
+        <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4.5"/><path d="M10 9l5.5 3L10 15z" fill="currentColor" stroke="none"/></svg> YouTube</a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg> Instagram</a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v10.5a3.5 3.5 0 1 1-3.2-3.5"/><path d="M14 6.6c1 1.7 2.6 2.5 4.5 2.6"/></svg> TikTok</a>
+        <a href="mailto:seu@email.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M3.6 7l8.4 6 8.4-6"/></svg> E-mail</a>
       </div>
     </div>
   </section>
@@ -966,7 +997,7 @@
       const alvo = parseFloat(ns);
       const dec = (ns.split('.')[1] || '').length;
       const t0 = performance.now();
-      const dur = 1500;
+      const dur = 2600;
       const passo = (now) => {
         const k = Math.min(1, (now - t0) / dur);
         const e = 1 - Math.pow(1 - k, 3);
@@ -1090,48 +1121,31 @@
     });
   });
 
-  // ---------- Audio: trilha ambiente + efeitos de UI ----------
+  // ---------- Audio: trilha epica + efeitos de UI ----------
   (function () {
     const btn = document.getElementById('somBtn');
     if (!btn || !(window.AudioContext || window.webkitAudioContext)) return;
-    let ctx = null, master = null, sfx = null, bus = null, padVozes = [], padFiltro = null;
-    let tocando = false, tAcorde = null, tMelodia = null, prox = 1, acordeAtual = null;
-    const BPM = 72, compasso = (60 / BPM) * 8;
+    let ctx = null, master = null, sfx = null, bus = null, tocando = false, seqTimer = null;
+    let proximoTempo = 0, passo = 0;
+    const BPM = 100, passoDur = 60 / BPM / 4;
     const acordes = [
-      [110.00, 164.81, 261.63, 329.63],
-      [87.31,  174.61, 261.63, 349.23],
-      [130.81, 196.00, 261.63, 392.00],
-      [98.00,  196.00, 246.94, 392.00]
+      { root: 110.00, arp: [220.00, 261.63, 329.63, 440.00], pad: [164.81, 220.00, 329.63] },
+      { root: 87.31,  arp: [174.61, 220.00, 261.63, 349.23], pad: [130.81, 174.61, 261.63] },
+      { root: 130.81, arp: [261.63, 329.63, 392.00, 523.25], pad: [196.00, 261.63, 392.00] },
+      { root: 98.00,  arp: [196.00, 246.94, 293.66, 392.00], pad: [146.83, 196.00, 293.66] }
     ];
     function impulso(dur, decay) {
       const rate = ctx.sampleRate, len = Math.floor(rate * dur);
       const buf = ctx.createBuffer(2, len, rate);
-      for (let c = 0; c < 2; c++) {
-        const d = buf.getChannelData(c);
-        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
-      }
+      for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c);
+        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay); }
       return buf;
     }
     function montarAudio() {
-      const conv = ctx.createConvolver(); conv.buffer = impulso(3.4, 2.1);
-      const wet = ctx.createGain(); wet.gain.value = 0.55; conv.connect(wet); wet.connect(master);
+      const conv = ctx.createConvolver(); conv.buffer = impulso(2.8, 2.2);
+      const wet = ctx.createGain(); wet.gain.value = 0.4; conv.connect(wet); wet.connect(master);
       const revIn = ctx.createGain(); revIn.gain.value = 1; revIn.connect(conv);
       bus = ctx.createGain(); bus.gain.value = 1; bus.connect(master); bus.connect(revIn);
-      padFiltro = ctx.createBiquadFilter(); padFiltro.type = 'lowpass'; padFiltro.frequency.value = 900; padFiltro.Q.value = 0.5;
-      padFiltro.connect(bus);
-      const flfo = ctx.createOscillator(); flfo.frequency.value = 0.03;
-      const fg = ctx.createGain(); fg.gain.value = 300;
-      flfo.connect(fg); fg.connect(padFiltro.frequency); flfo.start();
-      acordes[0].forEach(function (f, i) {
-        const o = ctx.createOscillator(); o.type = (i % 2) ? 'sine' : 'triangle'; o.frequency.value = f;
-        const g = ctx.createGain(); g.gain.value = 0.055;
-        o.connect(g); g.connect(padFiltro);
-        const lfo = ctx.createOscillator(); lfo.frequency.value = 0.02 + i * 0.008;
-        const lg = ctx.createGain(); lg.gain.value = 6;
-        lfo.connect(lg); lg.connect(o.detune); lfo.start(); o.start();
-        padVozes.push(o);
-      });
-      acordeAtual = acordes[0];
     }
     function garantir() {
       if (!ctx) {
@@ -1143,14 +1157,51 @@
       if (ctx.state === 'suspended') ctx.resume();
       return ctx;
     }
-    function nota(freq, dur, vol, tipo, dest) {
-      const t0 = ctx.currentTime;
-      const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t0);
+    function voz(freq, t, dur, vol, tipo, dest) {
+      const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t);
       const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t0);
-      g.gain.exponentialRampToValueAtTime(vol, t0 + (tipo === 'bell' ? 0.008 : 0.9));
-      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-      o.connect(g); g.connect(dest || bus); o.start(t0); o.stop(t0 + dur + 0.1);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(dest || bus); o.start(t); o.stop(t + dur + 0.03);
+    }
+    function kick(t) {
+      const o = ctx.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(135, t); o.frequency.exponentialRampToValueAtTime(44, t + 0.13);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.6, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+      o.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.22);
+    }
+    function ruido(t, dur, freq, vol, tipo) {
+      const len = Math.max(1, Math.floor(ctx.sampleRate * dur));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+      const s = ctx.createBufferSource(); s.buffer = buf;
+      const f = ctx.createBiquadFilter(); f.type = tipo || 'highpass'; f.frequency.value = freq;
+      const g = ctx.createGain(); g.gain.value = vol;
+      s.connect(f); f.connect(g); g.connect(bus); s.start(t);
+    }
+    function tocarPasso() {
+      const t = proximoTempo;
+      const barra = Math.floor(passo / 16) % 4;
+      const ac = acordes[barra];
+      const p = passo % 16;
+      const b = Math.floor(passo / 16);
+      if (b >= 2) { const i = (passo % 8); voz(ac.arp[i % ac.arp.length], t, 0.22, 0.045, 'triangle'); }
+      if (p === 0) { voz(ac.root, t, 1.5, 0.16, 'triangle'); ac.pad.forEach(function (f) { voz(f, t, 3.2, 0.035, 'sine'); }); }
+      if (p === 3 || p === 6 || p === 11 || p === 14) voz(ac.root, t, 0.35, 0.11, 'triangle');
+      if (p === 8) voz(ac.root * 1.5, t, 1.1, 0.13, 'triangle');
+      if (b >= 4) {
+        if (p === 0 || p === 8) kick(t);
+        if (p === 4 || p === 12) ruido(t, 0.16, 1400, 0.18, 'bandpass');
+        if (p % 2 === 1) ruido(t, 0.05, 7500, 0.04, 'highpass');
+      }
+      if (b >= 6 && (p === 0 || p === 10)) voz(ac.arp[(p ? 2 : 0)] * 2, t, 1.6, 0.05, 'sine');
+    }
+    function agendar() {
+      if (!tocando || !ctx) return;
+      while (proximoTempo < ctx.currentTime + 0.25) { tocarPasso(); proximoTempo += passoDur; passo++; }
     }
     function tom(freq, dur, vol, tipo, atraso, dest) {
       if (!tocando) return;
@@ -1163,38 +1214,22 @@
       g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
       o.connect(g); g.connect(dest || sfx); o.start(t0); o.stop(t0 + dur + 0.03);
     }
-    function trocarAcorde() {
-      const ac = acordes[prox % acordes.length];
-      const t = ctx.currentTime;
-      padVozes.forEach(function (o, i) { o.frequency.linearRampToValueAtTime(ac[i], t + 3.5); });
-      nota(ac[0] / 2, 5.0, 0.16, 'sine');
-      acordeAtual = ac; prox++;
-    }
-    function melodia() {
-      if (!acordeAtual || Math.random() < 0.35) return;
-      const n = acordeAtual[Math.floor(Math.random() * acordeAtual.length)] * (Math.random() < 0.5 ? 2 : 4);
-      nota(n, 2.8, 0.055, 'triangle');
-      nota(n * 2, 3.2, 0.018, 'sine');
-    }
     function ligar() {
       garantir();
       const t0 = ctx.currentTime;
       master.gain.cancelScheduledValues(t0);
       master.gain.setValueAtTime(0.0001, t0);
-      master.gain.linearRampToValueAtTime(0.22, t0 + 3);
-      master.gain.linearRampToValueAtTime(0.55, t0 + 50);
-      tocando = true;
-      trocarAcorde();
-      if (!tAcorde) tAcorde = setInterval(trocarAcorde, compasso * 1000);
-      if (!tMelodia) { tMelodia = setInterval(melodia, 1750); setTimeout(melodia, 900); }
-      btn.classList.add('ativo'); btn.textContent = '🔊';
+      master.gain.linearRampToValueAtTime(0.3, t0 + 2.5);
+      master.gain.linearRampToValueAtTime(0.62, t0 + 40);
+      tocando = true; proximoTempo = t0 + 0.12; passo = 0;
+      if (!seqTimer) seqTimer = setInterval(agendar, 60);
+      btn.classList.add('ativo');
     }
     function desligar() {
       tocando = false;
-      if (tAcorde) { clearInterval(tAcorde); tAcorde = null; }
-      if (tMelodia) { clearInterval(tMelodia); tMelodia = null; }
-      btn.classList.remove('ativo'); btn.textContent = '🔈';
-      if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.0); }
+      if (seqTimer) { clearInterval(seqTimer); seqTimer = null; }
+      btn.classList.remove('ativo');
+      if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8); }
     }
     const dica = document.getElementById('somHint');
     btn.addEventListener('click', function () { tocando ? desligar() : ligar(); if (dica) dica.classList.add('oculto'); });
