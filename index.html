@@ -19,6 +19,10 @@
     --vermelho: #e8543f;
     --azul-ceu: #7fc4e8;
     --areia: #e8c9a0;
+    --col-magenta: #e646b0;
+    --col-verde: #3fbf4f;
+    --col-azul: #2b6bd8;
+    --col-amarelo: #ffd23f;
     --line: rgba(255,255,255,.08);
     --radius: 16px;
     --maxw: 1180px;
@@ -353,6 +357,23 @@
 
 
   .video-fundo { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 0; opacity: .22; pointer-events: none; filter: saturate(.35) brightness(.85) contrast(1.05); mix-blend-mode: luminosity; }
+  /* Colagem (hero) */
+  .colagem { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .cg { position: absolute; }
+  .bloco { box-shadow: 0 12px 34px rgba(0,0,0,.4); }
+  .bl1 { width: 118px; height: 104px; background: var(--col-magenta); top: 5%; left: -3%; transform: rotate(-12deg); border-radius: 4px; opacity: .85; }
+  .bl2 { width: 150px; height: 86px; background: var(--col-verde); left: 2%; bottom: 4%; transform: rotate(8deg); opacity: .8; }
+  .bl3 { width: 72px; height: 72px; background: var(--col-amarelo); border-radius: 50%; right: 9%; top: 2%; opacity: .85; }
+  .stk { color: #141418; filter: drop-shadow(0 8px 16px rgba(0,0,0,.55)); }
+  .stk svg { display: block; width: 100%; height: 100%; }
+  .stk-cam { width: 92px; height: 69px; right: 3%; bottom: 12%; transform: rotate(-7deg); }
+  .stk-cas { width: 98px; height: 66px; left: 3%; top: 62%; transform: rotate(7deg); }
+  .stk-mic { width: 48px; height: 74px; left: 30%; bottom: 2%; transform: rotate(-11deg); }
+  .stk-cla { width: 90px; height: 64px; right: 26%; top: 4%; transform: rotate(9deg); }
+  @media (max-width: 900px) { .bl1, .bl2, .bl3, .stk { display: none; } }
+  /* Ransom note */
+  .ransom { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; margin-bottom: 22px; }
+  .ransom b { display: inline-block; padding: 3px 8px; background: var(--c); color: #141418; font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: 17px; line-height: 1; border-radius: 2px; transform: rotate(var(--r)); box-shadow: 0 3px 0 rgba(0,0,0,.45); }
   /* Recortes de papel (fundo DIY) */
   #recortes { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .recorte { position: absolute; animation: flutuaPapel linear infinite; will-change: transform; }
@@ -594,6 +615,15 @@
 
   <div id="palco">
   <section class="hero">
+    <div class="colagem" aria-hidden="true">
+      <span class="cg bloco bl1"></span>
+      <span class="cg bloco bl2"></span>
+      <span class="cg bloco bl3"></span>
+      <span class="cg stk stk-cam"><svg viewBox="0 0 64 48" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="5" y="13" width="40" height="27" rx="4"/><path d="M45 23 l13-7 v24 l-13-7z"/><circle cx="22" cy="26.5" r="7" fill="#fff" stroke="#141418"/></svg></span>
+      <span class="cg stk stk-cas"><svg viewBox="0 0 68 46" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="4" y="7" width="60" height="32" rx="4"/><rect x="12" y="12" width="44" height="6" fill="#fff" stroke="none"/><circle cx="21" cy="29" r="7" fill="#fff" stroke="#141418"/><circle cx="47" cy="29" r="7" fill="#fff" stroke="#141418"/></svg></span>
+      <span class="cg stk stk-mic"><svg viewBox="0 0 44 68" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="14" y="6" width="16" height="30" rx="8"/><path d="M10 32 a12 12 0 0 0 24 0" fill="none"/><path d="M22 44 v12 M15 56 h14" fill="none"/></svg></span>
+      <span class="cg stk stk-cla"><svg viewBox="0 0 68 48" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="5" y="19" width="58" height="24" rx="3"/><path d="M5 19 L57 6 l1.5 9 L7 28z"/></svg></span>
+    </div>
     <div class="hero-esq">
       <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
       <h1 class="display"><em>Histórias</em> que <em>ganham vida</em> na tela.</h1>
@@ -604,6 +634,9 @@
       </div>
     </div>
     <div class="hero-dir">
+      <div class="ransom" aria-hidden="true">
+        <b style="--c:#ffd23f;--r:-4deg">C</b><b style="--c:#e646b0;--r:3deg">R</b><b style="--c:#3fbf4f;--r:-2deg">I</b><b style="--c:#2b6bd8;--r:4deg">A</b><b style="--c:#e8543f;--r:-3deg">T</b><b style="--c:#ffd23f;--r:2deg">I</b><b style="--c:#e646b0;--r:-4deg">V</b><b style="--c:#3fbf4f;--r:3deg">O</b>
+      </div>
       <div class="roles">
         <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span class="princ">Ator</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>Criação de Vídeo com IA</span><span>TI</span>
       </div>
