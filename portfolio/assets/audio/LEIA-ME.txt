@@ -1,0 +1,20 @@
+COLOQUE AQUI AS MÚSICAS DO PORTFÓLIO
+====================================
+
+Suba exatamente 2 arquivos nesta pasta, com ESTES nomes:
+
+1) abertura.mp3
+   -> Som de abertura (toca assim que a página carrega)
+
+2) trilha.mp3
+   -> Música de fundo (toca em LOOP, logo depois da abertura)
+
+Formatos aceitos: mp3 (recomendado), ogg, wav.
+
+COMO FUNCIONA:
+- Ao carregar a página, o player começa MUDO (exigência dos navegadores).
+- Na primeira interação (rolar a página, clique ou toque), o som DESMUTA sozinho.
+- O botão de fone/mp3 no canto direito liga/desliga o som.
+
+Enquanto os arquivos não estiverem aqui, o site usa a trilha sintetizada
+(gerada pelo próprio navegador) automaticamente.

@@ -511,6 +511,8 @@
   <video class="video-fundo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
     <source src="https://videos.pexels.com/video-files/855120/855120-sd_960_540_25fps.mp4" type="video/mp4">
   </video>
+  <audio id="auAbertura" src="assets/audio/abertura.mp3" preload="auto"></audio>
+  <audio id="auTrilha" src="assets/audio/trilha.mp3" preload="auto" loop></audio>
   <div class="grain"></div>
   <div class="scroll-progress"><span id="progress"></span></div>
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
@@ -1121,6 +1123,53 @@
     });
   });
 
+  // ---------- Player de arquivos (abertura + trilha) ----------
+  (function () {
+    const A = document.getElementById('auAbertura');
+    const T = document.getElementById('auTrilha');
+    const btn = document.getElementById('somBtn');
+    if (!A || !T) return;
+    let ativo = false, mudo = false, iniciado = false;
+    window.__player = { ativo: false, alternar: null };
+    function desmutar() {
+      if (!mudo) return;
+      mudo = false; A.muted = false; T.muted = false;
+      if (btn) btn.classList.add('ativo');
+    }
+    function ouvirInteracao() {
+      ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'].forEach(function (ev) {
+        addEventListener(ev, function h() { desmutar(); removeEventListener(ev, h); }, { passive: true });
+      });
+    }
+    function tocarTrilha() {
+      T.volume = 0.55; T.muted = mudo;
+      const p = T.play();
+      if (p && p.catch) p.catch(function () { T.muted = true; mudo = true; T.play().catch(function () {}); ouvirInteracao(); });
+    }
+    function alternar() {
+      if (mudo) { desmutar(); if (btn) btn.classList.add('ativo'); }
+      else { mudo = true; A.muted = true; T.muted = true; if (btn) btn.classList.remove('ativo'); }
+    }
+    function iniciar() {
+      if (iniciado) return; iniciado = true;
+      window.__player.ativo = true; window.__player.alternar = alternar;
+      document.body.classList.add('audio-arquivo');
+      if (btn) btn.classList.add('ativo');
+      A.volume = 0.9;
+      const p = A.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          mudo = true; A.muted = true;
+          if (btn) btn.classList.remove('ativo');
+          A.play().catch(function () {});
+          ouvirInteracao();
+        });
+      }
+      A.addEventListener('ended', tocarTrilha, { once: true });
+    }
+    A.addEventListener('canplaythrough', iniciar, { once: true });
+  })();
+
   // ---------- Audio: trilha epica + efeitos de UI ----------
   (function () {
     const btn = document.getElementById('somBtn');
@@ -1232,7 +1281,11 @@
       if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8); }
     }
     const dica = document.getElementById('somHint');
-    btn.addEventListener('click', function () { tocando ? desligar() : ligar(); if (dica) dica.classList.add('oculto'); });
+    btn.addEventListener('click', function () {
+      if (dica) dica.classList.add('oculto');
+      if (window.__player && window.__player.ativo) { window.__player.alternar(); return; }
+      tocando ? desligar() : ligar();
+    });
     let ultimoHover = 0;
     function hoverSom() { const a = performance.now(); if (a - ultimoHover < 70) return; ultimoHover = a; tom(1200, 0.08, 0.035, 'sine'); tom(1800, 0.06, 0.018, 'sine', 0.02); }
     function cliqueSom() { tom(680, 0.12, 0.055, 'triangle'); tom(1020, 0.14, 0.04, 'sine', 0.05); tom(1360, 0.16, 0.028, 'sine', 0.11); }
