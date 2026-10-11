@@ -136,14 +136,14 @@
   .foto-pilha { position: relative; margin-bottom: 28px; }
   .foto { position: relative; z-index: 4; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4/5; background: var(--card); }
   .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .pilha-foto { position: absolute; inset: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 16px 36px rgba(0,0,0,.5); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .pilha-foto { position: absolute; inset: -5%; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 16px 36px rgba(0,0,0,.5); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
   .pilha-foto img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.5) brightness(.7); }
-  .pilha-foto.f1 { z-index: 1; transform: translate(-7%, 8%) rotate(-9deg); }
-  .pilha-foto.f2 { z-index: 2; transform: translate(7%, 8%) rotate(8deg); }
-  .pilha-foto.f3 { z-index: 3; transform: translate(0, 11%) rotate(-3deg); }
-  .foto-pilha:hover .f1 { transform: translate(-22%, 22%) rotate(-16deg); }
-  .foto-pilha:hover .f2 { transform: translate(23%, 22%) rotate(15deg); }
-  .foto-pilha:hover .f3 { transform: translate(0, 30%) rotate(-6deg); }
+  .pilha-foto.f1 { z-index: 1; transform: translate(-11%, 11%) rotate(-13deg); }
+  .pilha-foto.f2 { z-index: 2; transform: translate(11%, 11%) rotate(12deg); }
+  .pilha-foto.f3 { z-index: 3; transform: translate(0, 16%) rotate(-4deg); }
+  .foto-pilha:hover .f1 { transform: translate(-26%, 24%) rotate(-18deg); }
+  .foto-pilha:hover .f2 { transform: translate(27%, 24%) rotate(16deg); }
+  .foto-pilha:hover .f3 { transform: translate(0, 34%) rotate(-7deg); }
   .sobre-esq p { color: var(--muted); margin-bottom: 14px; }
   .sobre-esq .skills { margin-top: 20px; }
   .tl-titulo { font-size: 20px; font-weight: 600; margin-bottom: 20px; }
@@ -241,6 +241,23 @@
 
   /* ---------- Contato ---------- */
   #contato { padding: 110px 0; text-align: center; }
+  .mascotes { position: relative; height: 158px; margin: 44px auto 0; max-width: 660px; }
+  .mascote-skatista, .mascote-cine, .mascote-construtor { color: var(--accent); opacity: .92; position: absolute; bottom: 4px; }
+  .mascote-skatista svg, .mascote-cine svg, .mascote-construtor svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .mascote-skatista { left: 2%; width: 72px; animation: andar 11s ease-in-out infinite; }
+  .mascote-skatista .bob { animation: bob 1s ease-in-out infinite; }
+  @keyframes andar { 0% { left: 2%; } 50% { left: 82%; } 100% { left: 2%; } }
+  @keyframes bob { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-5px) rotate(1.5deg); } }
+  .mascote-cine { left: 22%; width: 64px; animation: balancar 3.6s ease-in-out infinite; }
+  @keyframes balancar { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  .mascote-cine .rec { animation: piscar 1.1s steps(1) infinite; }
+  @keyframes piscar { 0%,50% { opacity: 1; } 51%,100% { opacity: .12; } }
+  .mascote-construtor { right: 20%; width: 84px; }
+  .mascote-construtor .bloco { opacity: 0; animation: empilhar 3.6s ease-in-out infinite; }
+  .mascote-construtor .b2 { animation-delay: .55s; }
+  .mascote-construtor .b3 { animation-delay: 1.1s; }
+  @keyframes empilhar { 0%,8% { opacity: 0; transform: translateY(9px); } 24%,80% { opacity: 1; transform: none; } 96%,100% { opacity: 0; transform: translateY(9px); } }
+  @media (max-width: 720px) { .mascotes { height: 128px; } .mascote-cine { left: 10%; } .mascote-construtor { right: 6%; } }
   #contato h2 { font-size: clamp(28px, 4.4vw, 50px); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; }
   #contato p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; }
   .redes { display: flex; gap: 16px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
@@ -418,7 +435,18 @@
   .arena-msg.oculto { opacity: 0; visibility: hidden; }
   .arena-msg p { color: var(--muted); max-width: 430px; font-size: 14px; }
   .arena-msg strong { color: var(--txt); }
-  @media (max-width: 720px) { .arena { height: 340px; } }
+  .arena.jogando { cursor: none; }
+  .ret { position: absolute; z-index: 3; width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 2px solid rgba(92,200,189,.85); border-radius: 50%; pointer-events: none; display: none; }
+  .ret::after { content: ''; position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; background: var(--accent); border-radius: 50%; transform: translate(-50%,-50%); }
+  .arena.jogando .ret { display: block; }
+  body.mirando .cursor, body.mirando .cursor-dot { opacity: 0; }
+  .alvo.bonus { background: radial-gradient(circle at 35% 30%, #ffffff, #e6fff9 55%, #8fe0d2); box-shadow: 0 0 0 2px rgba(255,255,255,.5), 0 0 22px rgba(180,255,240,.4); }
+  .pop { position: absolute; z-index: 5; font-family: ui-monospace, Menlo, monospace; font-size: 15px; font-weight: 700; color: var(--accent); pointer-events: none; animation: poppop .8s ease-out forwards; }
+  .pop.bonus { color: #ffffff; }
+  @keyframes poppop { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-34px) scale(1.25); } }
+  .hud span#hudCombo { color: var(--accent); }
+  .sec-head .desafio { color: var(--accent); margin-top: 10px; }
+  @media (max-width: 720px) { .arena { height: 340px; } .hud { font-size: 11px; } .hud span { padding: 3px 8px; } }
 </style>
 </head>
 <body>
@@ -748,16 +776,20 @@
         <div class="kicker">Desafio</div>
         <h2 class="display">Teste a minha mira</h2>
         <p>Um minigame rápido: clique nos alvos antes que desapareçam. Sou criativo, penso rápido e adoro FPS.</p>
+        <p class="desafio">🎁 Se você bater meu score, ganha um presentinho quando fecharmos negócio.</p>
       </div>
       <div class="arena revelar" id="arena">
         <div class="hud">
           <span id="hudTempo">20.0s</span>
+          <span id="hudCombo"></span>
           <span id="hudScore">0 pts</span>
           <span id="hudPrec">100%</span>
+          <span id="hudRec">Recorde: 3200</span>
         </div>
         <div class="mira" id="mira"></div>
+        <div class="ret" aria-hidden="true"></div>
         <div class="arena-msg" id="arenaMsg">
-          <p id="arenaTexto">Clique em <strong>Jogar</strong> e acerte o máximo de alvos em 20 segundos.</p>
+          <p id="arenaTexto">Clique em <strong>Jogar</strong> e acerte o máximo de alvos em 20 segundos. Bata o recorde de <strong>3200</strong>!</p>
           <button class="btn primary" id="btnJogar">Jogar</button>
         </div>
       </div>
@@ -770,6 +802,11 @@
       <h2 class="display revelar">Vamos criar juntos?</h2>
       <p class="revelar">Disponível para projetos de vídeo, comerciais, documentários e conteúdo para marcas. Direção, fotografia, roteiro e edição sob o mesmo olhar.</p>
       <a href="mailto:seu@email.com" class="btn primary revelar">Fale comigo</a>
+      <div class="mascotes revelar" aria-hidden="true">
+        <div class="mascote-skatista"><div class="bob"><svg viewBox="0 0 70 92" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="35" cy="17" r="8"/><path d="M35 25 L33 54"/><path d="M34 33 L19 27"/><path d="M34 33 L51 41"/><path d="M33 54 L23 72"/><path d="M33 54 L47 70"/><rect x="13" y="74" width="46" height="6" rx="3"/><circle cx="23" cy="85" r="4"/><circle cx="49" cy="85" r="4"/></svg></div></div>
+        <div class="mascote-cine"><svg viewBox="0 0 70 92" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="35" cy="15" r="8"/><path d="M35 23 L35 58"/><path d="M35 33 L22 36"/><path d="M35 33 L48 36"/><rect x="18" y="28" width="34" height="15" rx="3"/><circle cx="54" cy="35.5" r="6"/><circle class="rec" cx="24" cy="35.5" r="2.2" fill="currentColor" stroke="none"/><path d="M35 58 L26 80"/><path d="M35 58 L44 80"/></svg></div>
+        <div class="mascote-construtor"><svg viewBox="0 0 96 92" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="26" cy="18" r="8"/><path d="M26 26 L26 58"/><path d="M26 34 L44 26"/><path d="M26 34 L10 26"/><path d="M26 58 L18 80"/><path d="M26 58 L34 80"/><rect class="bloco b1" x="52" y="62" width="17" height="17" rx="2.5"/><rect class="bloco b2" x="52" y="44" width="17" height="17" rx="2.5"/><rect class="bloco b3" x="52" y="26" width="17" height="17" rx="2.5"/></svg></div>
+      </div>
       <div class="redes revelar">
         <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener">YouTube</a>
         <a href="#">Instagram</a>
@@ -1012,7 +1049,8 @@
   (function () {
     const btn = document.getElementById('somBtn');
     if (!btn || !(window.AudioContext || window.webkitAudioContext)) return;
-    let ctx = null, master = null, sfx = null, tocando = false;
+    let ctx = null, master = null, sfx = null, filtro = null, melodia = null, tocando = false;
+    let vozes = [], acordes = null, acordeAtual = null, progIdx = 0, tAcorde = null, tArp = null;
     function impulso(dur, decay) {
       const rate = ctx.sampleRate, len = Math.floor(rate * dur);
       const buf = ctx.createBuffer(2, len, rate);
@@ -1023,22 +1061,29 @@
       return buf;
     }
     function montarPad() {
-      const conv = ctx.createConvolver(); conv.buffer = impulso(3.6, 2.2);
-      const wet = ctx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
-      const filtro = ctx.createBiquadFilter(); filtro.type = 'lowpass'; filtro.frequency.value = 900; filtro.Q.value = 0.5;
+      const conv = ctx.createConvolver(); conv.buffer = impulso(4.2, 2.0);
+      const wet = ctx.createGain(); wet.gain.value = 0.55; conv.connect(wet); wet.connect(master);
+      filtro = ctx.createBiquadFilter(); filtro.type = 'lowpass'; filtro.frequency.value = 780; filtro.Q.value = 0.6;
       filtro.connect(master); filtro.connect(conv);
-      const acorde = [110, 164.81, 220, 261.63, 329.63, 392];
-      acorde.forEach(function (f, i) {
+      melodia = ctx.createGain(); melodia.gain.value = 0.5; melodia.connect(master); melodia.connect(conv);
+      acordes = [
+        [110, 164.81, 220, 261.63, 329.63],
+        [98, 146.83, 196, 246.94, 293.66],
+        [87.31, 130.81, 174.61, 220, 261.63],
+        [130.81, 196, 261.63, 329.63, 392]
+      ];
+      acordeAtual = acordes[0];
+      acordeAtual.forEach(function (f, i) {
         const o = ctx.createOscillator(); o.type = (i % 2) ? 'sine' : 'triangle'; o.frequency.value = f;
-        const g = ctx.createGain(); g.gain.value = 0.10 / acorde.length;
+        const g = ctx.createGain(); g.gain.value = 0.09 / 5;
         o.connect(g); g.connect(filtro);
-        const lfo = ctx.createOscillator(); lfo.frequency.value = 0.03 + i * 0.011;
-        const lg = ctx.createGain(); lg.gain.value = 6;
+        const lfo = ctx.createOscillator(); lfo.frequency.value = 0.02 + i * 0.009;
+        const lg = ctx.createGain(); lg.gain.value = 7;
         lfo.connect(lg); lg.connect(o.detune); lfo.start();
-        o.start();
+        o.start(); vozes.push(o);
       });
-      const flfo = ctx.createOscillator(); flfo.frequency.value = 0.025;
-      const fg = ctx.createGain(); fg.gain.value = 420;
+      const flfo = ctx.createOscillator(); flfo.frequency.value = 0.02;
+      const fg = ctx.createGain(); fg.gain.value = 380;
       flfo.connect(fg); fg.connect(filtro.frequency); flfo.start();
     }
     function garantir() {
@@ -1051,26 +1096,44 @@
       if (ctx.state === 'suspended') ctx.resume();
       return ctx;
     }
-    function tom(freq, dur, vol, tipo, atraso) {
+    function tom(freq, dur, vol, tipo, atraso, dest) {
       if (!tocando) return;
       garantir();
       const t0 = ctx.currentTime + (atraso || 0);
       const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t0);
       const g = ctx.createGain();
       g.gain.setValueAtTime(0.0001, t0);
-      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.015);
       g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-      o.connect(g); g.connect(sfx);
+      o.connect(g); g.connect(dest || sfx);
       o.start(t0); o.stop(t0 + dur + 0.03);
+    }
+    function trocarAcorde() {
+      progIdx = (progIdx + 1) % acordes.length;
+      acordeAtual = acordes[progIdx];
+      const t = ctx.currentTime;
+      vozes.forEach(function (o, i) { if (acordeAtual[i]) o.frequency.linearRampToValueAtTime(acordeAtual[i], t + 4.5); });
+    }
+    function plin() {
+      if (!acordeAtual) return;
+      const base = acordeAtual[Math.floor(Math.random() * acordeAtual.length)];
+      const f = base * (Math.random() < 0.5 ? 2 : 4);
+      tom(f, 1.8, 0.05, 'sine', 0, melodia);
+      tom(f * 1.5, 2.1, 0.025, 'sine', 0.14, melodia);
     }
     function ligar() {
       garantir();
       master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.linearRampToValueAtTime(0.10, ctx.currentTime + 2.5);
+      master.gain.setValueAtTime(0.02, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0.14, ctx.currentTime + 45);
+      if (!tAcorde) tAcorde = setInterval(trocarAcorde, 9000);
+      if (!tArp) { tArp = setInterval(plin, 2400); setTimeout(plin, 800); }
       tocando = true; btn.classList.add('ativo'); btn.textContent = '🔊';
     }
     function desligar() {
       tocando = false; btn.classList.remove('ativo'); btn.textContent = '🔈';
+      if (tAcorde) { clearInterval(tAcorde); tAcorde = null; }
+      if (tArp) { clearInterval(tArp); tArp = null; }
       if (ctx) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.0); }
     }
     btn.addEventListener('click', function () { tocando ? desligar() : ligar(); });
@@ -1090,80 +1153,112 @@
     const alvosHover = '.item, .filtro, .marca, .btn, nav a, .aba, .foto-pilha';
     document.querySelectorAll(alvosHover).forEach(function (el) { el.addEventListener('mouseenter', hoverSom); });
     document.querySelectorAll('a, button, .item, .filtro').forEach(function (el) { el.addEventListener('click', cliqueSom); });
+    window.__sfx = {
+      hit: function () { tom(1500, 0.09, 0.06, 'sine'); tom(2250, 0.11, 0.03, 'sine', 0.04); },
+      bonus: function () { tom(1200, 0.09, 0.06, 'sine'); tom(1800, 0.10, 0.05, 'sine', 0.06); tom(2400, 0.14, 0.04, 'sine', 0.12); },
+      miss: function () { tom(200, 0.14, 0.045, 'sawtooth'); }
+    };
   })();
 
   // ---------- Minigame (mira) ----------
   (function () {
     const arena = document.getElementById('arena');
     const mira = document.getElementById('mira');
+    const ret = document.querySelector('.ret');
     const msg = document.getElementById('arenaMsg');
     const texto = document.getElementById('arenaTexto');
     const btn = document.getElementById('btnJogar');
     const hudTempo = document.getElementById('hudTempo');
     const hudScore = document.getElementById('hudScore');
     const hudPrec = document.getElementById('hudPrec');
+    const hudCombo = document.getElementById('hudCombo');
     if (!arena) return;
-    let jogando = false, score = 0, tiros = 0, acertos = 0, tempo = 20, timer = null, spawner = null;
-    function limpar() { mira.innerHTML = ''; }
-    function atualizarPrec() { hudPrec.textContent = (tiros > 0 ? Math.round((acertos / tiros) * 100) : 100) + '%'; }
+    const RECORDE = 3200;
+    let jogando = false, score = 0, tiros = 0, acertos = 0, combo = 0, tempo = 20, timer = null, spawner = null;
+    function sfx(n) { if (window.__sfx && window.__sfx[n]) window.__sfx[n](); }
+    function mult() { return Math.min(5, 1 + Math.floor(combo / 4)); }
+    function atualizarHud() {
+      hudPrec.textContent = (tiros > 0 ? Math.round((acertos / tiros) * 100) : 100) + '%';
+      hudScore.textContent = score + ' pts';
+      hudCombo.textContent = combo >= 2 ? ('x' + mult() + '  ' + combo + ' seguidos') : '';
+    }
+    function pop(x, y, txt, bonus) {
+      const el = document.createElement('div');
+      el.className = 'pop' + (bonus ? ' bonus' : '');
+      el.textContent = txt;
+      el.style.left = x + 'px'; el.style.top = y + 'px';
+      arena.appendChild(el);
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 820);
+    }
     function criarAlvo() {
       if (!jogando) return;
-      const tam = 34 + Math.random() * 36;
+      const bonus = Math.random() < 0.22;
+      const tam = bonus ? (24 + Math.random() * 14) : (34 + Math.random() * 36);
       const r = arena.getBoundingClientRect();
       const x = Math.random() * (r.width - tam - 24) + 12;
       const y = Math.random() * (r.height - tam - 74) + 58;
       const el = document.createElement('div');
-      el.className = 'alvo';
+      el.className = 'alvo' + (bonus ? ' bonus' : '');
       el.style.width = tam + 'px'; el.style.height = tam + 'px';
       el.style.left = x + 'px'; el.style.top = y + 'px';
       mira.appendChild(el);
       let vivo = true;
       const to = setTimeout(function () {
         if (!vivo) return;
-        vivo = false;
-        el.classList.add('errou');
+        vivo = false; el.classList.add('errou');
         setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
-      }, Math.max(720, 1500 - (20 - tempo) * 34));
+      }, bonus ? 850 : Math.max(680, 1400 - (20 - tempo) * 36));
       el.addEventListener('mousedown', function (ev) {
         ev.stopPropagation();
         if (!jogando || !vivo) return;
         vivo = false; clearTimeout(to);
-        tiros++; acertos++; score += 100;
-        hudScore.textContent = score + ' pts'; atualizarPrec();
+        tiros++; acertos++; combo++;
+        const pontos = (bonus ? 250 : 100) * mult();
+        score += pontos;
+        pop(x + tam / 2, y + tam / 2, '+' + pontos, bonus);
+        atualizarHud();
+        sfx(bonus ? 'bonus' : 'hit');
         el.classList.add('errou');
-        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 200);
       });
     }
-    arena.addEventListener('mousedown', function () { if (jogando) { tiros++; atualizarPrec(); } });
+    arena.addEventListener('mousedown', function () {
+      if (!jogando) return;
+      tiros++; combo = 0; atualizarHud(); sfx('miss');
+    });
+    arena.addEventListener('mousemove', function (e) {
+      if (!ret) return;
+      const r = arena.getBoundingClientRect();
+      ret.style.left = (e.clientX - r.left) + 'px';
+      ret.style.top = (e.clientY - r.top) + 'px';
+    });
     function iniciar() {
-      jogando = true; score = 0; tiros = 0; acertos = 0; tempo = 20;
-      hudScore.textContent = '0 pts'; hudPrec.textContent = '100%'; hudTempo.textContent = '20.0s';
-      msg.classList.add('oculto');
-      limpar();
+      jogando = true; score = 0; tiros = 0; acertos = 0; combo = 0; tempo = 20;
+      arena.classList.add('jogando'); document.body.classList.add('mirando');
+      atualizarHud(); hudTempo.textContent = '20.0s';
+      msg.classList.add('oculto'); mira.innerHTML = '';
       timer = setInterval(function () {
         tempo -= 0.1;
         if (tempo <= 0) { terminar(); return; }
         hudTempo.textContent = tempo.toFixed(1) + 's';
       }, 100);
-      spawner = setInterval(criarAlvo, 650);
-      criarAlvo(); criarAlvo();
+      spawner = setInterval(criarAlvo, 480);
+      criarAlvo(); criarAlvo(); criarAlvo();
     }
     function terminar() {
-      jogando = false;
+      jogando = false; arena.classList.remove('jogando'); document.body.classList.remove('mirando');
       clearInterval(timer); clearInterval(spawner);
-      limpar();
+      mira.innerHTML = ''; hudCombo.textContent = '';
       const pr = tiros > 0 ? Math.round((acertos / tiros) * 100) : 0;
       let rank = 'Continue treinando!';
       if (score >= 2000) rank = 'Mira de elite! 🎯';
       else if (score >= 1200) rank = 'Ótima mira! 🔥';
       else if (score >= 600) rank = 'Boa! 💪';
-      texto.innerHTML = '<strong>' + score + ' pts</strong> · precisão <strong>' + pr + '%</strong> · ' + rank;
+      const bateu = score > RECORDE ? ' 🎁 Você bateu meu recorde — o presentinho é seu!' : '';
+      texto.innerHTML = '<strong>' + score + ' pts</strong> · precisão <strong>' + pr + '%</strong> · ' + rank + bateu;
       btn.textContent = 'Jogar de novo';
       msg.classList.remove('oculto');
     }
     btn.addEventListener('click', iniciar);
   })();
   </script>
-
-</body>
-</html>
