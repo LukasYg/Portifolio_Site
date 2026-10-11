@@ -1130,43 +1130,59 @@
     const btn = document.getElementById('somBtn');
     const dica = document.getElementById('somHint');
     if (!A || !T) return;
-    let pronto = false, mudo = false, comecou = false;
-    window.__player = { ativo: false, alternar: null };
+    let mudo = false, tentando = false, tocandoTrilha = false;
+    window.__player = { ativo: true, alternar: null };
+
     function mostrarDica() { if (dica) dica.classList.remove('oculto'); }
     function esconderDica() { if (dica) dica.classList.add('oculto'); }
     function comSom() { mudo = false; A.muted = false; T.muted = false; if (btn) btn.classList.add('ativo'); esconderDica(); }
+
     function tocarTrilha() {
+      if (tocandoTrilha) return; tocandoTrilha = true;
       T.volume = 0.55; T.loop = true; T.muted = mudo;
       const p = T.play(); if (p && p.catch) p.catch(function () {});
     }
-    function comecar() {
-      if (comecou) return; comecou = true;
-      A.volume = 0.95;
+
+    function tentarTocar() {
+      if (tentando || tocandoTrilha) return;
+      tentando = true;
+      A.volume = 0.95; A.muted = false;
       const p = A.play();
       if (p && p.then) {
-        p.then(function () { comSom(); }).catch(function () { aguardar(); });
-      } else { comSom(); }
-      A.addEventListener('ended', tocarTrilha, { once: true });
+        p.then(function () { tentando = false; comSom(); })
+         .catch(function (er) {
+            tentando = false;
+            if (er && (er.name === 'NotAllowedError' || er.name === 'AbortError')) { aguardar(); }
+            else { window.__player.ativo = false; }
+         });
+      } else { tentando = false; comSom(); }
     }
+
     function aguardar() {
       mostrarDica();
-      const eventos = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
-      function h() {
-        eventos.forEach(function (e2) { removeEventListener(e2, h); });
-        comecar();
-      }
-      eventos.forEach(function (e2) { addEventListener(e2, h, { passive: true }); });
+      const evs = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
+      function h() { evs.forEach(function (e2) { removeEventListener(e2, h); }); tentarTocar(); }
+      evs.forEach(function (e2) { addEventListener(e2, h, { passive: true }); });
     }
+
     function alternar() {
-      if (mudo) { comSom(); }
+      if (mudo) { comSom(); if (tocandoTrilha && T.paused) { T.play().catch(function () {}); } }
       else { mudo = true; A.muted = true; T.muted = true; if (btn) btn.classList.remove('ativo'); }
     }
-    A.addEventListener('canplaythrough', function () {
-      if (pronto) return; pronto = true;
-      window.__player.ativo = true; window.__player.alternar = alternar;
-      document.body.classList.add('audio-arquivo');
-      comecar();
-    }, { once: true });
+
+    A.addEventListener('ended', tocarTrilha, { once: true });
+    A.addEventListener('error', function () { window.__player.ativo = false; });
+    T.addEventListener('error', function () { window.__player.ativo = false; });
+    window.__player.alternar = alternar;
+    document.body.classList.add('audio-arquivo');
+
+    // Tenta tocar assim que possivel (play() espera o buffer sozinho)
+    if (A.readyState >= 2) { tentarTocar(); }
+    else {
+      A.addEventListener('loadedmetadata', tentarTocar, { once: true });
+      A.addEventListener('canplay', tentarTocar, { once: true });
+      setTimeout(tentarTocar, 300);
+    }
   })();
 
   // ---------- Audio: trilha epica + efeitos de UI ----------
