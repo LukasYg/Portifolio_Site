@@ -14,8 +14,8 @@
     --card: #14161a;
     --txt: #e9ebee;
     --muted: #868d96;
-    --accent: #5cc8bd;
-    --accent2: #7f9cc9;
+    --accent: #e8543f;
+    --accent2: #7fc4e8;
     --vermelho: #e8543f;
     --azul-ceu: #7fc4e8;
     --areia: #e8c9a0;
@@ -44,8 +44,8 @@
     position: fixed; border-radius: 50%; filter: blur(150px); opacity: .12;
     pointer-events: none; z-index: 0;
   }
-  .glow.a { width: 520px; height: 520px; background: #2f6f68; top: -180px; left: -140px; }
-  .glow.b { width: 460px; height: 460px; background: #2a3a5c; top: 45%; right: -160px; }
+  .glow.a { width: 520px; height: 520px; background: #5c2a20; top: -180px; left: -140px; }
+  .glow.b { width: 460px; height: 460px; background: #234a5e; top: 45%; right: -160px; }
 
   /* ---------- Nav ---------- */
   header {
@@ -97,7 +97,7 @@
     text-decoration: none; transition: transform .25s, box-shadow .25s;
     display: inline-block; cursor: pointer; border: none;
   }
-  .btn.primary { background: var(--accent); color: #05130f; box-shadow: 0 6px 18px rgba(92,200,189,.14); }
+  .btn.primary { background: var(--accent); color: #05130f; box-shadow: 0 6px 18px rgba(232,84,63,.14); }
   .btn.ghost { background: transparent; color: var(--txt); border: 1px solid var(--line); }
   .btn.ghost:hover { border-color: var(--accent); }
   .btn:hover { transform: translateY(-2px); }
@@ -106,7 +106,7 @@
     font-size: 13px; color: var(--txt); padding: 8px 16px; border-radius: 999px;
     background: rgba(255,255,255,.035); border: 1px solid var(--line);
   }
-  .roles span.princ { background: rgba(92,200,189,.10); border-color: rgba(92,200,189,.40); color: #d6fff9; }
+  .roles span.princ { background: rgba(232,84,63,.10); border-color: rgba(232,84,63,.40); color: #d6fff9; }
   .stats { display: flex; gap: 40px; margin-top: 44px; flex-wrap: wrap; }
   .stats div { display: flex; flex-direction: column; }
   .stats strong { font-size: 30px; font-weight: 800; color: #fff; }
@@ -124,7 +124,7 @@
   .tl-card h3 { font-size: 21px; margin-bottom: 6px; }
   .tl-card p { color: var(--muted); font-size: 14px; }
   .tl-stats { margin-top: 14px; font-size: 13px; color: var(--accent); font-weight: 600; }
-  .tl-card a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(92,200,189,.4); }
+  .tl-card a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(232,84,63,.4); }
   .tl-card a:hover { border-bottom-color: var(--accent); }
   .tl-stats span { color: var(--muted); font-weight: 400; margin: 0 4px; }
   /* Marcas */
@@ -258,9 +258,9 @@
   .orbita.atras { z-index: 1; }
   .orbita.frente { z-index: 4; }
   .pt { position: absolute; left: 50%; top: 50%; color: var(--accent); will-change: transform, opacity; }
-  .pt svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(92,200,189,.6)); }
+  .pt svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(232,84,63,.6)); }
   .orbita.frente .pt { color: var(--accent2); }
-  .orbita.frente .pt svg { filter: drop-shadow(0 0 10px rgba(127,156,201,.65)); }
+  .orbita.frente .pt svg { filter: drop-shadow(0 0 10px rgba(127,196,232,.65)); }
   .pt.a1 { width: 13px; height: 13px; }
   .pt.a2 { width: 20px; height: 20px; }
   .pt.a3 { width: 15px; height: 15px; }
@@ -357,7 +357,7 @@
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(60% 45% at 12% 0%, rgba(92,200,189,.08), transparent 62%),
+      radial-gradient(60% 45% at 12% 0%, rgba(232,84,63,.08), transparent 62%),
       radial-gradient(55% 40% at 88% 12%, rgba(127,196,232,.10), transparent 62%),
       radial-gradient(70% 50% at 50% 100%, rgba(232,84,63,.06), transparent 70%);
   }
@@ -395,8 +395,8 @@
 
   /* ---------- Animações extras ---------- */
   .scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; background: rgba(255,255,255,.05); }
-  .scroll-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 10px rgba(92,200,189,.35); }
-  .spotlight { position: fixed; width: 640px; height: 640px; border-radius: 50%; pointer-events: none; z-index: 0; left: 0; top: 0; background: radial-gradient(circle, rgba(92,200,189,.06), transparent 62%); transform: translate(-50%,-50%); opacity: 0; transition: opacity .5s; }
+  .scroll-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 10px rgba(232,84,63,.35); }
+  .spotlight { position: fixed; width: 640px; height: 640px; border-radius: 50%; pointer-events: none; z-index: 0; left: 0; top: 0; background: radial-gradient(circle, rgba(232,84,63,.06), transparent 62%); transform: translate(-50%,-50%); opacity: 0; transition: opacity .5s; }
 
   /* Entrada do hero */
   @keyframes subir { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
@@ -407,7 +407,7 @@
 
   /* Brilho suave no topo do hero */
   .hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(85% 65% at 50% 0%, rgba(92,200,189,.07), transparent 62%); }
+    background: radial-gradient(85% 65% at 50% 0%, rgba(232,84,63,.07), transparent 62%); }
 
   /* Titulo letra por letra */
   @keyframes letra { to { opacity: 1; transform: none; } }
@@ -489,10 +489,10 @@
   body.tem-cursor a, body.tem-cursor button { cursor: none; }
   .cursor { position: fixed; top: 0; left: 0; width: 34px; height: 34px; border: 1px solid var(--accent); border-radius: 50%; pointer-events: none; z-index: 150; transform: translate(-50%,-50%); transition: width .28s, height .28s, background .28s, border-color .28s, opacity .3s; opacity: .8; }
   .cursor-dot { position: fixed; top: 0; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 151; transform: translate(-50%,-50%); }
-  .cursor.grande { width: 68px; height: 68px; background: rgba(92,200,189,.12); border-color: transparent; opacity: 1; }
+  .cursor.grande { width: 68px; height: 68px; background: rgba(232,84,63,.12); border-color: transparent; opacity: 1; }
   @media (hover: none) { .cursor, .cursor-dot { display: none; } }
   .knob { position: fixed; bottom: 24px; right: 24px; z-index: 90; width: 56px; height: 56px; border-radius: 50%; background: rgba(16,18,22,.75); border: 1px solid var(--line); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; cursor: ns-resize; transition: border-color .3s, box-shadow .3s; user-select: none; touch-action: none; }
-  .knob:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(92,200,189,.10); }
+  .knob:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,84,63,.10); }
   .knob svg { width: 46px; height: 46px; overflow: visible; }
   .k-base { fill: none; stroke: rgba(255,255,255,.13); stroke-width: 4; stroke-dasharray: 89.5 200; stroke-linecap: round; }
   .k-arco { fill: none; stroke: var(--accent); stroke-width: 4; stroke-dasharray: 0 200; stroke-linecap: round; transition: stroke-dasharray .08s linear; }
@@ -514,13 +514,13 @@
   /* Minigame */
   #minigame { padding: 90px 0; }
   .arena { position: relative; height: 420px; border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; cursor: crosshair;
-    background: radial-gradient(120% 100% at 50% 0%, rgba(92,200,189,.06), transparent 60%),
+    background: radial-gradient(120% 100% at 50% 0%, rgba(232,84,63,.06), transparent 60%),
       repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 40px),
       repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 40px), #0d0f13; }
   .hud { position: absolute; top: 14px; left: 16px; right: 16px; display: flex; justify-content: space-between; font-family: ui-monospace, Menlo, monospace; font-size: 13px; color: var(--muted); z-index: 3; pointer-events: none; letter-spacing: 1px; }
   .hud span { background: rgba(0,0,0,.35); border: 1px solid var(--line); padding: 4px 12px; border-radius: 8px; }
   .mira { position: absolute; inset: 0; z-index: 2; }
-  .alvo { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #bff3ea, var(--accent) 55%, #2b6f68); box-shadow: 0 0 0 2px rgba(92,200,189,.35), 0 8px 24px rgba(92,200,189,.25); cursor: crosshair; animation: surgir .18s ease-out; }
+  .alvo { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #bff3ea, var(--accent) 55%, #2b6f68); box-shadow: 0 0 0 2px rgba(232,84,63,.35), 0 8px 24px rgba(232,84,63,.25); cursor: crosshair; animation: surgir .18s ease-out; }
   .alvo::after { content: ''; position: absolute; inset: 32%; border-radius: 50%; background: rgba(10,11,13,.85); }
   @keyframes surgir { from { transform: scale(.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   .alvo.errou { animation: sumir .2s ease-in forwards; }
@@ -530,7 +530,7 @@
   .arena-msg p { color: var(--muted); max-width: 430px; font-size: 14px; }
   .arena-msg strong { color: var(--txt); }
   .arena.jogando { cursor: none; }
-  .ret { position: absolute; z-index: 3; width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 2px solid rgba(92,200,189,.85); border-radius: 50%; pointer-events: none; display: none; }
+  .ret { position: absolute; z-index: 3; width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 2px solid rgba(232,84,63,.85); border-radius: 50%; pointer-events: none; display: none; }
   .ret::after { content: ''; position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; background: var(--accent); border-radius: 50%; transform: translate(-50%,-50%); }
   .arena.jogando .ret { display: block; }
   body.mirando .cursor, body.mirando .cursor-dot { opacity: 0; }
@@ -564,14 +564,14 @@
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="knob" id="somBtn" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" tabindex="0" title="Volume">
+  <div class="knob" id="somBtn" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" tabindex="0" title="Volume">
     <svg viewBox="0 0 48 48">
       <circle class="k-base" cx="24" cy="24" r="19" transform="rotate(135 24 24)"/>
       <circle class="k-arco" id="kArco" cx="24" cy="24" r="19" transform="rotate(135 24 24)"/>
       <line class="k-ponteiro" id="kPonteiro" x1="24" y1="24" x2="24" y2="8"/>
       <circle class="k-centro" cx="24" cy="24" r="2.6"/>
     </svg>
-    <span class="k-pct" id="kPct">70</span>
+    <span class="k-pct" id="kPct">60</span>
   </div>
   <div class="som-hint" id="somHint">Ativar som 🎵</div>
 
@@ -1192,22 +1192,36 @@
     const btn = document.getElementById('somBtn');
     const dica = document.getElementById('somHint');
     if (!A || !T) return;
-    let vol = 0.7, tentando = false, tocandoTrilha = false;
+    let vol = 0.6, tentando = false, tocandoTrilha = false;
     window.__player = { ativo: true, setVolume: null };
 
     function mostrarDica() { if (dica) dica.classList.remove('oculto'); }
     function esconderDica() { if (dica) dica.classList.add('oculto'); }
+    function volA() { return vol * 0.55; }
+    function volT() { return vol * 0.32; }
     function aplicarVolume() {
-      A.volume = vol * 0.72; T.volume = vol * 0.46;
+      A.volume = volA(); T.volume = volT();
       A.muted = false; T.muted = false;
+      window.__somLigado = vol > 0;
       if (window.__synthVol) window.__synthVol(vol);
     }
     function comSom() { aplicarVolume(); if (btn) btn.classList.add('ativo'); esconderDica(); }
 
+    function fade(el, de, para, dur) {
+      const t0 = performance.now();
+      function passo(now) {
+        const k = Math.min(1, (now - t0) / dur);
+        el.volume = Math.max(0, Math.min(1, de + (para - de) * k));
+        if (k < 1) requestAnimationFrame(passo);
+      }
+      requestAnimationFrame(passo);
+    }
     function tocarTrilha() {
       if (tocandoTrilha) return; tocandoTrilha = true;
-      T.loop = true; aplicarVolume();
+      T.loop = true; T.volume = 0; T.muted = false;
       const p = T.play(); if (p && p.catch) p.catch(function () {});
+      fade(T, 0, volT(), 2200);
+      fade(A, A.volume, 0, 2200);
     }
 
     function tentarTocar() {
@@ -1232,7 +1246,10 @@
       evs.forEach(function (e2) { addEventListener(e2, h, { passive: true }); });
     }
 
-    A.addEventListener('ended', tocarTrilha, { once: true });
+    A.addEventListener('ended', function () { tocarTrilha(); });
+    A.addEventListener('timeupdate', function () {
+      if (!tocandoTrilha && isFinite(A.duration) && A.duration - A.currentTime <= 2.2) tocarTrilha();
+    });
     A.addEventListener('error', function () { window.__player.ativo = false; });
     T.addEventListener('error', function () { window.__player.ativo = false; });
     window.__player.setVolume = function (v) {
@@ -1328,7 +1345,7 @@
       while (proximoTempo < ctx.currentTime + 0.25) { tocarPasso(); proximoTempo += passoDur; passo++; }
     }
     function tom(freq, dur, vol, tipo, atraso, dest) {
-      if (!tocando) return;
+      if (window.__somLigado === false) return;
       garantir();
       const t0 = ctx.currentTime + (atraso || 0);
       const o = ctx.createOscillator(); o.type = tipo || 'sine'; o.frequency.setValueAtTime(freq, t0);
@@ -1367,6 +1384,15 @@
     const alvosHover = '.item, .filtro, .marca, .btn, nav a, .aba, .foto-pilha';
     document.querySelectorAll(alvosHover).forEach(function (el) { el.addEventListener('mouseenter', hoverSom); });
     document.querySelectorAll('a, button, .item, .filtro').forEach(function (el) { el.addEventListener('click', cliqueSom); });
+    let ultimoRolar = 0;
+    addEventListener('wheel', function () {
+      if (window.__somLigado === false) return;
+      const a = performance.now();
+      if (a - ultimoRolar < 65) return;
+      ultimoRolar = a;
+      tom(780 + Math.random() * 190, 0.05, 0.016, 'sine');
+      tom(1560, 0.035, 0.008, 'sine', 0.015);
+    }, { passive: true });
     window.__synthVol = function (v) { volSynth = v; if (ctx && master && tocando) { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.linearRampToValueAtTime(0.62 * v / 0.7, ctx.currentTime + 0.25); } };
     window.__sfx = {
       hit: function () { tom(1500, 0.09, 0.06, 'sine'); tom(2250, 0.11, 0.03, 'sine', 0.04); },
@@ -1484,7 +1510,7 @@
     const ponteiro = document.getElementById('kPonteiro');
     const pct = document.getElementById('kPct');
     const L = 89.5;
-    let vol = 0.7, arrastando = false, inicioY = 0, volInicio = 0;
+    let vol = 0.6, arrastando = false, inicioY = 0, volInicio = 0;
     function pintar() {
       if (arco) arco.style.strokeDasharray = (L * vol) + ' 200';
       if (ponteiro) ponteiro.style.transform = 'rotate(' + (-135 + vol * 270).toFixed(1) + 'deg)';
