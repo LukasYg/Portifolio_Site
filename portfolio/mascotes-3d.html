@@ -3,25 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prévia — Mascotes 3D (low-poly voxel)</title>
+<title>Prévia — Lukitas 3D cute</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0b0d; font-family: 'Inter', system-ui, sans-serif; }
   #cena { display: block; width: 100%; height: 100%; }
-  .topo { position: fixed; top: 22px; left: 50%; transform: translateX(-50%); text-align: center; color: #e9ebee; pointer-events: none; }
-  .topo h1 { font-size: clamp(16px, 3vw, 26px); font-weight: 700; letter-spacing: -.02em; }
-  .topo p { font-size: 13px; color: #868d96; margin-top: 6px; }
-  .dica { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); color: #9fd0ff; font-size: 12px; background: rgba(20,40,80,.5); padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(120,180,255,.3); backdrop-filter: blur(6px); pointer-events: none; }
-  #load { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #7fb8ff; font-size: 14px; background: #0a0b0d; transition: opacity .5s; }
+  .topo { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); text-align: center; color: #e9ebee; pointer-events: none; z-index: 2; }
+  .topo h1 { font-size: clamp(15px, 2.6vw, 24px); font-weight: 700; letter-spacing: -.02em; }
+  .topo p { font-size: 12px; color: #868d96; margin-top: 5px; }
+  .dica { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); color: #9fd0ff; font-size: 12px; background: rgba(20,40,80,.5); padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(120,180,255,.3); backdrop-filter: blur(6px); pointer-events: none; z-index: 2; }
+  #load { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #7fb8ff; font-size: 14px; background: #0a0b0d; transition: opacity .5s; z-index: 3; }
 </style>
 </head>
 <body>
-  <div id="load">Carregando mascotes 3D…</div>
-  <div class="topo">
-    <h1>🧊 Mascotes em 3D — prévia</h1>
-    <p>Low-poly / voxel, mesma paleta do site</p>
-  </div>
-  <div class="dica">🖱️ Arraste para girar · Scroll para zoom</div>
+  <div id="load">Carregando personagens 3D…</div>
+  <div class="topo"><h1>Lukitas 3D — prévia "cute"</h1><p>Chibi estilo Pixar · baseado na sua foto</p></div>
+  <div class="dica">Arraste para girar · Scroll para zoom</div>
   <canvas id="cena"></canvas>
 
   <script type="importmap">
@@ -39,138 +36,166 @@
 
   const canvas = document.getElementById('cena');
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x0a0b0d, 14, 26);
+  scene.fog = new THREE.Fog(0x0a0b0d, 15, 30);
 
-  const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 100);
-  camera.position.set(0, 3.4, 9.5);
+  const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 100);
+  camera.position.set(0, 3.2, 10);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setSize(innerWidth, innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
 
   const controls = new OrbitControls(camera, canvas);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.07;
-  controls.target.set(0, 1.5, 0);
-  controls.minDistance = 4;
-  controls.maxDistance = 18;
-  controls.maxPolarAngle = Math.PI * 0.52;
+  controls.enableDamping = true; controls.dampingFactor = 0.07;
+  controls.target.set(0, 1.55, 0);
+  controls.minDistance = 4; controls.maxDistance = 20;
+  controls.maxPolarAngle = Math.PI * 0.53;
 
-  // Luzes suaves
-  scene.add(new THREE.HemisphereLight(0x9fd0ff, 0x0a0b0d, 0.9));
-  const key = new THREE.DirectionalLight(0xffffff, 2.1);
-  key.position.set(5, 9, 6);
-  key.castShadow = true;
+  scene.add(new THREE.HemisphereLight(0xbcd4ff, 0x101018, 1.0));
+  const key = new THREE.DirectionalLight(0xffffff, 1.9);
+  key.position.set(5, 10, 7); key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
   key.shadow.camera.near = 1; key.shadow.camera.far = 40;
-  key.shadow.camera.left = -10; key.shadow.camera.right = 10;
-  key.shadow.camera.top = 10; key.shadow.camera.bottom = -10;
-  scene.add(key);
-  const rim = new THREE.PointLight(0x5cc8bd, 30, 26);
-  rim.position.set(-6, 3, -5);
-  scene.add(rim);
+  key.shadow.camera.left = -12; key.shadow.camera.right = 12;
+  key.shadow.camera.top = 12; key.shadow.camera.bottom = -12;
+  key.shadow.radius = 3; scene.add(key);
+  const rim = new THREE.DirectionalLight(0x8aa0ff, 1.2);
+  rim.position.set(-6, 4, -6); scene.add(rim);
+  const fill = new THREE.PointLight(0x5cc8bd, 14, 22);
+  fill.position.set(0, 2, 6); scene.add(fill);
 
-  // Chao
-  const chao = new THREE.Mesh(
-    new THREE.CircleGeometry(16, 64),
-    new THREE.MeshStandardMaterial({ color: 0x101216, roughness: 0.9, metalness: 0.1 })
-  );
-  chao.rotation.x = -Math.PI / 2;
-  chao.receiveShadow = true;
-  scene.add(chao);
-  function mat(cor, rough) {
-    return new THREE.MeshStandardMaterial({ color: cor, roughness: rough == null ? 0.75 : rough, metalness: 0.15 });
-  }
-  function bloco(w, h, d, cor) {
-    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(cor));
-    m.castShadow = true; m.receiveShadow = true;
-    return m;
-  }
-  const OLHO = new THREE.MeshStandardMaterial({ color: 0x1b1524, roughness: 0.5 });
+  const chao = new THREE.Mesh(new THREE.CircleGeometry(20, 64),
+    new THREE.MeshStandardMaterial({ color: 0x0e1015, roughness: 0.95, metalness: 0 }));
+  chao.rotation.x = -Math.PI / 2; chao.receiveShadow = true; scene.add(chao);
 
-  function criarBase(cores) {
+  function mat(cor, rough, metal) {
+    return new THREE.MeshStandardMaterial({ color: cor, roughness: rough == null ? 0.7 : rough, metalness: metal == null ? 0.05 : metal });
+  }
+  function contorno(mesh, cor) {
+    const o = new THREE.Mesh(mesh.geometry, new THREE.MeshBasicMaterial({ color: cor || 0x241a12, side: THREE.BackSide }));
+    o.scale.multiplyScalar(1.045);
+    mesh.add(o);
+    return mesh;
+  }
+
+  // Cores baseadas na SUA foto
+  const CORES = { pele: 0xf6d3b0, cabelo: 0x4a3527, camisa: 0x6b4fa8, calca: 0x2b2f36, tenis: 0x2a2a33 };
+
+  function criarChibi(cores) {
     const g = new THREE.Group();
-    const cabeca = bloco(0.86, 0.86, 0.86, cores.pele);
-    cabeca.position.y = 1.74; g.add(cabeca);
-    const olhoGeo = new THREE.BoxGeometry(0.1, 0.15, 0.06);
-    const oE = new THREE.Mesh(olhoGeo, OLHO); oE.position.set(-0.17, 1.78, 0.44);
-    const oD = new THREE.Mesh(olhoGeo, OLHO); oD.position.set(0.17, 1.78, 0.44);
-    const boca = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.05, 0.05), OLHO);
-    boca.position.set(0, 1.62, 0.44);
-    g.add(oE, oD, boca);
-    const corpo = bloco(0.72, 0.92, 0.46, cores.camisa);
-    corpo.position.y = 1.08; g.add(corpo);
-    const bracoGeo = new THREE.BoxGeometry(0.2, 0.72, 0.2);
-    const bE = new THREE.Mesh(bracoGeo, mat(cores.camisa)); bE.castShadow = true;
-    bE.position.set(-0.47, 1.14, 0);
-    const bD = new THREE.Mesh(bracoGeo, mat(cores.camisa)); bD.castShadow = true;
-    bD.position.set(0.47, 1.14, 0);
-    g.add(bE, bD);
-    const pernaGeo = new THREE.BoxGeometry(0.24, 0.66, 0.24);
-    const pE = new THREE.Mesh(pernaGeo, mat(cores.calca)); pE.castShadow = true;
-    pE.position.set(-0.18, 0.33, 0);
-    const pD = new THREE.Mesh(pernaGeo, mat(cores.calca)); pD.castShadow = true;
-    pD.position.set(0.18, 0.33, 0);
-    g.add(pE, pD);
-    return { g: g, cabeca: cabeca, bE: bE, bD: bD };
+    // CABECA (grande)
+    const cabeca = new THREE.Mesh(new THREE.SphereGeometry(0.86, 44, 36), mat(cores.pele, 0.62));
+    cabeca.position.y = 1.95; cabeca.scale.set(1, 1.03, 0.98);
+    contorno(cabeca); cabeca.castShadow = true; g.add(cabeca);
+    // OLHOS grandes
+    [-0.29, 0.29].forEach(function (x) {
+      const branco = new THREE.Mesh(new THREE.SphereGeometry(0.2, 26, 22), mat(0xffffff, 0.28));
+      branco.position.set(x, 1.98, 0.78); branco.scale.set(1, 1.18, 0.5);
+      const iris = new THREE.Mesh(new THREE.SphereGeometry(0.12, 22, 18), mat(0x3a2a1c, 0.3));
+      iris.position.set(x, 1.97, 0.86); iris.scale.set(1, 1.15, 0.55);
+      const brilho = new THREE.Mesh(new THREE.SphereGeometry(0.042, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      brilho.position.set(x + 0.05, 2.05, 0.94);
+      const brilho2 = new THREE.Mesh(new THREE.SphereGeometry(0.022, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      brilho2.position.set(x - 0.04, 1.9, 0.9);
+      g.add(branco, iris, brilho, brilho2);
+    });
+    // SOBRANCELHAS
+    [-0.29, 0.29].forEach(function (x) {
+      const s = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.06, 0.08), mat(cores.cabelo, 0.7));
+      s.position.set(x, 2.26, 0.72); s.rotation.z = x < 0 ? 0.18 : -0.18;
+      s.scale.z = 0.6; g.add(s);
+    });
+    // NARIZ + BOCA + BLUSH
+    const nariz = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 10), mat(cores.pele, 0.6));
+    nariz.position.set(0, 1.83, 0.94);
+    const boca = new THREE.Mesh(new THREE.SphereGeometry(0.075, 16, 12), mat(0x8a4a44, 0.5));
+    boca.position.set(0, 1.7, 0.9); boca.scale.set(1.5, 0.6, 0.4);
+    g.add(nariz, boca);
+    [-0.5, 0.5].forEach(function (x) {
+      const b = new THREE.Mesh(new THREE.SphereGeometry(0.11, 14, 12), mat(0xf2a8a8, 0.7));
+      b.position.set(x, 1.8, 0.62); b.scale.set(1, 0.7, 0.35); g.add(b);
+    });
+    // CABELO ondulado
+    const cap = new THREE.Mesh(new THREE.SphereGeometry(0.9, 44, 30, 0, Math.PI * 2, 0, Math.PI * 0.56), mat(cores.cabelo, 0.8));
+    cap.position.y = 1.95; cap.scale.set(1.02, 1.08, 1.02); contorno(cap, 0x2a1e14); g.add(cap);
+    const topete = new THREE.Mesh(new THREE.SphereGeometry(0.42, 26, 20), mat(cores.cabelo, 0.8));
+    topete.position.set(0.14, 2.66, 0.16); topete.scale.set(1.35, 0.85, 1.2); topete.rotation.z = -0.3;
+    contorno(topete, 0x2a1e14); g.add(topete);
+    [-0.7, 0.7].forEach(function (x) {
+      const l = new THREE.Mesh(new THREE.SphereGeometry(0.3, 22, 18), mat(cores.cabelo, 0.8));
+      l.position.set(x, 2.02, 0.02); l.scale.set(0.72, 1.15, 0.95); contorno(l, 0x2a1e14); g.add(l);
+    });
+    // CORPO
+    const corpo = new THREE.Mesh(new THREE.CapsuleGeometry(0.5, 0.42, 18, 34), mat(cores.camisa, 0.82));
+    corpo.position.y = 0.98; corpo.scale.set(1.06, 1, 0.86); contorno(corpo); corpo.castShadow = true; g.add(corpo);
+    // BRACOS + MAOS
+    const bracoGeo = new THREE.CapsuleGeometry(0.14, 0.5, 10, 22);
+    const maoGeo = new THREE.SphereGeometry(0.17, 18, 16);
+    const bracos = [];
+    [-1, 1].forEach(function (s) {
+      const b = new THREE.Mesh(bracoGeo, mat(cores.camisa, 0.82));
+      b.position.set(0.62 * s, 1.02, 0); b.rotation.z = 0.2 * s; b.castShadow = true; contorno(b);
+      const m = new THREE.Mesh(maoGeo, mat(cores.pele, 0.6));
+      m.position.set(0.74 * s, 0.66, 0); m.castShadow = true; contorno(m);
+      g.add(b, m); bracos.push(b);
+    });
+    // PERNAS + TENIS
+    const pernaGeo = new THREE.CapsuleGeometry(0.17, 0.42, 10, 22);
+    [-0.25, 0.25].forEach(function (x) {
+      const p = new THREE.Mesh(pernaGeo, mat(cores.calca, 0.8));
+      p.position.set(x, 0.44, 0); p.castShadow = true; contorno(p);
+      const t = new THREE.Mesh(new THREE.SphereGeometry(0.2, 20, 16), mat(cores.tenis, 0.6));
+      t.position.set(x, 0.15, 0.07); t.scale.set(1.15, 0.8, 1.35); t.castShadow = true; contorno(t);
+      g.add(p, t);
+    });
+    return { g: g, bracos: bracos, maoEsq: null };
   }
-
-  // ---------- Skatista (chapeu de palha + skate) ----------
-  const CORES_SKAT = { pele: 0xf2c79b, camisa: 0xe0533d, calca: 0x2f5fa0 };
-  const skat = criarBase(CORES_SKAT);
-  const abaS = new THREE.Mesh(new THREE.CylinderGeometry(0.72, 0.72, 0.08, 24), mat(0xf2c94c));
-  abaS.position.y = 2.16; abaS.castShadow = true;
-  const copaS = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.46, 0.32, 24), mat(0xf7d977));
-  copaS.position.y = 2.32; copaS.castShadow = true;
-  skat.g.add(abaS, copaS);
-  // skate
-  const deck = bloco(1.5, 0.1, 0.5, 0x5a7fc4);
-  deck.position.set(0, 0.06, 0.05);
-  const rodGeo = new THREE.CylinderGeometry(0.11, 0.11, 0.14, 12);
-  const rodMat = mat(0x1b1524);
-  [[-0.55, -0.18], [-0.55, 0.28], [0.55, -0.18], [0.55, 0.28]].forEach(function (p) {
-    const r = new THREE.Mesh(rodGeo, rodMat);
-    r.rotation.z = Math.PI / 2;
-    r.position.set(p[0], 0.0, p[1]);
-    r.castShadow = true;
+  // ---------- 1) SKATISTA ----------
+  const skat = criarChibi(CORES);
+  skat.g.position.set(-3.7, 0.18, 0);
+  const deck = new THREE.Mesh(new THREE.BoxGeometry(1.75, 0.12, 0.64), mat(0x5a7fc4, 0.55));
+  deck.position.set(0, 0.05, 0.06); deck.castShadow = true; contorno(deck, 0x1b1524);
+  skat.g.add(deck);
+  const rodGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.16, 14);
+  [[-0.6, -0.22], [-0.6, 0.3], [0.6, -0.22], [0.6, 0.3]].forEach(function (p) {
+    const r = new THREE.Mesh(rodGeo, mat(0x1b1524, 0.5));
+    r.rotation.z = Math.PI / 2; r.position.set(p[0], -0.03, p[1]); r.castShadow = true;
     skat.g.add(r);
   });
-  skat.g.add(deck);
-  skat.g.position.set(-3.4, 0, 0);
   scene.add(skat.g);
-  
-  // ---------- Cinegrafista (bone + camera) ----------
-  const CORES_CINE = { pele: 0xf2c79b, camisa: 0x2f4a6b, calca: 0x2b2f36 };
-  const cine = criarBase(CORES_CINE);
-  const copaC = bloco(0.9, 0.28, 0.9, 0x4caf50); copaC.position.y = 2.24;
-  const abaC = bloco(0.8, 0.12, 0.34, 0x38813c); abaC.position.set(0, 2.1, 0.42);
-  cine.g.add(copaC, abaC);
-  const camCorpo = bloco(0.62, 0.42, 0.4, 0x26304a); camCorpo.position.set(0, 1.2, 0.5);
-  const lente = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 0.3, 20), mat(0x7f9cc9, 0.4));
-  lente.rotation.x = Math.PI / 2; lente.position.set(0.12, 1.2, 0.78); lente.castShadow = true;
+
+  // ---------- 2) CINEGRAFISTA ----------
+  const cine = criarChibi(CORES);
+  cine.bracos[0].rotation.x = -1.25; cine.bracos[1].rotation.x = -1.25;
+  const cam = new THREE.Group();
+  const camCorpo = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.44, 0.42), mat(0x26304a, 0.5));
+  contorno(camCorpo, 0x141c2c); camCorpo.castShadow = true;
+  const lente = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.19, 0.36, 24), mat(0x7f9cc9, 0.35));
+  lente.rotation.x = Math.PI / 2; lente.position.z = 0.34; contorno(lente, 0x141c2c);
   const recMat = new THREE.MeshStandardMaterial({ color: 0xff6b6b, emissive: 0xff6b6b, emissiveIntensity: 2 });
-  const rec = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.05), recMat);
-  rec.position.set(-0.2, 1.3, 0.71);
-  cine.g.add(camCorpo, lente, rec);
+  const rec = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.09, 0.07), recMat);
+  rec.position.set(-0.22, 0.13, 0.22);
+  cam.add(camCorpo, lente, rec);
+  cam.position.set(0, 1.18, 0.7);
+  cine.g.add(cam);
+  cine.g.position.set(0, 0, 0);
   scene.add(cine.g);
 
-  // ---------- Construtor (capacete + blocos) ----------
-  const CORES_CONS = { pele: 0xf2c79b, camisa: 0xe0863d, calca: 0x3a4250 };
-  const cons = criarBase(CORES_CONS);
-  const helmo = new THREE.Mesh(new THREE.SphereGeometry(0.48, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2), mat(0xf2c94c));
-  helmo.position.y = 2.16; helmo.castShadow = true;
-  const helmoAba = bloco(0.98, 0.1, 0.62, 0xcfa32f); helmoAba.position.set(0, 2.14, 0.5);
-  cons.g.add(helmo, helmoAba);
-  const coresBloco = [0xe0533d, 0xf2c94c, 0x4caf50];
+  // ---------- 3) CONSTRUTOR ----------
+  const cons = criarChibi(CORES);
+  cons.bracos[0].rotation.z = 1.3; cons.bracos[1].rotation.z = -1.3;
   const blocos = [];
-  coresBloco.forEach(function (c, i) {
-    const b = bloco(0.5, 0.5, 0.5, c);
-    b.position.set(1.0, 0.25 + i * 0.52, 0.05);
+  [0xe0533d, 0xf2c94c, 0x4caf50].forEach(function (c, i) {
+    const b = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.52, 0.52), mat(c, 0.7));
+    contorno(b, 0x1b1524); b.castShadow = true;
+    b.position.set(1.15, 0.3 + i * 0.56, 0.06);
     cons.g.add(b); blocos.push(b);
   });
-  cons.g.position.set(3.3, 0, 0);
+  cons.g.position.set(3.7, 0, 0);
   scene.add(cons.g);
 
   // ---------- Animacao ----------
@@ -179,18 +204,17 @@
   function animate() {
     requestAnimationFrame(animate);
     t += relogio.getDelta();
-    skat.g.position.y = Math.sin(t * 2.2) * 0.06;
+    skat.g.position.y = 0.18 + Math.sin(t * 2.2) * 0.05;
     skat.g.rotation.z = Math.sin(t * 1.6) * 0.05;
-    skat.g.rotation.y = Math.sin(t * 0.5) * 0.16;
-    cine.g.rotation.z = Math.sin(t * 1.1) * 0.05;
-    cine.bE.rotation.x = -1.2 + Math.sin(t * 1.3) * 0.12;
-    cine.bD.rotation.x = -1.2 + Math.sin(t * 1.3 + 0.4) * 0.12;
+    skat.g.rotation.y = Math.sin(t * 0.5) * 0.14;
+    cine.g.rotation.z = Math.sin(t * 1.1) * 0.04;
+    cine.g.position.y = Math.sin(t * 1.7) * 0.03;
     recMat.emissiveIntensity = 1.4 + Math.sin(t * 5) * 1.4;
-    cons.bE.rotation.z = 1.5 + Math.sin(t * 1.4) * 0.25;
-    cons.bD.rotation.z = -1.5 - Math.sin(t * 1.4) * 0.25;
+    cons.bracos[0].rotation.z = 1.25 + Math.sin(t * 1.4) * 0.22;
+    cons.bracos[1].rotation.z = -1.25 - Math.sin(t * 1.4) * 0.22;
     blocos.forEach(function (b, i) {
-      const fase = (t * 0.5 + i * 0.33) % 1;
-      b.position.y = 0.25 + i * 0.52 + Math.max(0, Math.sin(fase * Math.PI)) * 0.9;
+      const fase = (t * 0.45 + i * 0.33) % 1;
+      b.position.y = 0.3 + i * 0.56 + Math.max(0, Math.sin(fase * Math.PI)) * 1.0;
       b.rotation.y = t * 0.6 + i;
     });
     controls.update();
