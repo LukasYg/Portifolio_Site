@@ -81,6 +81,13 @@
   .hero-esq { min-width: 0; }
   .hero-dir { display: flex; flex-direction: column; gap: 26px; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px; }
   .hero .scroll-cue { grid-column: 1 / -1; }
+  .hero-perfil { display: flex; align-items: center; gap: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  .hero-perfil img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 8px 22px rgba(0,0,0,.45); }
+  .hero-perfil-txt { display: flex; flex-direction: column; gap: 4px; }
+  .assinatura { font-family: 'Caveat', cursive; font-size: 30px; line-height: .9; color: #fff; }
+  .disp { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); letter-spacing: .3px; }
+  .disp i { width: 8px; height: 8px; border-radius: 50%; background: #3fbf4f; animation: pulsaDisp 2s ease-out infinite; }
+  @keyframes pulsaDisp { 0% { box-shadow: 0 0 0 0 rgba(63,191,79,.65); } 70% { box-shadow: 0 0 0 9px rgba(63,191,79,0); } 100% { box-shadow: 0 0 0 0 rgba(63,191,79,0); } }
   .hero-dir .roles { margin-top: 0; }
   .hero-dir .stats { margin-top: 0; }
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-dir { padding: 24px 22px; } }
@@ -627,6 +634,13 @@
       </div>
     </div>
     <div class="hero-dir">
+      <div class="hero-perfil">
+        <img src="https://yt3.googleusercontent.com/X0cKDvFUOEKKOjyWTyzWIEjn_GSaIoc-XApSrpGg5uXk7ungxfVDyerB9FF5D4fBdR9kuCCxyQ=s400-c-k-c0x00ffffff-no-rj" alt="Lukitas">
+        <div class="hero-perfil-txt">
+          <span class="assinatura">Lukitas</span>
+          <span class="disp"><i></i>Disponível para projetos</span>
+        </div>
+      </div>
       <div class="roles">
         <span class="princ">Diretor de Fotografia</span><span class="princ">Apresentador</span><span class="princ">Ator</span><span>Criador de Conteúdo</span><span>Diretor</span><span>Roteirista</span><span>Editor de Vídeo</span><span>Criação de Vídeo com IA</span><span>TI</span>
       </div>
