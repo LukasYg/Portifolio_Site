@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <title>Lukitas — Direção, Fotografia &amp; Vídeo</title>
 <style>
   :root {
@@ -145,11 +145,13 @@
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   /* Quem sou eu */
   .sobre-junto { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 52px; align-items: start; }
-  .foto-pilha { position: relative; margin-bottom: 66px; }
-  .foto { position: relative; z-index: 4; width: 84%; margin: 0 auto; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4/5; background: var(--card); }
-  .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .pilha-foto { position: absolute; top: 0; left: 8%; width: 84%; height: 100%; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 16px 36px rgba(0,0,0,.5); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
-  .pilha-foto img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.5) brightness(.7); }
+  .foto-pilha { position: relative; margin-bottom: 78px; cursor: pointer; }
+  .foto { position: relative; z-index: 4; width: 88%; margin: 0 auto; background: #f7f4ec; padding: 9px 9px 40px; border-radius: 3px; box-shadow: 0 22px 48px rgba(0,0,0,.55); }
+  .foto img { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 1px; }
+  .pilha-foto { position: absolute; top: 0; left: 6%; width: 88%; background: #efece3; padding: 9px 9px 40px; border-radius: 3px; box-shadow: 0 18px 40px rgba(0,0,0,.5); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .pilha-foto img { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 1px; filter: grayscale(.45) brightness(.75); }
+  .foto::after, .pilha-foto::after { content: ''; position: absolute; inset: 0; border-radius: 3px; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.07) 30%, transparent 42%, rgba(255,255,255,.12) 68%, transparent 100%); }
+  .pol { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: 'Caveat', cursive; font-size: 18px; color: #223049; pointer-events: none; }
   .pilha-foto.f1 { z-index: 1; transform: translate(-7%, 3%) rotate(-10deg); }
   .pilha-foto.f2 { z-index: 2; transform: translate(7%, 3%) rotate(9deg); }
   .pilha-foto.f3 { z-index: 3; transform: translate(0, 6%) rotate(-3deg); }
@@ -200,6 +202,11 @@
 
   /* ---------- Galeria ---------- */
   #trabalhos { padding: 60px 0 100px; }
+  #trabalhos .wrap { position: relative; }
+  .fios { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: visible; }
+  .fios path { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 6 7; opacity: .55; }
+  .fios circle { fill: var(--accent); opacity: .75; }
+  #trabalhos .grid { position: relative; z-index: 1; }
   .grid {
     display: grid; gap: 22px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -258,33 +265,25 @@
   /* Palco 3D do contato */
   .contato-palco { position: relative; width: fit-content; margin: 0 auto; perspective: 900px; transform-style: preserve-3d; }
   .contato-palco h2 { position: relative; z-index: 3; }
-  .contato-palco::after { content: ''; position: absolute; left: 50%; top: 50%; width: 112%; height: 230%; transform: translate(-50%,-50%); z-index: 2; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(closest-side, rgba(10,11,13,.98), rgba(10,11,13,.82) 58%, rgba(10,11,13,0) 100%); }
+  .contato-palco::after { content: ''; position: absolute; left: 50%; top: 50%; width: 130%; height: 260%; transform: translate(-50%,-50%); z-index: 2; pointer-events: none; border-radius: 50%;
+    -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+    -webkit-mask-image: radial-gradient(closest-side, #000 45%, transparent 100%); mask-image: radial-gradient(closest-side, #000 45%, transparent 100%); }
   .orbita { position: absolute; inset: -80px; pointer-events: none; }
   .orbita.atras { z-index: 1; }
-  .orbita.frente { z-index: 4; }
   .pt { position: absolute; left: 50%; top: 50%; color: var(--accent); will-change: transform, opacity; }
   .pt svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(232,84,63,.6)); }
-  .orbita.frente .pt { color: var(--accent2); }
-  .orbita.frente .pt svg { filter: drop-shadow(0 0 10px rgba(127,196,232,.65)); }
   .pt.a1 { width: 13px; height: 13px; }
   .pt.a2 { width: 20px; height: 20px; }
   .pt.a3 { width: 15px; height: 15px; }
   .pt.a4 { width: 17px; height: 17px; }
   .pt.a5 { width: 16px; height: 16px; }
   .pt.a6 { width: 12px; height: 12px; }
-  .pt.f1 { width: 16px; height: 16px; }
-  .pt.f2 { width: 13px; height: 13px; }
-  .pt.f3 { width: 22px; height: 22px; }
   .pt.a1 { animation: giro1 11s linear infinite; }
   .pt.a2 { animation: giro2 14s linear infinite; }
   .pt.a3 { animation: giro3 8.5s linear infinite; }
   .pt.a4 { animation: giro1 13s linear infinite; animation-delay: -5s; }
   .pt.a5 { animation: giro2 9.5s linear infinite; animation-delay: -3s; }
   .pt.a6 { animation: giro3 12s linear infinite; animation-delay: -7s; }
-  .pt.f1 { animation: giro2 10s linear infinite; animation-delay: -2s; }
-  .pt.f2 { animation: giro3 9s linear infinite; animation-delay: -4.5s; }
-  .pt.f3 { animation: giro1 15s linear infinite; animation-delay: -6s; }
   @keyframes giro1 {
     0% { transform: translate(-200px, 4px) scale(.55); opacity: .35; }
     25% { transform: translate(-34px, -88px) scale(1.15); opacity: 1; }
@@ -649,11 +648,12 @@
       <div class="sobre-junto">
         <div class="sobre-esq revelar">
           <div class="foto-pilha">
-            <div class="pilha-foto f1"><img src="https://images.pexels.com/photos/38059008/pexels-photo-38059008.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bastidores"></div>
-            <div class="pilha-foto f2"><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Dirigindo"></div>
-            <div class="pilha-foto f3"><img src="https://images.pexels.com/photos/37593308/pexels-photo-37593308.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Câmera"></div>
+            <div class="pilha-foto f1"><img src="https://images.pexels.com/photos/38059008/pexels-photo-38059008.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bastidores"><span class="pol">bastidores</span></div>
+            <div class="pilha-foto f2"><img src="https://images.pexels.com/photos/32292610/pexels-photo-32292610.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Dirigindo"><span class="pol">em cena</span></div>
+            <div class="pilha-foto f3"><img src="https://images.pexels.com/photos/37593308/pexels-photo-37593308.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Câmera"><span class="pol">câmera</span></div>
             <div class="foto">
               <img src="https://yt3.googleusercontent.com/X0cKDvFUOEKKOjyWTyzWIEjn_GSaIoc-XApSrpGg5uXk7ungxfVDyerB9FF5D4fBdR9kuCCxyQ=s400-c-k-c0x00ffffff-no-rj" alt="Lucas Yago (Lukitas)">
+              <span class="pol">Lukitas ✎</span>
             </div>
           </div>
           <p>Sou o Lukitas, profissional de audiovisual. Atuo como <strong>diretor de fotografia e apresentador</strong>, além de <strong>criador de conteúdo, diretor, roteirista, editor de vídeo e profissional de TI</strong> — cuidando de cada etapa, da ideia à entrega final.</p>
@@ -842,6 +842,7 @@
         <button class="filtro" data-filtro="roteiro">Roteiro</button>
       </div>
 
+      <svg class="fios" id="fios" aria-hidden="true"></svg>
       <div class="grid" id="grid">
         <article class="item revelar" data-cat="atuacao" data-titulo="GeekPunk — curta (CCXP 2018)" data-desc="Curta-metragem apresentado na CCXP 2018." data-link="https://youtu.be/DijrR1Dr-Zw">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/DijrR1Dr-Zw/hq720.jpg')"></div>
@@ -954,9 +955,6 @@
           <span class="pt a1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span><span class="pt a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span class="pt a3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/><rect x="17" y="13.5" width="4.5" height="7" rx="2"/></svg></span><span class="pt a4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/></svg></span><span class="pt a5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v2M4.8 5.8l1.4 1.4M19.2 5.8l-1.4 1.4M1.5 12h2M20.5 12h2"/><rect x="7" y="9" width="10" height="8" rx="2"/><path d="M12 17v4.5"/></svg></span><span class="pt a6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span>
         </div>
         <h2 class="display revelar">Vamos criar juntos?</h2>
-        <div class="orbita frente" aria-hidden="true">
-          <span class="pt f1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/><rect x="17" y="13.5" width="4.5" height="7" rx="2"/></svg></span><span class="pt f2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span class="pt f3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/></svg></span>
-        </div>
       </div>
       <p class="revelar">Disponível para projetos de vídeo, comerciais, documentários e conteúdo para marcas. Direção, fotografia, roteiro e edição sob o mesmo olhar.</p>
       <a href="https://wa.me/5511973881154" target="_blank" rel="noopener" class="btn primary revelar">Fale comigo</a>
@@ -1654,6 +1652,48 @@
       d.style.animationDelay = (-i * 2.3) + 's';
       c.appendChild(d);
       obs.observe(d);
+    });
+  })();
+  // ---------- Fiozinhos entre os trabalhos ----------
+  (function () {
+    const svg = document.getElementById('fios');
+    const grid = document.getElementById('grid');
+    if (!svg || !grid) return;
+    function desenhar() {
+      const wrap = svg.parentNode.getBoundingClientRect();
+      const itens = [].slice.call(grid.querySelectorAll('.item')).filter(function (el) { return el.offsetParent !== null; });
+      svg.setAttribute('viewBox', '0 0 ' + wrap.width + ' ' + wrap.height);
+      svg.setAttribute('width', wrap.width);
+      svg.setAttribute('height', wrap.height);
+      let html = '';
+      for (let i = 1; i < itens.length; i++) {
+        const a = itens[i - 1].getBoundingClientRect();
+        const b = itens[i].getBoundingClientRect();
+        const ax = a.left - wrap.left + a.width / 2, ay = a.top - wrap.top + a.height / 2;
+        const bx = b.left - wrap.left + b.width / 2, by = b.top - wrap.top + b.height / 2;
+        const mx = (ax + bx) / 2, my = (ay + by) / 2 - 34;
+        html += '<path d="M' + ax.toFixed(1) + ' ' + ay.toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + bx.toFixed(1) + ' ' + by.toFixed(1) + '"/>';
+        html += '<circle cx="' + ax.toFixed(1) + '" cy="' + ay.toFixed(1) + '" r="3"/>';
+      }
+      svg.innerHTML = html;
+    }
+    addEventListener('resize', desenhar);
+    [400, 1200, 2600].forEach(function (t) { setTimeout(desenhar, t); });
+    addEventListener('load', desenhar);
+  })();
+  // ---------- Polaroid: clique troca a foto ----------
+  (function () {
+    const pilha = document.querySelector('.foto-pilha');
+    if (!pilha) return;
+    const imgs = [].slice.call(pilha.querySelectorAll('img'));
+    if (imgs.length < 2) return;
+    const base = imgs.map(function (i) { return i.getAttribute('src'); });
+    let idx = 0;
+    pilha.title = 'Clique para trocar a foto';
+    pilha.addEventListener('click', function () {
+      idx = (idx + 1) % base.length;
+      const ordem = base.slice(idx).concat(base.slice(0, idx));
+      imgs.forEach(function (im, k) { im.setAttribute('src', ordem[k]); });
     });
   })();
   </script>
