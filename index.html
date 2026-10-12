@@ -88,6 +88,26 @@
   .disp { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); letter-spacing: .3px; }
   .disp i { width: 8px; height: 8px; border-radius: 50%; background: #3fbf4f; animation: pulsaDisp 2s ease-out infinite; }
   @keyframes pulsaDisp { 0% { box-shadow: 0 0 0 0 rgba(63,191,79,.65); } 70% { box-shadow: 0 0 0 9px rgba(63,191,79,0); } 100% { box-shadow: 0 0 0 0 rgba(63,191,79,0); } }
+  .selo { display: inline-block; align-self: flex-start; margin: 0 0 16px; padding: 7px 15px; background: var(--accent); color: #fff; font-weight: 800; font-size: 13px; border-radius: 3px; transform: rotate(-2deg); box-shadow: 0 8px 20px rgba(0,0,0,.4); }
+  .posic { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(17px, 1.7vw, 22px); line-height: 1.45; color: #fff; max-width: 620px; margin-bottom: 16px; }
+  .parceiros { margin-top: 36px; }
+  .parc-label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .parc-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
+  .parc-logos img { height: 26px; width: auto; max-width: 86px; object-fit: contain; filter: grayscale(1) brightness(1.9); opacity: .6; transition: filter .3s, opacity .3s; }
+  .parc-logos img:hover { filter: grayscale(0) brightness(1); opacity: 1; }
+  /* Showreel */
+  #showreel { padding: 0 0 40px; }
+  .sr-card { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 70px rgba(0,0,0,.55); aspect-ratio: 21/9; background: #05080f; }
+  .sr-card video { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .9; }
+  .sr-play { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(rgba(6,12,24,.25), rgba(6,12,24,.5)); border: none; cursor: pointer; color: #fff; }
+  .sr-play svg { width: 76px; height: 76px; filter: drop-shadow(0 10px 24px rgba(0,0,0,.6)); transition: transform .3s; }
+  .sr-play:hover svg { transform: scale(1.08); }
+  .sr-play strong { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(20px, 2.6vw, 30px); }
+  .sr-play span { font-size: 13px; color: #cfd8e6; }
+  .sr-aviso { position: absolute; left: 14px; right: 14px; bottom: 14px; background: rgba(6,12,24,.9); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 12px; color: var(--muted); opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .sr-aviso.mostra { opacity: 1; }
+  .sr-aviso code { color: var(--accent); }
+  @media (max-width: 720px) { .sr-card { aspect-ratio: 16/10; } }
   .hero-dir .roles { margin-top: 0; }
   .hero-dir .stats { margin-top: 0; }
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-dir { padding: 24px 22px; } }
@@ -627,10 +647,23 @@
     <div class="hero-esq">
       <span class="tag">Tecnologia · Audiovisual · Criação de Conteúdo</span>
       <h1 class="display"><em>Histórias</em> que <em>ganham vida</em> na tela.</h1>
+      <span class="selo">🎬 Diretor de Fotografia</span>
+      <p class="posic">Direção de fotografia, apresentação e conteúdo que fazem sua marca parecer cinema.</p>
       <p>Salve! Eu sou o <strong>Lucas Yago</strong>, mas você pode me chamar de <strong>Lukitas</strong>. Diretor de fotografia, apresentador e editor de vídeo — crio narrativas visuais que conectam.</p>
       <div class="cta">
         <a href="#trabalhos" class="btn primary">Ver trabalhos</a>
         <a href="#contato" class="btn ghost">Trabalhe comigo</a>
+      </div>
+      <div class="parceiros">
+        <span class="parc-label">Já trabalhei com</span>
+        <div class="parc-logos">
+          <img src="assets/marcas/redragon.jpg" alt="Redragon">
+          <img src="assets/marcas/onepower.png" alt="OnePower">
+          <img src="assets/marcas/gigabyte.svg" alt="Gigabyte">
+          <img src="https://www.google.com/s2/favicons?domain=nzxt.com&sz=128" alt="NZXT">
+          <img src="https://www.google.com/s2/favicons?domain=philips.com&sz=128" alt="Philips">
+          <img src="https://www.google.com/s2/favicons?domain=cougargaming.com&sz=128" alt="Cougar">
+        </div>
       </div>
     </div>
     <div class="hero-dir">
@@ -651,6 +684,21 @@
       </div>
     </div>
     <div class="scroll-cue"><span></span>Role para explorar</div>
+  </section>
+
+  <!-- ===== SHOWREEL ===== -->
+  <section id="showreel">
+    <div class="wrap">
+      <div class="sr-card revelar">
+        <video id="srVideo" poster="https://images.pexels.com/photos/38059008/pexels-photo-38059008.jpeg?auto=compress&cs=tinysrgb&w=1600" preload="none" playsinline></video>
+        <button class="sr-play" id="srPlay" aria-label="Assistir showreel">
+          <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2.5" opacity=".85"/><path d="M26 21 L45 32 L26 43 Z" fill="currentColor"/></svg>
+          <strong>Showreel</strong>
+          <span>Meus melhores momentos em vídeo</span>
+        </button>
+        <div class="sr-aviso" id="srAviso">Showreel em breve — para ativar, adicione o arquivo <code>assets/showreel.mp4</code></div>
+      </div>
+    </div>
   </section>
 
   <!-- ===== QUEM SOU EU ===== -->
@@ -1713,6 +1761,28 @@
       idx = (idx + 1) % base.length;
       const ordem = base.slice(idx).concat(base.slice(0, idx));
       imgs.forEach(function (im, k) { im.setAttribute('src', ordem[k]); });
+    });
+  })();
+  // ---------- Showreel ----------
+  (function () {
+    const v = document.getElementById('srVideo');
+    const b = document.getElementById('srPlay');
+    const aviso = document.getElementById('srAviso');
+    if (!v || !b) return;
+    let semArq = false;
+    const src = document.createElement('source');
+    src.src = 'assets/showreel.mp4';
+    src.type = 'video/mp4';
+    src.addEventListener('error', function () { semArq = true; });
+    v.appendChild(src);
+    v.addEventListener('error', function () { semArq = true; }, true);
+    b.addEventListener('click', function () {
+      if (semArq || v.error) { if (aviso) aviso.classList.add('mostra'); return; }
+      const p = v.play();
+      if (p && p.then) {
+        p.then(function () { b.style.display = 'none'; v.controls = true; });
+        if (p.catch) p.catch(function () { if (aviso) aviso.classList.add('mostra'); });
+      } else { b.style.display = 'none'; v.controls = true; }
     });
   })();
   </script>
