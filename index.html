@@ -25,7 +25,7 @@
     --col-amarelo: #ffd23f;
     --line: rgba(170,205,255,.13);
     --radius: 16px;
-    --maxw: 1180px;
+    --maxw: 1330px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -74,7 +74,7 @@
   .hero {
     position: relative; z-index: 1;
     max-width: var(--maxw); margin: 0 auto;
-    padding: 170px 6vw 90px;
+    padding: 168px 3.5vw 90px;
     display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     column-gap: 56px; row-gap: 34px; align-items: center;
   }
@@ -144,7 +144,7 @@
   .marquee:hover .marquee-track { animation-play-state: paused; }
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   /* Quem sou eu */
-  .sobre-junto { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 52px; align-items: start; }
+  .sobre-junto { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 70px; align-items: start; }
   .foto-pilha { position: relative; margin-bottom: 78px; cursor: pointer; }
   .foto { position: relative; z-index: 4; width: 88%; margin: 0 auto; background: #f7f4ec; padding: 9px 9px 40px; border-radius: 3px; box-shadow: 0 22px 48px rgba(0,0,0,.55); }
   .foto img { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 1px; }
@@ -179,7 +179,7 @@
 
   /* ---------- Seções ---------- */
   section { position: relative; z-index: 1; }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 6vw; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 3.5vw; }
   .sec-head { margin-bottom: 44px; }
   .sec-head .kicker {
     font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
@@ -202,11 +202,11 @@
 
   /* ---------- Galeria ---------- */
   #trabalhos { padding: 60px 0 100px; }
-  #trabalhos .wrap { position: relative; }
   .fios { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: visible; }
-  .fios path { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 6 7; opacity: .55; }
-  .fios circle { fill: var(--accent); opacity: .75; }
-  #trabalhos .grid { position: relative; z-index: 1; }
+  .fios path { fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-dasharray: 6 7; opacity: .6; }
+  .fios circle { fill: var(--accent); opacity: .8; }
+  .aba-painel { position: relative; }
+  .aba-painel .timeline { position: relative; z-index: 1; }
   .grid {
     display: grid; gap: 22px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -367,7 +367,8 @@
   #colagem .cg.vis { opacity: .5; }
   #colagem .bloco { box-shadow: 0 12px 34px rgba(0,0,0,.35); border-radius: 4px; }
   #colagem .stk { color: #141418; filter: drop-shadow(0 8px 16px rgba(0,0,0,.5)); }
-  #colagem .stk svg { display: block; width: 100%; height: 100%; }
+  #colagem .stk svg, #colagem .stk img { display: block; width: 100%; height: 100%; overflow: visible; }
+  #colagem .stk img { object-fit: contain; filter: drop-shadow(0 6px 14px rgba(0,0,0,.55)); }
   @keyframes flutuaColagem {
     0% { transform: translate(0, 0) rotate(var(--rot, 0deg)); }
     50% { transform: translate(0, -24px) rotate(calc(var(--rot, 0deg) + 6deg)); }
@@ -672,6 +673,7 @@
             <button class="aba" data-aba="estudos">Estudos</button>
           </div>
           <div class="aba-painel" data-painel="carreira">
+            <svg class="fios" id="fiosCarreira" aria-hidden="true"></svg>
             <div class="timeline">
               <div class="tl-item">
                 <div class="tl-ano">2004 — 2018</div>
@@ -842,7 +844,6 @@
         <button class="filtro" data-filtro="roteiro">Roteiro</button>
       </div>
 
-      <svg class="fios" id="fios" aria-hidden="true"></svg>
       <div class="grid" id="grid">
         <article class="item revelar" data-cat="atuacao" data-titulo="GeekPunk — curta (CCXP 2018)" data-desc="Curta-metragem apresentado na CCXP 2018." data-link="https://youtu.be/DijrR1Dr-Zw">
           <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/DijrR1Dr-Zw/hq720.jpg')"></div>
@@ -1625,28 +1626,29 @@
     function app(bg2, cor, txt) {
       return '<svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="10" fill="' + bg2 + '" stroke="rgba(255,255,255,.55)" stroke-width="2"/><text x="24" y="32" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="19" fill="' + cor + '">' + txt + '</text></svg>';
     }
-    const DR = '<svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="10" fill="#182430" stroke="rgba(255,255,255,.55)" stroke-width="2"/><circle cx="24" cy="24" r="11" fill="none" stroke="#e8552f" stroke-width="3.4"/><path d="M24 13 a11 11 0 0 1 9.5 5.6" fill="none" stroke="#f5c451" stroke-width="3.4"/><path d="M33.5 29.4 a11 11 0 0 1 -9.5 5.6" fill="none" stroke="#3fbf7f" stroke-width="3.4"/><path d="M14.5 29.4 a11 11 0 0 1 9.5 -16.4" fill="none" stroke="#3f8fe8" stroke-width="3.4"/></svg>';
+    const AFF = '<svg viewBox="0 0 48 48"><defs><linearGradient id="affg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00AEEF"/><stop offset=".5" stop-color="#2E3192"/><stop offset="1" stop-color="#E6007E"/></linearGradient></defs><path d="M24 8 L37 40 L29.5 40 L24 26 L18.5 40 L11 40 Z" fill="url(#affg)"/></svg>';
     const itens = [
-      ['s', app('#2b0a4d', '#b39dff', 'Pr'), '6%', '3%', 76, 76, -10, 21],
-      ['s', app('#1e0a3c', '#b39dff', 'Ae'), '82%', '11%', 72, 72, 8, 25],
-      ['s', CAM, '9%', '18%', 104, 78, -7, 22],
-      ['s', app('#001e36', '#31a8ff', 'Ps'), '76%', '26%', 68, 68, 6, 23],
-      ['s', DR, '11%', '34%', 74, 74, -6, 19],
-      ['s', CAS, '85%', '41%', 108, 73, 7, 26],
-      ['s', app('#1b1b1b', '#ff8b25', 'Bl'), '45%', '48%', 66, 66, 7, 24],
-      ['s', app('#1a0d33', '#00e4bb', 'Au'), '7%', '58%', 62, 62, -9, 22],
-      ['s', MIC, '89%', '64%', 50, 78, -11, 20],
-      ['s', CLA, '15%', '72%', 96, 68, 9, 24],
-      ['s', app('#2b0a4d', '#b39dff', 'Me'), '81%', '80%', 64, 64, -8, 23],
-      ['s', CAS, '28%', '90%', 100, 68, 6, 25]
+      ['h', 'https://cdn.simpleicons.org/youtube', '6%', '3%', 62, 62, -10, 21],
+      ['h', 'https://cdn.simpleicons.org/blender', '82%', '11%', 58, 58, 8, 25],
+      ['s', app('#00005B', '#9999FF', 'Pr'), '8%', '18%', 74, 74, -8, 22],
+      ['h', 'https://cdn.simpleicons.org/instagram', '77%', '26%', 56, 56, 6, 23],
+      ['s', app('#001E36', '#31A8FF', 'Ps'), '10%', '34%', 70, 70, -7, 19],
+      ['h', 'https://cdn.simpleicons.org/tiktok/ffffff', '86%', '41%', 54, 54, 9, 26],
+      ['s', AFF, '45%', '48%', 66, 66, 5, 24],
+      ['s', app('#00005B', '#D6A0FF', 'Ae'), '6%', '58%', 72, 72, -9, 22],
+      ['h', 'https://cdn.simpleicons.org/davinciresolve', '88%', '64%', 62, 62, -6, 20],
+      ['s', CAM, '13%', '72%', 96, 68, 8, 24],
+      ['h', 'https://cdn.simpleicons.org/claude', '81%', '80%', 58, 58, -8, 23],
+      ['s', CLA, '28%', '88%', 92, 66, 6, 25]
     ];
     itens.forEach(function (o, i) {
       const d = document.createElement('span');
-      d.className = 'cg ' + (o[0] === 's' ? 'stk' : 'bloco');
+      const tipo = o[0];
+      d.className = 'cg ' + (tipo === 'b' ? 'bloco' : 'stk');
       d.style.left = o[2]; d.style.top = o[3];
       d.style.width = o[4] + 'px'; d.style.height = o[5] + 'px';
-      if (o[0] === 's') d.innerHTML = o[1]; else d.style.background = o[1];
-      if (o[0] === 'r') d.style.borderRadius = '50%';
+      if (tipo === 'h') d.innerHTML = '<img src="' + o[1] + '" alt="" loading="lazy">';
+      else d.innerHTML = o[1];
       d.style.setProperty('--rot', o[6] + 'deg');
       d.style.animationDuration = o[7] + 's';
       d.style.animationDelay = (-i * 2.3) + 's';
@@ -1654,14 +1656,14 @@
       obs.observe(d);
     });
   })();
-  // ---------- Fiozinhos entre os trabalhos ----------
+  // ---------- Fiozinhos da carreira ----------
   (function () {
-    const svg = document.getElementById('fios');
-    const grid = document.getElementById('grid');
-    if (!svg || !grid) return;
+    const svg = document.getElementById('fiosCarreira');
+    const alvo = document.querySelector('.aba-painel[data-painel="carreira"]');
+    if (!svg || !alvo) return;
     function desenhar() {
       const wrap = svg.parentNode.getBoundingClientRect();
-      const itens = [].slice.call(grid.querySelectorAll('.item')).filter(function (el) { return el.offsetParent !== null; });
+      const itens = [].slice.call(alvo.querySelectorAll('.tl-item')).filter(function (el) { return el.offsetParent !== null; });
       svg.setAttribute('viewBox', '0 0 ' + wrap.width + ' ' + wrap.height);
       svg.setAttribute('width', wrap.width);
       svg.setAttribute('height', wrap.height);
@@ -1680,6 +1682,9 @@
     addEventListener('resize', desenhar);
     [400, 1200, 2600].forEach(function (t) { setTimeout(desenhar, t); });
     addEventListener('load', desenhar);
+    document.querySelectorAll('.aba').forEach(function (b) {
+      b.addEventListener('click', function () { setTimeout(desenhar, 80); });
+    });
   })();
   // ---------- Polaroid: clique troca a foto ----------
   (function () {
