@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <title>Lukitas — Direção, Fotografia &amp; Vídeo</title>
 <style>
   :root {
-    --bg: #0a1526;
-    --bg-soft: #0e1d33;
-    --card: #10203a;
-    --txt: #e9ebee;
-    --muted: #868d96;
-    --accent: #e8543f;
-    --accent2: #7fc4e8;
+    --bg: #0a0a0a;
+    --bg-soft: #101010;
+    --card: #141414;
+    --cream: #f7f2e7;
+    --tinta: #16160f;
+    --txt: #f4f4f4;
+    --muted: #9a9a9a;
+    --accent: #f5f5f5;
+    --accent2: #8ce99a;
     --vermelho: #e8543f;
     --azul-ceu: #7fc4e8;
     --areia: #e8c9a0;
@@ -28,7 +30,7 @@
     --laranja: #ffa94d;
     --azul: #74c0fc;
     --rosa: #f783ac;
-    --line: rgba(170,205,255,.13);
+    --line: rgba(255,255,255,.10);
     --radius: 16px;
     --maxw: 1330px;
   }
@@ -41,14 +43,11 @@
     line-height: 1.6;
     overflow-x: hidden;
   }
-  body::before {
-    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image: radial-gradient(rgba(180,215,255,.05) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
+  body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(70% 45% at 50% -10%, rgba(255,255,255,.05), transparent 65%); }
   .hero h1, .sec-head h2, #contato h2, .tl-titulo, .arena-msg p { text-shadow: 0 2px 20px rgba(3,8,18,.8), 0 1px 4px rgba(3,8,18,.65); }
   .hero p, .sec-head p, .tl-card p, .tl-stats, .muted { text-shadow: 0 1px 10px rgba(3,8,18,.85); }
-  .display { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.035em; }
+  .display { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-weight: 600; letter-spacing: -0.03em; }
 
   /* ---------- Fundo decorativo ---------- */
   .glow {
@@ -64,7 +63,7 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: 18px 6vw;
     backdrop-filter: blur(12px);
-    background: rgba(10,11,13,.72);
+    background: rgba(10,10,10,.75);
     border-bottom: 1px solid var(--line);
   }
   .logo { font-weight: 800; letter-spacing: 1px; font-size: 18px; }
@@ -74,6 +73,9 @@
     font-size: 14px; transition: color .25s;
   }
   nav a:hover { color: var(--txt); }
+  .btn-nav { border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: 9px 20px; font-size: 13px; color: #fff; text-decoration: none; transition: background .25s, color .25s; white-space: nowrap; }
+  .btn-nav:hover { background: #fff; color: #0a0a0a; }
+  @media (max-width: 720px) { .btn-nav { display: none; } }
 
   /* ---------- Hero ---------- */
   .hero {
@@ -87,16 +89,16 @@
   .hero-dir { display: flex; flex-direction: column; gap: 28px; border-left: 1px solid var(--line); padding-left: 34px; }
   .hero .scroll-cue { grid-column: 1 / -1; }
   .hero-perfil { display: flex; align-items: center; gap: 18px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
-  .perfil-nome { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: clamp(22px, 2.4vw, 31px); color: #fff; line-height: 1.05; }
+  .perfil-nome { font-family: 'Poppins', 'Inter', sans-serif; font-weight: 600; font-size: clamp(22px, 2.4vw, 31px); color: #fff; line-height: 1.05; }
   .hero-marcas { grid-column: 1 / -1; margin-top: 46px; }
   .hero-marcas .carrossel-duplo { margin-top: 16px; }
   .hero-perfil img { width: 94px; height: 94px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); box-shadow: 0 10px 26px rgba(0,0,0,.5); }
   .hero-perfil-txt { display: flex; flex-direction: column; gap: 4px; }
-  .assinatura { font-family: 'Caveat', cursive; font-size: 27px; line-height: .9; color: var(--accent); }
+  .assinatura { font-family: 'Caveat', cursive; font-size: 27px; line-height: .9; color: #fff; }
   .disp { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); letter-spacing: .3px; }
   .disp i { width: 8px; height: 8px; border-radius: 50%; background: #3fbf4f; animation: pulsaDisp 2s ease-out infinite; }
   @keyframes pulsaDisp { 0% { box-shadow: 0 0 0 0 rgba(63,191,79,.65); } 70% { box-shadow: 0 0 0 9px rgba(63,191,79,0); } 100% { box-shadow: 0 0 0 0 rgba(63,191,79,0); } }
-  .selo { display: inline-block; align-self: flex-start; margin: 0 0 16px; padding: 7px 15px; background: var(--accent); color: #fff; font-weight: 800; font-size: 13px; border-radius: 3px; transform: rotate(-2deg); box-shadow: 0 8px 20px rgba(0,0,0,.4); }
+  .selo { display: inline-block; align-self: flex-start; margin: 0 0 16px; padding: 7px 15px; background: var(--verde); color: #0a0a0a; font-weight: 700; font-size: 13px; border-radius: 999px; }
   .posic { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(17px, 1.7vw, 22px); line-height: 1.45; color: #dfe6f2; max-width: 640px; margin-bottom: 16px; }
   .parceiros { margin-top: 36px; }
   .parc-label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
@@ -121,16 +123,16 @@
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-dir { padding: 24px 22px; } }
   .tag {
     display: inline-block; font-size: 12px; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--vermelho);
+    text-transform: uppercase; color: var(--verde);
     font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    border: 1px solid rgba(232,84,63,.38); border-radius: 999px;
+    border: 1px solid rgba(140,233,154,.35); border-radius: 999px;
     padding: 6px 16px; margin-bottom: 26px;
   }
   .hero h1 {
     font-size: clamp(40px, 5.8vw, 78px); line-height: 1.04;
     font-weight: 800; letter-spacing: -0.022em; margin-bottom: 24px;
   }
-  .hero h1 em { font-style: italic; color: var(--vermelho); }
+  .hero h1 em { font-style: normal; color: #fff; }
   .hero p { color: var(--muted); font-size: clamp(15px, 1.6vw, 18px); max-width: 620px; line-height: 1.7; }
   .cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
   .btn {
@@ -138,7 +140,8 @@
     text-decoration: none; transition: transform .25s, box-shadow .25s;
     display: inline-block; cursor: pointer; border: none;
   }
-  .btn.primary { background: var(--accent); color: #05130f; box-shadow: 0 6px 18px rgba(232,84,63,.14); }
+  .btn.primary { background: var(--accent); color: #0a0a0a; box-shadow: none; }
+  .btn.primary:hover { background: #fff; }
   .btn.ghost { background: transparent; color: var(--txt); border: 1px solid var(--line); }
   .btn.ghost:hover { border-color: var(--accent); }
   .btn:hover { transform: translateY(-2px); }
@@ -308,6 +311,31 @@
   }
 
   /* ---------- Contato ---------- */
+  /* Grade de colunas (estilo GSAP) */
+  #areas { border-top: 1px solid var(--line); padding: 92px 0; }
+  .cols { display: grid; grid-template-columns: repeat(6, 1fr); gap: 30px; }
+  .col h3 { font-size: 13px; font-weight: 600; margin-bottom: 16px; letter-spacing: .2px; }
+  .col a { display: block; color: var(--txt); text-decoration: none; font-size: 15px; padding: 5px 0; opacity: .88; transition: opacity .2s, transform .2s; }
+  .col a:hover { opacity: 1; transform: translateX(4px); }
+  @media (max-width: 1000px) { .cols { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .cols { grid-template-columns: repeat(2, 1fr); } }
+  /* Contato creme (estilo GSAP) */
+  .cream-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 60px; align-items: start; }
+  #contato h2 { color: var(--tinta); font-size: clamp(34px, 5vw, 62px); line-height: 1.02; margin-bottom: 20px; text-shadow: none; }
+  #contato p { color: #55554a; max-width: 430px; margin-bottom: 34px; text-shadow: none; }
+  .campo { display: flex; align-items: center; justify-content: space-between; gap: 20px; max-width: 470px; padding: 16px 2px; border-bottom: 1.5px solid rgba(0,0,0,.28); color: var(--tinta); text-decoration: none; font-size: 15px; transition: border-color .25s; }
+  .campo:hover { border-color: #000; }
+  .campo svg { width: 26px; height: 26px; flex: 0 0 auto; transition: transform .25s; }
+  .campo:hover svg { transform: translateX(6px); }
+  .cream-dir { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding-top: 8px; }
+  .ccol h4 { font-size: 13px; font-weight: 600; margin-bottom: 14px; color: var(--tinta); }
+  .ccol a { display: block; color: #55554a; text-decoration: none; font-size: 15px; padding: 5px 0; transition: color .2s; }
+  .ccol a:hover { color: #000; }
+  footer { background: var(--cream); color: #6a6a5e; border-top: 1px solid rgba(0,0,0,.12); padding: 26px 0; font-size: 13px; text-align: left; }
+  .foot-linha { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .foot-links a { color: #6a6a5e; text-decoration: none; margin-left: 22px; }
+  .foot-links a:hover { color: #000; }
+  @media (max-width: 900px) { .cream-grid { grid-template-columns: 1fr; gap: 40px; } }
   /* Palco 3D do contato */
   .contato-palco { position: relative; width: fit-content; margin: 0 auto; perspective: 900px; transform-style: preserve-3d; }
   .contato-palco h2 { position: relative; z-index: 3; }
@@ -352,7 +380,18 @@
   }
   @media (max-width: 720px) { .contato-palco { transform: scale(.62); } .orbita { inset: -60px; } }
 
-  #contato { padding: 110px 0; text-align: center; }
+  #contato { padding: 110px 0 80px; text-align: left; background: var(--cream); color: var(--tinta); border-top: 0 !important; }
+  #contato h2 { color: var(--tinta); text-shadow: none; }
+  #contato p { color: #55554a; text-shadow: none; }
+  #contato .kicker { color: #b08d3a; }
+  #contato .btn.primary { background: var(--tinta); color: var(--cream); }
+  #contato .btn.primary:hover { background: #000; }
+  #contato .redes a { color: #55554a; border-color: rgba(0,0,0,.18); }
+  #contato .redes a:hover { color: #000; border-color: #000; }
+  #contato .pt { color: rgba(20,20,15,.34); }
+  #contato .pt svg { filter: none; }
+  #contato .contato-palco::after { display: none; }
+  footer { background: var(--cream); color: #55554a; border-top: 1px solid rgba(0,0,0,.12); }
   #contato h2 { font-size: clamp(28px, 4.4vw, 50px); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; }
   #contato p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; }
   .redes { display: flex; gap: 16px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
@@ -433,9 +472,8 @@
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(65% 50% at 12% 0%, rgba(63,140,232,.16), transparent 62%),
-      radial-gradient(55% 40% at 88% 12%, rgba(127,196,232,.14), transparent 62%),
-      radial-gradient(70% 50% at 50% 100%, rgba(232,84,63,.07), transparent 70%);
+      radial-gradient(60% 40% at 15% 0%, rgba(140,233,154,.06), transparent 62%),
+      radial-gradient(55% 40% at 88% 10%, rgba(177,151,252,.06), transparent 62%);
   }
   .grain {
     position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .085;
@@ -626,15 +664,9 @@
   </div>
   <div class="glow a"></div>
   <div class="glow b"></div>
-  <video class="video-fundo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-    <source src="https://videos.pexels.com/video-files/5094475/5094475-sd_960_540_24fps.mp4" type="video/mp4">
-  </video>
   <audio id="auAbertura" src="assets/audio/abertura.wav" preload="auto"></audio>
   <audio id="auTrilha" src="assets/audio/trilha.mp3" preload="auto" loop></audio>
   <div class="grain"></div>
-  <div id="recortes" aria-hidden="true"></div>
-  <div id="colagem" aria-hidden="true"></div>
-  <div id="scrim" aria-hidden="true"></div>
   <div class="scroll-progress"><span id="progress"></span></div>
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
@@ -658,6 +690,7 @@
       <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
     </nav>
+    <a href="#contato" class="btn-nav">Fale comigo</a>
   </header>
 
   <div id="palco">
@@ -775,6 +808,20 @@
     </div>
     </div>
     <div class="scroll-cue"><span></span>Role para explorar</div>
+  </section>
+
+  <!-- ===== AREAS ===== -->
+  <section id="areas">
+    <div class="wrap">
+      <div class="cols revelar">
+        <div class="col"><h3 style="color:var(--verde)">Audiovisual</h3><a href="#trabalhos">Direção</a><a href="#trabalhos">Fotografia</a><a href="#trabalhos">Roteiro</a><a href="#trabalhos">Edição</a></div>
+        <div class="col"><h3 style="color:var(--roxo)">Conteúdo</h3><a href="#sobre">PipocaTech</a><a href="#sobre">TJ Gaming</a><a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener">YouTube</a></div>
+        <div class="col"><h3 style="color:var(--laranja)">Técnica</h3><a href="#trabalhos">Iluminação</a><a href="#trabalhos">Câmera</a><a href="#trabalhos">Color Grading</a><a href="#trabalhos">Vídeo com IA</a></div>
+        <div class="col"><h3 style="color:var(--azul)">Ferramentas</h3><a href="#trabalhos">Premiere</a><a href="#trabalhos">After Effects</a><a href="#trabalhos">Photoshop</a><a href="#trabalhos">DaVinci</a><a href="#trabalhos">Blender</a></div>
+        <div class="col"><h3 style="color:var(--roxo)">Experiência</h3><a href="#sobre">Ator</a><a href="#sobre">Diretor</a><a href="#sobre">Apresentador</a></div>
+        <div class="col"><h3 style="color:var(--verde)">Outros</h3><a href="#sobre">TI</a><a href="#minigame">Minigame</a><a href="#contato">Contato</a></div>
+      </div>
+    </div>
   </section>
 
   <!-- ===== SHOWREEL ===== -->
@@ -1011,27 +1058,41 @@
     </div>
   </section>
 
-  <!-- ===== CONTATO ===== -->
+  <!-- ===== CONTATO (secao creme) ===== -->
   <section id="contato">
     <div class="wrap">
-      <div class="contato-palco">
-        <div class="orbita atras" aria-hidden="true">
-          <span class="pt a1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span><span class="pt a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span class="pt a3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/><rect x="17" y="13.5" width="4.5" height="7" rx="2"/></svg></span><span class="pt a4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/></svg></span><span class="pt a5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v2M4.8 5.8l1.4 1.4M19.2 5.8l-1.4 1.4M1.5 12h2M20.5 12h2"/><rect x="7" y="9" width="10" height="8" rx="2"/><path d="M12 17v4.5"/></svg></span><span class="pt a6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2.5"/><path d="M16 11l5-3v9l-5-3z"/><circle cx="8" cy="12.5" r="2.2"/></svg></span>
+      <div class="cream-grid">
+        <div class="cream-esq">
+          <h2 class="display revelar">Vamos criar juntos?</h2>
+          <p class="revelar">Disponível para projetos de vídeo, comerciais, documentários e conteúdo para marcas. Direção, fotografia, roteiro e edição sob o mesmo olhar.</p>
+          <a class="campo revelar" href="mailto:lucasyago2013@gmail.com">
+            <span>lucasyago2013@gmail.com</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
         </div>
-        <h2 class="display revelar">Vamos criar juntos?</h2>
-      </div>
-      <p class="revelar">Disponível para projetos de vídeo, comerciais, documentários e conteúdo para marcas. Direção, fotografia, roteiro e edição sob o mesmo olhar.</p>
-      <a href="https://wa.me/5511973881154" target="_blank" rel="noopener" class="btn primary revelar">Fale comigo</a>
-      <div class="redes revelar">
-        <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4.5"/><path d="M10 9l5.5 3L10 15z" fill="currentColor" stroke="none"/></svg> YouTube</a>
-        <a href="https://www.instagram.com/lukas_yg/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg> Instagram</a>
-        <a href="https://wa.me/5511973881154" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.4A10 10 0 1 0 12 2zm0 1.8a8.2 8.2 0 0 1 0 16.4 8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8zm-2.4 3.7c-.2 0-.5.1-.7.3-.2.3-.9 1-.9 2.3s.9 2.7 1 2.9c.1.2 1.7 2.7 4.2 3.7 2 .8 2.5.7 3 .6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3l-1.5-.7c-.2-.1-.4-.1-.5.1l-.6.8c-.1.2-.3.2-.5.1-.3-.1-1.2-.5-2.2-1.4-.8-.7-1.3-1.6-1.5-1.9-.1-.2 0-.4.1-.5l.5-.6.3-.6c.1-.2 0-.4 0-.5l-.6-1.5c-.2-.4-.3-.4-.5-.4h-.5z"/></svg> WhatsApp</a>
-        <a href="mailto:lucasyago2013@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M3.6 7l8.4 6 8.4-6"/></svg> E-mail</a>
+        <div class="cream-dir revelar">
+          <div class="ccol">
+            <h4>Contato</h4>
+            <a href="https://wa.me/5511973881154" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="mailto:lucasyago2013@gmail.com">E-mail</a>
+          </div>
+          <div class="ccol">
+            <h4>Redes</h4>
+            <a href="https://www.youtube.com/@Lukitas_Yg" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://www.instagram.com/lukas_yg/" target="_blank" rel="noopener">Instagram</a>
+            <a href="#">TikTok</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>© 2025 Lukitas · Direção · Fotografia · Roteiro · Edição</footer>
+  <footer>
+    <div class="wrap foot-linha">
+      <span>© 2025 Lukitas — Direção, Fotografia &amp; Vídeo</span>
+      <span class="foot-links"><a href="#trabalhos">Trabalhos</a><a href="#contato">Contato</a></span>
+    </div>
+  </footer>
   </div><!-- /palco -->
 
   <!-- ===== LIGHTBOX ===== -->
@@ -1641,85 +1702,6 @@
     });
     pintar();
   })();
-  // ---------- Recortes de papel (fundo DIY) ----------
-  (function () {
-    const c = document.getElementById('recortes');
-    if (!c) return;
-    const S = {
-      estrela: "M16 2 L20 12 L31 12 L22 19 L25 30 L16 23 L7 30 L10 19 L1 12 L12 12 Z",
-      risco: "M2 16 C8 4 12 28 18 16 S26 4 30 16",
-      circulo: "M6 16 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0",
-      seta: "M3 21 L28 6 M28 6 l-9 1.5 M28 6 l-1.5 9",
-      faisca: "M16 3 L18 14 L29 16 L18 18 L16 29 L14 18 L3 16 L14 14 Z",
-      mais: "M16 5 v22 M5 16 h22",
-      zigue: "M2 22 L9 10 L16 22 L23 10 L30 22",
-      sol: "M16 7 v-5 M16 30 v-5 M7 16 h-5 M30 16 h-5 M9.5 9.5 L6 6 M22.5 22.5 l3.5 3.5 M22.5 9.5 L26 6 M9.5 22.5 L6 26"
-    };
-    const lista = [
-      ['estrela', '7%', '16%', 30, 15, -8, 0], ['risco', '88%', '12%', 34, 19, 6, 1],
-      ['circulo', '13%', '72%', 38, 17, 12, 0], ['seta', '78%', '64%', 40, 21, -14, 0],
-      ['faisca', '48%', '7%', 26, 13, 4, 1], ['mais', '92%', '40%', 24, 16, 20, 0],
-      ['zigue', '4%', '44%', 36, 18, -6, 0], ['sol', '64%', '85%', 32, 20, 0, 1],
-      ['estrela', '72%', '26%', 20, 12, 16, 0], ['risco', '30%', '89%', 28, 22, -18, 0],
-      ['circulo', '56%', '30%', 22, 14, 8, 0], ['faisca', '20%', '34%', 18, 11, -10, 0]
-    ];
-    lista.forEach(function (o, i) {
-      const d = document.createElement('div');
-      d.className = 'recorte';
-      d.style.left = o[1]; d.style.top = o[2];
-      d.style.width = o[3] + 'px'; d.style.height = o[3] + 'px';
-      d.style.color = o[6] ? 'rgba(232,84,63,.22)' : 'rgba(255,255,255,.16)';
-      d.style.animationDuration = o[4] + 's';
-      d.style.animationDelay = (-i * 1.9) + 's';
-      d.style.setProperty('--rot', o[5] + 'deg');
-      d.innerHTML = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + S[o[0]] + '"/></svg>';
-      c.appendChild(d);
-    });
-  })();
-  // ---------- Colagem de fundo ----------
-  (function () {
-    const c = document.getElementById('colagem');
-    if (!c) return;
-    const obs = new IntersectionObserver(function (ents) {
-      ents.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('vis'); obs.unobserve(en.target); } });
-    }, { threshold: 0.12 });
-    const CAM = '<svg viewBox="0 0 64 48" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="5" y="13" width="40" height="27" rx="4"/><path d="M45 23 l13-7 v24 l-13-7z"/><circle cx="22" cy="26.5" r="7" fill="#fff" stroke="#141418"/></svg>';
-    const CAS = '<svg viewBox="0 0 68 46" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="4" y="7" width="60" height="32" rx="4"/><rect x="12" y="12" width="44" height="6" fill="#fff" stroke="none"/><circle cx="21" cy="29" r="7" fill="#fff" stroke="#141418"/><circle cx="47" cy="29" r="7" fill="#fff" stroke="#141418"/></svg>';
-    const MIC = '<svg viewBox="0 0 44 68" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="14" y="6" width="16" height="30" rx="8"/><path d="M10 32 a12 12 0 0 0 24 0" fill="none"/><path d="M22 44 v12 M15 56 h14" fill="none"/></svg>';
-    const CLA = '<svg viewBox="0 0 68 48" fill="currentColor" stroke="#fff" stroke-width="3" stroke-linejoin="round"><rect x="5" y="19" width="58" height="24" rx="3"/><path d="M5 19 L57 6 l1.5 9 L7 28z"/></svg>';
-    function app(bg2, cor, txt) {
-      return '<svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="10" fill="' + bg2 + '" stroke="rgba(255,255,255,.55)" stroke-width="2"/><text x="24" y="32" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="19" fill="' + cor + '">' + txt + '</text></svg>';
-    }
-    const AFF = '<svg viewBox="0 0 48 48"><defs><linearGradient id="affg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00AEEF"/><stop offset=".5" stop-color="#2E3192"/><stop offset="1" stop-color="#E6007E"/></linearGradient></defs><path d="M24 8 L37 40 L29.5 40 L24 26 L18.5 40 L11 40 Z" fill="url(#affg)"/></svg>';
-    const itens = [
-      ['h', 'https://cdn.simpleicons.org/youtube', '6%', '3%', 62, 62, -10, 21],
-      ['h', 'https://cdn.simpleicons.org/blender', '82%', '11%', 58, 58, 8, 25],
-      ['s', app('#00005B', '#9999FF', 'Pr'), '8%', '18%', 74, 74, -8, 22],
-      ['h', 'https://cdn.simpleicons.org/instagram', '77%', '26%', 56, 56, 6, 23],
-      ['s', app('#001E36', '#31A8FF', 'Ps'), '10%', '34%', 70, 70, -7, 19],
-      ['h', 'https://cdn.simpleicons.org/tiktok/ffffff', '86%', '41%', 54, 54, 9, 26],
-      ['s', AFF, '45%', '48%', 66, 66, 5, 24],
-      ['s', app('#00005B', '#D6A0FF', 'Ae'), '6%', '58%', 72, 72, -9, 22],
-      ['h', 'https://cdn.simpleicons.org/davinciresolve', '88%', '64%', 62, 62, -6, 20],
-      ['s', CAM, '13%', '72%', 96, 68, 8, 24],
-      ['h', 'https://cdn.simpleicons.org/claude', '81%', '80%', 58, 58, -8, 23],
-      ['s', CLA, '28%', '88%', 92, 66, 6, 25]
-    ];
-    itens.forEach(function (o, i) {
-      const d = document.createElement('span');
-      const tipo = o[0];
-      d.className = 'cg ' + (tipo === 'b' ? 'bloco' : 'stk');
-      d.style.left = o[2]; d.style.top = o[3];
-      d.style.width = o[4] + 'px'; d.style.height = o[5] + 'px';
-      if (tipo === 'h') d.innerHTML = '<img src="' + o[1] + '" alt="" loading="lazy">';
-      else d.innerHTML = o[1];
-      d.style.setProperty('--rot', o[6] + 'deg');
-      d.style.animationDuration = o[7] + 's';
-      d.style.animationDelay = (-i * 2.3) + 's';
-      c.appendChild(d);
-      obs.observe(d);
-    });
-  })();
   // ---------- Fiozinhos da carreira ----------
   (function () {
     const svg = document.getElementById('fiosCarreira');
@@ -1819,3 +1801,5 @@
     });
   })();
   </script>
+</body>
+</html>
