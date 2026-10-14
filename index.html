@@ -272,6 +272,11 @@
     padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15);
   }
   .item.oculto { display: none; }
+  .item .prev { position: absolute; inset: 0; z-index: 2; opacity: 0; transition: opacity .45s; pointer-events: none; background: #000; }
+  .item .prev iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .item.prev-ativo .prev { opacity: 1; }
+  .item .overlay { z-index: 3; }
+  .item.prev-ativo { box-shadow: 0 34px 70px rgba(0,0,0,.65); }
 
   /* ---------- Sobre ---------- */
   #sobre { padding: 100px 0; background: var(--bg-soft); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
@@ -1141,9 +1146,10 @@
       const r = el.getBoundingClientRect();
       const x = (ev.clientX - r.left) / r.width - 0.5;
       const y = (ev.clientY - r.top) / r.height - 0.5;
-      el.style.transform = 'perspective(760px) rotateY(' + (x * 7).toFixed(2) + 'deg) rotateX(' + (-y * 7).toFixed(2) + 'deg) translateY(-6px) scale(1.015)';
+      el.style.transform = 'perspective(760px) rotateY(' + (x * 6).toFixed(2) + 'deg) rotateX(' + (-y * 6).toFixed(2) + 'deg) translateY(-8px) scale(1.05)';
+      el.style.zIndex = '6';
     });
-    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; el.style.zIndex = ''; });
   });
 
   // ---------- Claquete / Gate de entrada ----------
@@ -1733,6 +1739,37 @@
       b.addEventListener('click', function () { setTimeout(desenhar, 80); });
     });
   })();
+  // ---------- Preview de video no hover (cards de trabalho) ----------
+  (function () {
+    document.querySelectorAll('.grid .item').forEach(function (card) {
+      const link = card.dataset.link || '';
+      const m = link.match(/(?:youtu\.be\/|watch\?v=|\/embed\/)([A-Za-z0-9_-]{6,})/);
+      if (!m) return;
+      const id = m[1];
+      let frame = null, timer = null, remTimer = null;
+      card.addEventListener('mouseenter', function () {
+        clearTimeout(remTimer);
+        if (frame) return;
+        timer = setTimeout(function () {
+          if (frame) return;
+          frame = document.createElement('div');
+          frame.className = 'prev';
+          frame.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&modestbranding=1&rel=0&playsinline=1&start=2" allow="autoplay; encrypted-media" title="preview"></iframe>';
+          card.appendChild(frame);
+          requestAnimationFrame(function () { card.classList.add('prev-ativo'); });
+        }, 420);
+      });
+      card.addEventListener('mouseleave', function () {
+        clearTimeout(timer);
+        card.classList.remove('prev-ativo');
+        remTimer = setTimeout(function () {
+          if (frame && frame.parentNode) frame.parentNode.removeChild(frame);
+          frame = null;
+        }, 420);
+      });
+    });
+  })();
+
   // ---------- Polaroid: clique troca a foto ----------
   (function () {
     const pilha = document.querySelector('.foto-pilha');
