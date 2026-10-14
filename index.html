@@ -216,7 +216,7 @@
 
   /* ---------- Seções ---------- */
   section { position: relative; z-index: 1; }
-  #showreel, #sobre, #trabalhos, #bastidores, #minigame, #contato, #areas { border-top: 1px solid var(--line); }
+  #showreel, #sobre, #trabalhos, #precos, #bastidores, #minigame, #contato, #areas { border-top: 1px solid var(--line); }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.7vw; }
   .sec-head { margin-bottom: 40px; }
   #showreel .kicker, #trabalhos .kicker { color: var(--verde); }
@@ -651,6 +651,52 @@
   .hud span#hudCombo { color: var(--accent); }
   .sec-head .desafio { color: var(--accent); margin-top: 10px; }
   @media (max-width: 720px) { .arena { height: 340px; } .hud { font-size: 11px; } .hud span { padding: 3px 8px; } }
+  /* ---------- Preços (edição de vídeo) ---------- */
+  #precos { padding: 72px 0; }
+  #precos .kicker { color: #b8860b; }
+  .preco-filtros { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; }
+  .preco-filtro {
+    background: transparent; color: var(--muted); border: 1px solid var(--line);
+    padding: 8px 20px; border-radius: 999px; font-size: 13px; cursor: pointer;
+    transition: all .25s; font-family: inherit;
+  }
+  .preco-filtro:hover { color: var(--txt); }
+  .preco-filtro.ativo { background: var(--tinta); color: var(--cream); border-color: transparent; }
+  .preco-grid {
+    display: grid; gap: 22px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    align-items: stretch;
+  }
+  .plano {
+    position: relative; display: flex; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px 26px 26px; overflow: hidden;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, opacity .4s;
+  }
+  .plano:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,.14); }
+  .plano.destaque { border-color: var(--tinta); box-shadow: 0 18px 44px rgba(0,0,0,.12); }
+  .plano .p-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .plano .p-nome { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 19px; letter-spacing: -.02em; }
+  .plano .p-tag {
+    font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 600;
+    background: var(--tinta); color: var(--cream); padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .plano .p-desc { color: var(--muted); font-size: 13.5px; min-height: 38px; }
+  .plano .p-preco { display: flex; align-items: baseline; gap: 6px; margin: 16px 0 2px; }
+  .plano .p-preco strong { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-size: clamp(28px, 2.6vw, 34px); font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+  .plano .p-preco span { color: var(--muted); font-size: 13px; }
+  .plano .p-nota { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+  .plano ul { list-style: none; display: flex; flex-direction: column; gap: 11px; margin: 0 0 26px; }
+  .plano li { position: relative; padding-left: 26px; font-size: 14px; color: var(--txt); line-height: 1.45; }
+  .plano li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--verde); font-weight: 700; }
+  .plano li.nao { color: var(--muted); }
+  .plano li.nao::before { content: '—'; color: rgba(23,23,15,.28); }
+  .plano .btn { margin-top: auto; text-align: center; }
+  .plano.oculto { display: none; }
+  .preco-obs { margin-top: 30px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 22px; max-width: 860px; }
+  .preco-obs strong { color: var(--txt); }
+  @media (max-width: 640px) { .plano { padding: 24px 22px 22px; } }
+
 </style>
 </head>
 <body>
@@ -686,6 +732,7 @@
     <div class="logo">LUKI<span>TAS</span></div>
     <nav>
       <a href="#trabalhos">Trabalhos</a>
+      <a href="#precos">Preços</a>
       <a href="#trajetoria">Trajetória</a>
       <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
@@ -1012,6 +1059,160 @@
   </section>
 
 
+  <!-- ===== PREÇOS (edição de vídeo) ===== -->
+  <section id="precos">
+    <div class="wrap">
+      <div class="sec-head revelar">
+        <div class="kicker">Edição de Vídeo</div>
+        <h2 class="display">Tabela de preços</h2>
+        <p>Valores de referência para o mercado brasileiro, divididos entre <strong>vídeos curtos</strong> (Reels, Shorts e TikTok) e <strong>vídeos longos</strong> (YouTube e institucional). O preço final varia conforme o material bruto, a complexidade da edição e o prazo de entrega.</p>
+      </div>
+
+      <div class="preco-filtros revelar">
+        <button class="preco-filtro ativo" data-plano="curto">Vídeos curtos</button>
+        <button class="preco-filtro" data-plano="longo">Vídeos longos</button>
+        <button class="preco-filtro" data-plano="pacote">Pacotes mensais</button>
+      </div>
+
+      <div class="preco-grid" id="precoGrid">
+        <!-- ===== VÍDEOS CURTOS ===== -->
+        <article class="plano revelar" data-plano="curto">
+          <div class="p-topo"><span class="p-nome">Essencial</span></div>
+          <p class="p-desc">Vídeo vertical de até 90s com corte limpo e entrega rápida.</p>
+          <div class="p-preco"><strong>R$ 150</strong><span>/ vídeo</span></div>
+          <p class="p-nota">Reels · Shorts · TikTok</p>
+          <ul>
+            <li>Corte dinâmico e ritmo</li>
+            <li>Legendas automáticas</li>
+            <li>Trilha licenciada</li>
+            <li>1 rodada de ajuste</li>
+            <li>Exportação em alta qualidade</li>
+          </ul>
+          <a href="#contato" class="btn ghost">Solicitar orçamento</a>
+        </article>
+
+        <article class="plano revelar destaque" data-plano="curto">
+          <div class="p-topo"><span class="p-nome">Profissional</span><span class="p-tag">Mais pedido</span></div>
+          <p class="p-desc">Motion graphics e acabamento para prender a atenção no feed.</p>
+          <div class="p-preco"><strong>R$ 280</strong><span>/ vídeo</span></div>
+          <p class="p-nota">Reels · Shorts · TikTok</p>
+          <ul>
+            <li>Tudo do Essencial</li>
+            <li>Motion graphics e transições</li>
+            <li>Color grading básico</li>
+            <li>Capa / thumbnail</li>
+            <li>2 rodadas de ajuste</li>
+          </ul>
+          <a href="#contato" class="btn primary">Solicitar orçamento</a>
+        </article>
+
+        <article class="plano revelar" data-plano="curto">
+          <div class="p-topo"><span class="p-nome">Premium</span></div>
+          <p class="p-desc">Pacote completo com animação e sound design de nível publicitário.</p>
+          <div class="p-preco"><strong>R$ 550</strong><span>/ vídeo</span></div>
+          <p class="p-nota">Reels · Shorts · TikTok</p>
+          <ul>
+            <li>Tudo do Profissional</li>
+            <li>Animação e sound design</li>
+            <li>Roteiro de corte (hook)</li>
+            <li>2 versões (feed + stories)</li>
+            <li>3 rodadas de ajuste</li>
+          </ul>
+          <a href="#contato" class="btn ghost">Solicitar orçamento</a>
+        </article>
+        <!-- ===== VÍDEOS LONGOS ===== -->
+        <article class="plano revelar oculto" data-plano="longo">
+          <div class="p-topo"><span class="p-nome">Essencial</span></div>
+          <p class="p-desc">Vídeo de até 15 min com corte e ritmo profissional.</p>
+          <div class="p-preco"><strong>R$ 450</strong><span>/ vídeo</span></div>
+          <p class="p-nota">YouTube · Institucional</p>
+          <ul>
+            <li>Corte e ritmo</li>
+            <li>Correção de cor básica</li>
+            <li>Trilha licenciada</li>
+            <li>Legendas</li>
+            <li>Exportação em alta qualidade</li>
+          </ul>
+          <a href="#contato" class="btn ghost">Solicitar orçamento</a>
+        </article>
+
+        <article class="plano revelar oculto destaque" data-plano="longo">
+          <div class="p-topo"><span class="p-nome">Profissional</span><span class="p-tag">Mais pedido</span></div>
+          <p class="p-desc">Motion graphics leve e acabamento para canais em crescimento.</p>
+          <div class="p-preco"><strong>R$ 900</strong><span>/ vídeo</span></div>
+          <p class="p-nota">YouTube · Institucional</p>
+          <ul>
+            <li>Tudo do Essencial</li>
+            <li>Motion graphics e vinheta</li>
+            <li>Color grading</li>
+            <li>Sound design</li>
+            <li>Thumbnail</li>
+          </ul>
+          <a href="#contato" class="btn primary">Solicitar orçamento</a>
+        </article>
+
+        <article class="plano revelar oculto" data-plano="longo">
+          <div class="p-topo"><span class="p-nome">Premium</span></div>
+          <p class="p-desc">Edição avançada com multicâmera e direção de pós-produção.</p>
+          <div class="p-preco"><strong>R$ 1.800</strong><span>/ vídeo</span></div>
+          <p class="p-nota">YouTube · Institucional</p>
+          <ul>
+            <li>Tudo do Profissional</li>
+            <li>Multicâmera</li>
+            <li>Animação avançada</li>
+            <li>Color grading avançado</li>
+            <li>3 rodadas de ajuste</li>
+          </ul>
+          <a href="#contato" class="btn ghost">Solicitar orçamento</a>
+        </article>
+        <!-- ===== PACOTES MENSAIS ===== -->
+        <article class="plano revelar oculto" data-plano="pacote">
+          <div class="p-topo"><span class="p-nome">Social Starter</span></div>
+          <p class="p-desc">4 vídeos curtos por mês para começar a postar com constância.</p>
+          <div class="p-preco"><strong>R$ 600</strong><span>/ mês</span></div>
+          <p class="p-nota">4 vídeos curtos por mês</p>
+          <ul>
+            <li>4 vídeos curtos</li>
+            <li>Legendas e trilha</li>
+            <li>1 rodada de ajuste por vídeo</li>
+            <li>Calendário de postagem sugerido</li>
+          </ul>
+          <a href="#contato" class="btn ghost">Solicitar orçamento</a>
+        </article>
+
+        <article class="plano revelar oculto destaque" data-plano="pacote">
+          <div class="p-topo"><span class="p-nome">Social Pro</span><span class="p-tag">Melhor custo</span></div>
+          <p class="p-desc">8 vídeos curtos por mês com motion graphics e capas.</p>
+          <div class="p-preco"><strong>R$ 1.500</strong><span>/ mês</span></div>
+          <p class="p-nota">8 vídeos curtos por mês</p>
+          <ul>
+            <li>8 vídeos curtos</li>
+            <li>Motion graphics e capas</li>
+            <li>2 rodadas de ajuste por vídeo</li>
+            <li>Prioridade na fila de entrega</li>
+          </ul>
+          <a href="#contato" class="btn primary">Solicitar orçamento</a>
+        </article>
+
+        <article class="plano revelar oculto" data-plano="pacote">
+          <div class="p-topo"><span class="p-nome">Canal em Dia</span></div>
+          <p class="p-desc">Até 4 vídeos longos por mês para manter o canal em movimento.</p>
+          <div class="p-preco"><strong>R$ 3.000</strong><span>/ mês</span></div>
+          <p class="p-nota">4 vídeos longos por mês</p>
+          <ul>
+            <li>4 vídeos longos</li>
+            <li>Motion, color e sound design</li>
+            <li>Thumbnails inclusas</li>
+            <li>Prazo dedicado por episódio</li>
+          </ul>
+          <a href="#contato" class="btn ghost">Solicitar orçamento</a>
+        </article>
+      </div>
+
+      <p class="preco-obs revelar"><strong>Como esses valores foram definidos:</strong> são médias de referência do mercado brasileiro de edição de vídeo, que hoje trabalha na faixa de <strong>R$ 120–550 por vídeo curto</strong> e <strong>R$ 450–1.800 por vídeo longo</strong>, conforme a complexidade. O orçamento final considera o material bruto, o nível de acabamento (motion, color grading e sound design), o prazo de entrega e o número de revisões. Serviços extras — como animação, legendas especiais e entregas urgentes — são orçados à parte. Pacotes mensais e projetos recorrentes têm condições especiais.</p>
+    </div>
+  </section>
+
   <!-- ===== BASTIDORES ===== -->
   <section id="bastidores">
     <div class="wrap">
@@ -1089,7 +1290,7 @@
   <footer>
     <div class="wrap foot-linha">
       <span>© 2025 Lukitas — Direção, Fotografia &amp; Vídeo</span>
-      <span class="foot-links"><a href="#trabalhos">Trabalhos</a><a href="#contato">Contato</a></span>
+      <span class="foot-links"><a href="#trabalhos">Trabalhos</a><a href="#precos">Preços</a><a href="#contato">Contato</a></span>
     </div>
   </footer>
   </div><!-- /palco -->
@@ -1334,6 +1535,23 @@
       document.querySelectorAll('.aba-painel').forEach(function (pl) { pl.classList.toggle('oculto', pl.dataset.painel !== alvo); });
     });
   });
+
+  // ---------- Filtros da tabela de preços (curtos / longos / pacotes) ----------
+  (function () {
+    const botoes = document.querySelectorAll('.preco-filtro');
+    const planos = document.querySelectorAll('#precoGrid .plano');
+    if (!botoes.length) return;
+    botoes.forEach(function (b) {
+      b.addEventListener('click', function () {
+        botoes.forEach(function (x) { x.classList.toggle('ativo', x === b); });
+        const cat = b.dataset.plano;
+        planos.forEach(function (pl) {
+          const mostra = cat === 'todos' || pl.dataset.plano === cat;
+          pl.classList.toggle('oculto', !mostra);
+        });
+      });
+    });
+  })();
 
   // ---------- Player de arquivos (abertura + trilha) ----------
   (function () {
