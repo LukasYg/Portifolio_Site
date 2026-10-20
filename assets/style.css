@@ -681,3 +681,36 @@
   .arena { height: 300px; }
   .grid { grid-template-columns: 1fr; }
 }
+
+/* ===== Ajustes finos: telas pequenas ===== */
+@media (max-width: 480px) {
+  .hero { padding: 84px 14px 34px; }
+  .wrap { padding: 0 14px; }
+  header { padding: 11px 14px; }
+  .logo { font-size: 15px; }
+  nav a { margin-left: 10px; font-size: 11.5px; }
+  .hero h1 { font-size: 25px; }
+  .posic { font-size: 14px; }
+  .sec-head h2 { font-size: 21px; }
+  #contato h2 { font-size: 24px; }
+  .foto-pilha { max-width: 190px; }
+  .sobre-esq p { font-size: 14px; }
+  .tl-card p { font-size: 14px; }
+  .tl-card h3 { font-size: 17px; }
+  .col a { font-size: 13px; }
+  .cols { gap: 16px; }
+  .marquee-track { gap: 28px; }
+  .marca { width: 96px; }
+  .hud { flex-wrap: wrap; gap: 5px; justify-content: center; }
+  .hud span { font-size: 10px; padding: 3px 7px; }
+  .arena { height: 280px; }
+  .campo { font-size: 13px; padding: 11px 2px; }
+  .campo svg { width: 20px; height: 20px; }
+  .redes a, .ccol a { font-size: 14px; }
+  .bts-strip figure { height: 130px; }
+  .stats { gap: 18px; }
+  .stats strong { font-size: 19px; }
+  .roles span { font-size: 11.5px; padding: 6px 12px; }
+}
+/* evita overflow horizontal (transforms dos elementos decorativos) */
+body, main { overflow-x: hidden; }
