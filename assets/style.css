@@ -206,7 +206,7 @@
 
   /* ---------- Seções ---------- */
   section { position: relative; z-index: 1; }
-  #showreel, #sobre, #trabalhos, #bastidores, #minigame, #contato, #areas { border-top: 1px solid var(--line); }
+  #showreel, #sobre, #trabalhos, #precos, #bastidores, #minigame, #contato, #areas { border-top: 1px solid var(--line); }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.7vw; }
   .sec-head { margin-bottom: 40px; }
   #showreel .kicker, #trabalhos .kicker { color: var(--verde); }
@@ -642,6 +642,63 @@
   .sec-head .desafio { color: var(--accent); margin-top: 10px; }
   @media (max-width: 720px) { .arena { height: 340px; } .hud { font-size: 11px; } .hud span { padding: 3px 8px; } }
 
+  /* ---------- Preços (edição de vídeo) ---------- */
+  #precos { padding: 72px 0; }
+  #precos .kicker { color: #b8860b; }
+  #precos .sec-head p { color: var(--muted); max-width: 760px; margin-top: 12px; font-size: 14.5px; }
+  #precos .sec-head strong { color: var(--txt); }
+  .preco-filtros { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; }
+  .preco-filtro {
+    background: transparent; color: var(--muted); border: 1px solid var(--line);
+    padding: 8px 20px; border-radius: 999px; font-size: 13px; cursor: pointer;
+    transition: all .25s; font-family: inherit;
+  }
+  .preco-filtro:hover { color: var(--txt); }
+  .preco-filtro.ativo { background: var(--tinta); color: var(--cream); border-color: transparent; }
+  .preco-grid {
+    display: grid; gap: 22px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    align-items: stretch;
+  }
+  .plano {
+    position: relative; display: flex; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px 26px 26px; overflow: hidden;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, opacity .4s;
+  }
+  .plano:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,.14); }
+  .plano.destaque { border-color: var(--tinta); box-shadow: 0 18px 44px rgba(0,0,0,.12); }
+  .plano .p-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .plano .p-nome { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 19px; letter-spacing: -.02em; }
+  .plano .p-tag {
+    font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 600;
+    background: var(--tinta); color: var(--cream); padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .plano .p-desc { color: var(--muted); font-size: 13.5px; min-height: 38px; }
+  .plano .p-preco { display: flex; align-items: baseline; gap: 6px; margin: 16px 0 2px; }
+  .plano .p-preco strong { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-size: clamp(28px, 2.6vw, 34px); font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+  .plano .p-preco span { color: var(--muted); font-size: 13px; }
+  .plano .p-nota { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+  .plano ul { list-style: none; display: flex; flex-direction: column; gap: 11px; margin: 0 0 26px; }
+  .plano li { position: relative; padding-left: 26px; font-size: 14px; color: var(--txt); line-height: 1.45; }
+  .plano li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--verde); font-weight: 700; }
+  .plano li.nao { color: var(--muted); }
+  .plano li.nao::before { content: '—'; color: rgba(23,23,15,.28); }
+  .plano .btn { margin-top: auto; text-align: center; }
+  .plano.oculto { display: none; }
+  .preco-obs { margin-top: 30px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 22px; max-width: 860px; }
+  .preco-obs strong { color: var(--txt); }
+  @media (max-width: 720px) {
+    #precos { padding: 56px 0; }
+    .preco-grid { grid-template-columns: 1fr; gap: 16px; }
+    .plano { padding: 24px 22px 22px; }
+  }
+  @media (max-width: 480px) {
+    .preco-filtros { gap: 8px; margin-bottom: 26px; }
+    .preco-filtro { font-size: 12px; padding: 7px 16px; }
+  }
+
+
 /* ===== Responsivo: celular ===== */
 @media (max-width: 720px) {
   header { padding: 12px 16px; }
@@ -684,6 +741,8 @@
 
 /* ===== Ajustes finos: telas pequenas ===== */
 @media (max-width: 480px) {
+  /* se os 5 links nao couberem, o menu desce para a linha de baixo em vez de estourar a tela */
+  header { flex-wrap: wrap; row-gap: 4px; }
   .hero { padding: 84px 14px 34px; }
   .wrap { padding: 0 14px; }
   header { padding: 11px 14px; }
@@ -711,6 +770,12 @@
   .stats { gap: 18px; }
   .stats strong { font-size: 19px; }
   .roles span { font-size: 11.5px; padding: 6px 12px; }
+}
+/* telas muito estreitas: caber os 5 links do menu */
+@media (max-width: 360px) {
+  header { padding: 10px 10px; }
+  .logo { font-size: 14px; }
+  nav a { margin-left: 7px; font-size: 10.5px; }
 }
 /* evita overflow horizontal (transforms dos elementos decorativos) */
 body, main { overflow-x: hidden; }

@@ -225,6 +225,23 @@
     });
   });
 
+  // ---------- Filtros da tabela de preços (curtos / longos / pacotes) ----------
+  (function () {
+    const botoes = document.querySelectorAll('.preco-filtro');
+    const planos = document.querySelectorAll('#precoGrid .plano');
+    if (!botoes.length) return;
+    botoes.forEach(function (b) {
+      b.addEventListener('click', function () {
+        botoes.forEach(function (x) { x.classList.toggle('ativo', x === b); });
+        const cat = b.dataset.plano;
+        planos.forEach(function (pl) {
+          const mostra = cat === 'todos' || pl.dataset.plano === cat;
+          pl.classList.toggle('oculto', !mostra);
+        });
+      });
+    });
+  })();
+
   // ---------- Player de arquivos (abertura + trilha) ----------
   (function () {
     const A = document.getElementById('auAbertura');
